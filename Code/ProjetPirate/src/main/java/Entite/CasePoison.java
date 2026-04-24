@@ -1,11 +1,16 @@
 package Entite;
 
-public class CasePoison implements Case {
+import Controleurs.ControlLancerDeDés;
 
+public class CasePoison implements Case {
+	//Elouan
 	@Override
 	public void appliquerEffet(Pirate pirate) {
-		// TODO Auto-generated method stub
+		ControlLancerDeDés lancerDes = new ControlLancerDeDés();
+		int i[]= lancerDes.lancerDés(1);
+		pirate.setDuréeEmpoisonnement(i[0]);
 		
 	}
+	//
 
 }

@@ -31,5 +31,10 @@ public class Pirate {
 	public void setVie(int vie) {
 		this.vie = vie;
 	}
+	public void soigner() {
+		if(vie<5) {
+			vie++;
+		}
+	}
 	//
 }
