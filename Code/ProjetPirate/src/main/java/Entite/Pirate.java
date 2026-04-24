@@ -2,6 +2,7 @@ package Entite;
 
 
 public class Pirate {
+	//Elouan
 	private int vie;
 	private int position;
 	private int duréeEmpoisonnement;
@@ -30,5 +31,5 @@ public class Pirate {
 	public void setVie(int vie) {
 		this.vie = vie;
 	}
-	
+	//
 }

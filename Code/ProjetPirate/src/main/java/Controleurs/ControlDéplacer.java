@@ -3,6 +3,7 @@ package Controleurs;
 import Entite.Pirate;
 
 public class ControlDéplacer {
+	//Elouan
 	public static void deplacer(Pirate pirate,int distance) {
 		int position= pirate.getPosition()+distance;
 		if (position>30) {
@@ -10,4 +11,5 @@ public class ControlDéplacer {
 		}
 		pirate.setPosition(position);
 	}
+	//Elouan
 }

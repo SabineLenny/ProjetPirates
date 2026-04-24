@@ -3,6 +3,7 @@ package Entite;
 import java.util.Map;
 
 public class Plateau {
+	//Elouan
 	private Map<Integer,Case> plateau;
 	
 	
@@ -13,7 +14,7 @@ public class Plateau {
 	public Map<Integer,Case> getPlateau() {
 		return plateau;
 	}
-
+	//
 }
 	
 	

@@ -3,7 +3,7 @@ package Controleurs;
 import java.util.Random;
 
 public class ControlLancerDeDés {
-
+	//Elouan
 	public static int[] lancerDés(int nbDés) {
 		Random random=new Random();
 		int[] result=new int[nbDés];
@@ -13,4 +13,5 @@ public class ControlLancerDeDés {
 		return result;
 		
 	}
+	//
 }
