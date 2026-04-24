@@ -4,6 +4,13 @@
  */
 package com.mycompany.projetpirates;
 
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.net.URL;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 /**
  *
  * @author DWR4418A
@@ -12,11 +19,25 @@ public class frame3 extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(frame3.class.getName());
 
+    private JLabel[] squares = new JLabel[30];
+
+    
+   
     /**
+     * 
      * Creates new form frame3
      */
+    
+        
+    
     public frame3() {
         initComponents();
+        
+        createBoard();
+        for(int i =0; i<30; i++){
+            setSquareImage(i, "island.png");
+        }
+        
     }
 
     /**
@@ -36,37 +57,16 @@ public class frame3 extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
-        jLabel27 = new javax.swing.JLabel();
-        jLabel28 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
-        jLabel30 = new javax.swing.JLabel();
-        jLabel31 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
+        boardPanel = new javax.swing.JPanel() {
+            private java.awt.Image bg = new javax.swing.ImageIcon(
+                getClass().getResource("ocean2.jpg")
+            ).getImage();
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(bg, 0, 0, getWidth(), getHeight(), this);
+            }
+        };
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
 
@@ -130,7 +130,8 @@ public class frame3 extends javax.swing.JFrame {
                             .addComponent(jProgressBar2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jButton1)))
+                        .addComponent(jButton1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(22, 22, 22))
         );
         jPanel2Layout.setVerticalGroup(
@@ -157,130 +158,7 @@ public class frame3 extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
-        jPanel1.setLayout(new java.awt.GridLayout(6, 5, 10, 10));
-
-        jLabel3.setText("jLabel3");
-        jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setMaximumSize(new java.awt.Dimension(37, 37));
-        jLabel3.setMinimumSize(new java.awt.Dimension(37, 37));
-        jLabel3.setPreferredSize(new java.awt.Dimension(37, 37));
-        jPanel1.add(jLabel3);
-
-        jLabel4.setText("jLabel3");
-        jLabel4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel4);
-
-        jLabel5.setText("jLabel3");
-        jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel5);
-
-        jLabel6.setText("jLabel3");
-        jLabel6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel6);
-
-        jLabel7.setText("jLabel3");
-        jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel7);
-
-        jLabel8.setText("jLabel3");
-        jLabel8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel8);
-
-        jLabel9.setText("jLabel3");
-        jLabel9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel9);
-
-        jLabel10.setText("jLabel3");
-        jLabel10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel10);
-
-        jLabel11.setText("jLabel3");
-        jLabel11.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel11);
-
-        jLabel12.setText("jLabel3");
-        jLabel12.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel12);
-
-        jLabel13.setText("jLabel3");
-        jLabel13.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel13);
-
-        jLabel14.setText("jLabel3");
-        jLabel14.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel14);
-
-        jLabel15.setText("jLabel3");
-        jLabel15.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel15);
-
-        jLabel16.setText("jLabel3");
-        jLabel16.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel16);
-
-        jLabel17.setText("jLabel3");
-        jLabel17.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel17);
-
-        jLabel18.setText("jLabel3");
-        jLabel18.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel18);
-
-        jLabel19.setText("jLabel3");
-        jLabel19.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel19);
-
-        jLabel20.setText("jLabel3");
-        jLabel20.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel20);
-
-        jLabel21.setText("jLabel3");
-        jLabel21.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel21);
-
-        jLabel22.setText("jLabel3");
-        jLabel22.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel22);
-
-        jLabel23.setText("jLabel3");
-        jLabel23.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel23);
-
-        jLabel24.setText("jLabel3");
-        jLabel24.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel24);
-
-        jLabel25.setText("jLabel3");
-        jLabel25.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel25);
-
-        jLabel26.setText("jLabel3");
-        jLabel26.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel26);
-
-        jLabel27.setText("jLabel3");
-        jLabel27.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel27);
-
-        jLabel28.setText("jLabel3");
-        jLabel28.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel28);
-
-        jLabel29.setText("jLabel3");
-        jLabel29.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel29);
-
-        jLabel30.setText("jLabel3");
-        jLabel30.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel30);
-
-        jLabel31.setText("jLabel3");
-        jLabel31.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel31);
-
-        jLabel32.setText("jLabel3");
-        jLabel32.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel32);
+        boardPanel.setLayout(new java.awt.GridLayout(6, 5, 10, 10));
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -297,7 +175,7 @@ public class frame3 extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(boardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane1))))
                 .addContainerGap())
         );
@@ -307,7 +185,7 @@ public class frame3 extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 543, Short.MAX_VALUE)
+                .addComponent(boardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 543, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -344,42 +222,46 @@ public class frame3 extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new frame3().setVisible(true));
     }
+    
+        private void createBoard(){
+                    
+            
+        for(int i = 0; i < 30; i++){
+            JLabel square = new JLabel();
+            square.setHorizontalAlignment(JLabel.CENTER);
+            square.setPreferredSize(new Dimension(50,50));
+            square.setMinimumSize(new Dimension(50,50));
+            square.setMaximumSize(new Dimension(50,50));
+            //square.setBorder(javax.swing.BorderFactory.createLineBorder(Color.yellow));
+            square.setText("" + (i + 1));
+            squares[i] = square;
+            boardPanel.add(square);
+            
+        }
+
+        boardPanel.revalidate();
+        boardPanel.repaint();
+    }
+    
+    private void setSquareImage(int index, String imagePath){
+        JLabel label = squares[index];
+
+        // DEBUG: check if the resource exists
+        URL resource = getClass().getResource(imagePath);
+
+
+        // Load the icon and scale
+        ImageIcon icon = new ImageIcon(resource);
+        Image img = icon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+        label.setIcon(new ImageIcon(img));
+        label.setText("");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel boardPanel;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
