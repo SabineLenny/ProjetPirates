@@ -1,5 +1,7 @@
 package Entite;
 
 public interface Case {
-	public abstract void appliquerEffet(Pirate pirate);
+	//Elouan
+	public abstract void appliquerEffet(Pirate pirateActif,Pirate autrePirate);
+	//
 }
