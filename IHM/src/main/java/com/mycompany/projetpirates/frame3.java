@@ -4,6 +4,7 @@
  */
 package com.mycompany.projetpirates;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -174,10 +175,9 @@ public class frame3 extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(boardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1))))
+                        .addComponent(jScrollPane1)))
                 .addContainerGap())
+            .addComponent(boardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,7 +254,20 @@ public class frame3 extends javax.swing.JFrame {
         ImageIcon icon = new ImageIcon(resource);
         Image img = icon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
         label.setIcon(new ImageIcon(img));
-        label.setText("");
+        
+    // KEEP the text (number)
+    label.setText(String.valueOf(index + 1));
+
+    // Center everything
+    label.setHorizontalAlignment(JLabel.RIGHT);
+    label.setVerticalAlignment(JLabel.CENTER);
+
+    // THIS is the key part 👇
+    label.setHorizontalTextPosition(JLabel.RIGHT);
+    label.setVerticalTextPosition(JLabel.CENTER);
+
+    // Make text visible on image
+    label.setForeground(Color.WHITE);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
