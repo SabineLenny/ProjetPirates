@@ -3,7 +3,8 @@ package Entite;
 public class CaseArrivee implements Case {
 
 	@Override
-	public void appliquerEffet(Pirate pirateActif,Pirate autrePirate) {
+	public String appliquerEffet(Pirate pirateActif,Pirate autrePirate) {
+		return null;
 		// TODO Auto-generated method stub
 		
 	}
