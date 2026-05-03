@@ -6,11 +6,13 @@ public class Pirate {
 	private int vie;
 	private int position;
 	private int duréeEmpoisonnement;
+        private String nom;
 	
-	public Pirate() {
+	public Pirate(String nom) {
 		vie=5;
 		position=0;
 		duréeEmpoisonnement=0;
+                this.nom=nom;
 	}
 	
 	public int getPosition() {
@@ -36,5 +38,13 @@ public class Pirate {
 			vie++;
 		}
 	}
+        
+        public String getNom() {
+            return nom;
+        }
+        
+        public void setNom(String nom) {
+            this.nom = nom;
+        }
 	//
 }
