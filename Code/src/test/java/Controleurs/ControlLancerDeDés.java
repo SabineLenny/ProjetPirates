@@ -23,12 +23,4 @@ public class ControlLancerDeDés {
             }
             return resultat + "\ndistance : " + totalDés;
         }
-        
-        public static int additionDés (int[] resDés) {
-            int totalDés = 0;
-            for (int i = 0; i < resDés.length; i++) {
-                totalDés += resDés[i];
-            }
-            return totalDés;
-        }
 }

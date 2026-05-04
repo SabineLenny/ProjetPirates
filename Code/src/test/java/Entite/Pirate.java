@@ -38,6 +38,10 @@ public class Pirate {
 			vie++;
 		}
 	}
+
+	public void prendreDegats(int degats) {
+		this.vie -= degats;
+	}
         
         public String getNom() {
             return nom;
