@@ -2,6 +2,7 @@ package Boundaries;
 
 import Controleurs.ControlDéplacer;
 import Controleurs.ControleurPirate;
+import Controleurs.ControlLancerDeDés;
 import Entite.Pirate;
 import java.util.Map;
 import java.util.Scanner;
@@ -9,15 +10,6 @@ import java.util.TreeMap;
 
 
 public class BoundarieJeuPirate {
-    /*
-        Initialiser le jeu
-        Lancer le jeu
-        Recevoir une action de l'utilisateur
-        L'envoyer à un controleur
-        Recevoir le retour du controleur
-        Traiter l'action (changement des variables dans le boundarie)
-        Afficher les actions
-    */
     //Ulysse
     public static void main (String[] args) {
         
@@ -39,6 +31,17 @@ public class BoundarieJeuPirate {
                 System.out.println("De combien de case faut-il se deplacer ?");
                 int distance = s.nextInt();
                 String actionLigne = ControlDéplacer.deplacer(mapPirate.get(indicePirate), distance);
+                System.out.println(actionLigne);
+                System.out.println("Position : " + mapPirate.get(indicePirate).getPosition());
+            } else if (action.equals("lancer1de")) {
+                System.out.println("Lancer le de");
+                int[] dés= ControlLancerDeDés.lancerDés(1);
+                String actionLigne = ControlLancerDeDés.affichageDés(dés);
+                System.out.println(actionLigne);
+            } else if (action.equals("lancer2de")) {
+                System.out.println("Lancer le de");
+                int[] dés= ControlLancerDeDés.lancerDés(2);
+                String actionLigne = ControlLancerDeDés.affichageDés(dés);
                 System.out.println(actionLigne);
             } else {
                 System.out.println("e");
