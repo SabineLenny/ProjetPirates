@@ -35,10 +35,29 @@ public class frame3 extends javax.swing.JFrame {
         initComponents();
         
         createBoard();
-        for(int i =0; i<30; i++){
+        for(int i = 1; i<=30; i++){
             setSquareImage(i, "island.png");
         }
         
+        initBoardNumber();
+        
+        setSquareImage(9, "bomb.png");
+        setSquareImage(11, "exchange.png");
+        setSquareImage(13, "heal.png");
+        setSquareImage(15, "poison.png");     
+    }
+    
+    private int getIndexFromSquareNumber(int squareNumber){
+        int totalCols = 5;
+        int n = squareNumber - 1;
+        int row = n / totalCols;
+        int col = n % totalCols;
+        
+        if(row % 2 != 0){
+            col = (totalCols - 1) - col;
+        }
+        
+        return (row * totalCols) + col;
     }
 
     /**
@@ -58,6 +77,9 @@ public class frame3 extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jLayeredPane1 = new javax.swing.JLayeredPane();
         boardPanel = new javax.swing.JPanel() {
             private java.awt.Image bg = new javax.swing.ImageIcon(
                 getClass().getResource("ocean2.jpg")
@@ -68,8 +90,6 @@ public class frame3 extends javax.swing.JFrame {
                 g.drawImage(bg, 0, 0, getWidth(), getHeight(), this);
             }
         };
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -159,12 +179,31 @@ public class frame3 extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
-        boardPanel.setLayout(new java.awt.GridLayout(6, 5, 10, 10));
-
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jTextArea1.setText("qsdqsf\nqsf\nqsf\nqsf\nazrzarazr\nqsf\nqsf\ngezezrazzz\nar\nzra\naz\nrzarazrzarzarr");
         jScrollPane1.setViewportView(jTextArea1);
+
+        boardPanel.setLayout(new java.awt.GridLayout());
+
+        jLayeredPane1.setLayer(boardPanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
+        jLayeredPane1.setLayout(jLayeredPane1Layout);
+        jLayeredPane1Layout.setHorizontalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(boardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jLayeredPane1Layout.setVerticalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(boardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -175,9 +214,9 @@ public class frame3 extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1)))
+                        .addComponent(jScrollPane1))
+                    .addComponent(jLayeredPane1))
                 .addContainerGap())
-            .addComponent(boardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,8 +224,8 @@ public class frame3 extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(boardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 543, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLayeredPane1)
+                .addGap(12, 12, 12)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -233,18 +272,25 @@ public class frame3 extends javax.swing.JFrame {
             square.setMinimumSize(new Dimension(50,50));
             square.setMaximumSize(new Dimension(50,50));
             //square.setBorder(javax.swing.BorderFactory.createLineBorder(Color.yellow));
-            square.setText("" + (i + 1));
+
             squares[i] = square;
             boardPanel.add(square);
             
         }
-
+        
+                
         boardPanel.revalidate();
         boardPanel.repaint();
     }
+        
+    private void initBoardNumber(){
+        for(int i = 0; i < squares.length; i++){
+            squares[i].setText(String.valueOf(getIndexFromSquareNumber(i+1) + 1));
+        }
+    }
     
-    private void setSquareImage(int index, String imagePath){
-        JLabel label = squares[index];
+    private void setSquareImage(int squareNumber, String imagePath){
+        JLabel label = squares[getIndexFromSquareNumber(squareNumber)];
 
         // DEBUG: check if the resource exists
         URL resource = getClass().getResource(imagePath);
@@ -256,14 +302,13 @@ public class frame3 extends javax.swing.JFrame {
         label.setIcon(new ImageIcon(img));
         
     // KEEP the text (number)
-    label.setText(String.valueOf(index + 1));
 
     // Center everything
-    label.setHorizontalAlignment(JLabel.RIGHT);
+    label.setHorizontalAlignment(JLabel.LEFT);
     label.setVerticalAlignment(JLabel.CENTER);
 
     // THIS is the key part 👇
-    label.setHorizontalTextPosition(JLabel.RIGHT);
+    label.setHorizontalTextPosition(JLabel.LEFT);
     label.setVerticalTextPosition(JLabel.CENTER);
 
     // Make text visible on image
@@ -275,6 +320,7 @@ public class frame3 extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
