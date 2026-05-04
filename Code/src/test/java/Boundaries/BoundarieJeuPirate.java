@@ -28,9 +28,8 @@ public class BoundarieJeuPirate {
             System.out.println("Entrez votre action");
             String action = s.next();
             if (action.equals("deplacer")) {
-                System.out.println("De combien de case faut-il se deplacer ?");
-                int distance = s.nextInt();
-                String actionLigne = ControlDéplacer.deplacer(mapPirate.get(indicePirate), distance);
+                System.out.println("Tirage des ?");
+                String actionLigne = ControlDéplacer.deplacer(mapPirate.get(indicePirate));
                 System.out.println(actionLigne);
                 System.out.println("Position : " + mapPirate.get(indicePirate).getPosition());
             } else if (action.equals("lancer1de")) {
@@ -46,7 +45,6 @@ public class BoundarieJeuPirate {
             } else {
                 System.out.println("e");
             }
-            
         }
     }
     //Ulysse
