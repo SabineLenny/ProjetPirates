@@ -11,7 +11,16 @@ public class ControlLancerDeDés {
 			result[i]=random.nextInt(1,7);
 		}
 		return result;
-		
 	}
 	//
+
+        public static String affichageDés (int[] resDés) {
+            String resultat ="Resultat du tirage de des : ";
+            int totalDés = 0;
+            for (int i = 0; i < resDés.length; i++) {
+                resultat += "\nde " + (i+1) + " : " + resDés[i];
+                totalDés += resDés[i];
+            }
+            return resultat + "\ndistance : " + totalDés;
+        }
 }
