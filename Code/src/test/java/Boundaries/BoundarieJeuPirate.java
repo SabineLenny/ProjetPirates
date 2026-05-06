@@ -1,7 +1,7 @@
 package Boundaries;
 
 import Controleurs.ControlDéplacer;
-import Controleurs.ControleurPirate;
+import Controleurs.ControlPirate;
 import Controleurs.ControlLancerDeDés;
 import Entite.Pirate;
 import java.util.Map;
@@ -17,8 +17,8 @@ public class BoundarieJeuPirate {
         boolean run = true;
         int indicePirate = 1;
         Map<Integer,Pirate> mapPirate = new TreeMap<>();
-        mapPirate.put(0, ControleurPirate.creationPirate("Pirate 1"));
-        mapPirate.put(1, ControleurPirate.creationPirate("Pirate 2"));
+        mapPirate.put(0, ControlPirate.creationPirate("Pirate 1"));
+        mapPirate.put(1, ControlPirate.creationPirate("Pirate 2"));
         Scanner s = new Scanner(System.in);
         
         //Lancer le jeu
