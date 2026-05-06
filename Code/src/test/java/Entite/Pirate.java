@@ -33,6 +33,15 @@ public class Pirate {
 	public void setVie(int vie) {
 		this.vie = vie;
 	}
+        
+        public String getNom() {
+            return nom;
+        }
+        
+        public void setNom(String nom) {
+            this.nom = nom;
+        }
+        
 	public void soigner() {
 		if(vie<5) {
 			vie++;
@@ -42,13 +51,5 @@ public class Pirate {
 	public void prendreDegats(int degats) {
 		this.vie -= degats;
 	}
-        
-        public String getNom() {
-            return nom;
-        }
-        
-        public void setNom(String nom) {
-            this.nom = nom;
-        }
 	//
 }
