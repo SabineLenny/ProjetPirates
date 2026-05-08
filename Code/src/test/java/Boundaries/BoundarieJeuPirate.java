@@ -3,7 +3,9 @@ package Boundaries;
 import Controleurs.ControlDéplacer;
 import Controleurs.ControlPirate;
 import Controleurs.ControlLancerDeDés;
+import Controleurs.ControlPlateau;
 import Entite.Pirate;
+import Entite.Plateau;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
@@ -20,6 +22,8 @@ public class BoundarieJeuPirate {
         mapPirate.put(0, ControlPirate.creationPirate("Pirate 1"));
         mapPirate.put(1, ControlPirate.creationPirate("Pirate 2"));
         Scanner s = new Scanner(System.in);
+        Plateau p = ControlPlateau.creationPlateau();
+        System.out.println(ControlPlateau.affichagePlateau(p));
         
         //Lancer le jeu
         while (run) {
