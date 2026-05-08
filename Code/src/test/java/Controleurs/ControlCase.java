@@ -1,13 +1,13 @@
 package Controleurs;
 
+import Entite.TypeCase;
+
 public class ControlCase {
 	//Lenny
-	enum TypesCases {
-		  NORMAL,BOMBE,EMPOISONNEMENT,SOIN,ECHANGE,DEPART,ARRIVEE
-	}
+	
 	//TypesCases Case;
 	
-	void select_case (TypesCases Case) {
+	void select_case (TypeCase Case) {
 		switch (Case) {
 		case NORMAL: {
 			

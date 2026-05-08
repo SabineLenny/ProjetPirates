@@ -4,14 +4,14 @@ import java.util.Map;
 
 public class Plateau {
 	//Elouan
-	private Map<Integer,Case> plateau;
+	private Map<Integer,TypeCase> plateau;
 	
 	
-	public Plateau(Map<Integer,Case> plateau) {
+	public Plateau(Map<Integer,TypeCase> plateau) {
 		this.plateau=plateau;
 	}
 
-	public Map<Integer,Case> getPlateau() {
+	public Map<Integer,TypeCase> getPlateau() {
 		return plateau;
 	}
 	//

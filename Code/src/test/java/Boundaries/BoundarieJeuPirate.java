@@ -15,7 +15,7 @@ public class BoundarieJeuPirate {
         
         //Initialiser le jeu
         boolean run = true;
-        int indicePirate = 1;
+        int indicePirate = 0;
         Map<Integer,Pirate> mapPirate = new TreeMap<>();
         mapPirate.put(0, ControlPirate.creationPirate("Pirate 1"));
         mapPirate.put(1, ControlPirate.creationPirate("Pirate 2"));
@@ -45,6 +45,7 @@ public class BoundarieJeuPirate {
             } else {
                 System.out.println("e");
             }
+            indicePirate = (indicePirate + 1) % 2;
         }
     }
     //Ulysse
