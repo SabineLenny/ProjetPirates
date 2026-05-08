@@ -1,6 +1,5 @@
 package Controleurs;
 
-import Entite.Case;
 import Entite.Pirate;
 import Entite.TypeCase;
 
@@ -9,41 +8,31 @@ public class ControlCase {
 	
 	//TypesCases Case;
 	
-	void select_case (TypeCase caseType,Pirate pirate, Pirate autrePirate) {
+	public static String selectCase (TypeCase caseType,Pirate pirate, Pirate autrePirate) {
 		switch (caseType) {
 		case NORMAL: {
-                    break;
+                    return pirate.getNom() + " a atteint une case sans effet";
 		}
 		case BOMBE: {
-                    ControlCaseBombe.appliquerEffet(pirate);
-                    break;
+                    return ControlCaseBombe.appliquerEffet(pirate);
 		}
 		case EMPOISONNEMENT:{
-                    ControlCasePoison.appliquerEffet(pirate);
-                    break;
+                    return ControlCasePoison.appliquerEffet(pirate);
 		}
 		case SOIN:{
-                    ControlCaseSoin.appliquerEffet(pirate);
-                    break;
+                    return ControlCaseSoin.appliquerEffet(pirate);
 		}
 		case ECHANGE:{
-                    ControlCaseEchange.appliquerEffet(pirate, autrePirate);
-                    break;
+                    return ControlCaseEchange.appliquerEffet(pirate, autrePirate);
 		}
 		case DEPART:{
-                    break;
+                    return pirate.getNom() + " est sur le départ";
 		}
 		case ARRIVEE:{
-                    ControlCaseArrivee.appliquerEffet(pirate);
-                    break;
+                    return ControlCaseArrivee.appliquerEffet(pirate);
 		}
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + caseType);
 		}
 	}
-	
-	
-	
-	
-	
 }
