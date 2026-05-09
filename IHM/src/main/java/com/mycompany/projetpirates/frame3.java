@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 /**
  *
@@ -133,6 +134,75 @@ public class frame3 extends javax.swing.JFrame {
         if(player2Name == null || player2Name.isBlank()){
             player2Name = "Joueur 2";
         }
+    }
+
+    
+    public void moveEntityToSquare(
+            JLabel entityLabel,
+            int squareNumber
+    ){
+
+        JLabel square =
+                squares[getIndexFromSquareNumber(squareNumber)];
+
+        Rectangle bounds = square.getBounds();
+
+        int pawnSize = 40;
+
+        int x = bounds.x + (bounds.width - pawnSize) / 2;
+        int y = bounds.y + (bounds.height - pawnSize) / 2;
+
+        entityLabel.setBounds(
+                x,
+                y,
+                pawnSize,
+                pawnSize
+        );
+
+        playerPanel.repaint();
+    }
+    
+    public void animateMovement(
+            JLabel entityLabel,
+            PositionComponent position,
+            int moveAmount
+    ){
+
+        int start = position.getBoardPosition();
+        int target = start + moveAmount;
+
+        // limite max du plateau
+        if(target > 30){
+            target = 30;
+        }
+
+        final int finalTarget = target;
+
+        Timer timer = new Timer(300, null);
+
+        timer.addActionListener(e -> {
+
+            int current = position.getBoardPosition();
+
+            // arrivé à destination
+            if(current >= finalTarget){
+                timer.stop();
+                return;
+            }
+
+            // avance d'une case
+            current++;
+
+            position.setBoardPosition(current);
+
+            moveEntityToSquare(
+                    entityLabel,
+                    current
+            );
+
+        });
+
+        timer.start();
     }
     ///
     
