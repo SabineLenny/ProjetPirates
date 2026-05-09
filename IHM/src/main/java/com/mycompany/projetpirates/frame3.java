@@ -16,6 +16,7 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,8 +27,10 @@ public class frame3 extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(frame3.class.getName());
 
     private JLabel[] squares = new JLabel[30];
-
-    
+    //Elouan
+    private String player1Name;
+    private String player2Name;
+    //
    
     /**
      * 
@@ -37,33 +40,35 @@ public class frame3 extends javax.swing.JFrame {
         
     
     public frame3() {
+
+        askPlayerNames();
+
         initComponents();
-        
+        //Elouan
+        jLabel1.setText(player1Name);
+        jLabel2.setText(player2Name);
+        //
         createBoard();
-        for(int i = 1; i<=30; i++){
+
+        for(int i = 1; i <= 30; i++){
             setSquareImage(i, "island.png");
         }
-        
+
         initBoardNumber();
-        
+
         setSquareImage(9, "bomb.png");
         setSquareImage(11, "exchange.png");
         setSquareImage(13, "heal.png");
         setSquareImage(15, "poison.png");
-        
-        
-        // testing add plqyer
+
         JLabel playerPawn = new JLabel();
-        playerPawn.setBounds(50, 50, 50, 50);  // Set initial position of pawn
+        playerPawn.setBounds(50, 50, 50, 50);
 
         playerPanel.add(playerPawn, JLayeredPane.DEFAULT_LAYER);
+
         setLabelIcon(playerPawn, "pirateship.png");
 
-        
-        // testing add cup
         initCup();
-
-       
     }
     
     
@@ -107,7 +112,31 @@ public class frame3 extends javax.swing.JFrame {
         
     }
     
+    //Elouan
+    private void askPlayerNames(){
 
+        player1Name = JOptionPane.showInputDialog(
+                this,
+                "Nom du Joueur 1 :"
+        );
+
+        player2Name = JOptionPane.showInputDialog(
+                this,
+                "Nom du Joueur 2 :"
+        );
+
+        // sécurité si utilisateur clique Annuler
+        if(player1Name == null || player1Name.isBlank()){
+            player1Name = "Joueur 1";
+        }
+
+        if(player2Name == null || player2Name.isBlank()){
+            player2Name = "Joueur 2";
+        }
+    }
+    ///
+    
+    
     private int getIndexFromSquareNumber(int squareNumber){
         int totalCols = 5;
         int n = squareNumber - 1;
