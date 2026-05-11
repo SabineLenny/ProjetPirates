@@ -9,6 +9,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -17,6 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 /**
@@ -138,72 +140,77 @@ public class frame3 extends javax.swing.JFrame {
 
     
     public void moveEntityToSquare(
-            JLabel entityLabel,
-            int squareNumber
-    ){
+        JLabel entityLabel,
+        int squareNumber
+){
 
-        JLabel square =
-                squares[getIndexFromSquareNumber(squareNumber)];
+    JLabel square =
+            squares[getIndexFromSquareNumber(squareNumber)];
 
-        Rectangle bounds = square.getBounds();
+    Rectangle bounds = square.getBounds();
 
-        int pawnSize = 40;
+    // conversion vers coordonnées globales
+    Point p = SwingUtilities.convertPoint(
+            square.getParent(),
+            bounds.x,
+            bounds.y,
+            playerPanel
+    );
 
-        int x = bounds.x + (bounds.width - pawnSize) / 2;
-        int y = bounds.y + (bounds.height - pawnSize) / 2;
+    int pawnSize = 40;
 
-        entityLabel.setBounds(
-                x,
-                y,
-                pawnSize,
-                pawnSize
-        );
+    int x = p.x + (bounds.width - pawnSize) / 2;
+    int y = p.y + (bounds.height - pawnSize) / 2;
 
-        playerPanel.repaint();
-    }
+    entityLabel.setBounds(
+            x,
+            y,
+            pawnSize,
+            pawnSize
+    );
+
+    playerPanel.repaint();
+}
     
     public void animateMovement(
-            JLabel entityLabel,
-            PositionComponent position,
-            int moveAmount
-    ){
+        JLabel entityLabel,
+        int position,
+        int moveAmount
+){
 
-        int start = position.getBoardPosition();
-        int target = start + moveAmount;
+    int start = position;
+    int target = start + moveAmount;
 
-        // limite max du plateau
-        if(target > 30){
-            target = 30;
+    if(target > 30){
+        target = 30;
+    }
+
+    final int finalTarget = target;
+
+    final Timer timer = new Timer(300, null);
+
+    timer.addActionListener(e -> {
+
+        int current = position;
+
+        if(current >= finalTarget){
+            timer.stop();
+            return;
         }
 
-        final int finalTarget = target;
+        current++;
 
-        Timer timer = new Timer(300, null);
+        
 
-        timer.addActionListener(e -> {
+        moveEntityToSquare(
+                entityLabel,
+                current
+        );
 
-            int current = position.getBoardPosition();
+    });
 
-            // arrivé à destination
-            if(current >= finalTarget){
-                timer.stop();
-                return;
-            }
-
-            // avance d'une case
-            current++;
-
-            position.setBoardPosition(current);
-
-            moveEntityToSquare(
-                    entityLabel,
-                    current
-            );
-
-        });
-
-        timer.start();
-    }
+    timer.start();
+}
     ///
     
     
