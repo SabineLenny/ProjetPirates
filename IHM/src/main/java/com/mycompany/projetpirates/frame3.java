@@ -18,7 +18,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 /**
@@ -33,6 +32,8 @@ public class frame3 extends javax.swing.JFrame {
     //Elouan
     private String player1Name;
     private String player2Name;
+    
+    JLabel playerPawn;
     //
    
     /**
@@ -51,6 +52,8 @@ public class frame3 extends javax.swing.JFrame {
         jLabel1.setText(player1Name);
         jLabel2.setText(player2Name);
         //
+        
+        setResizable(false);
         createBoard();
 
         for(int i = 1; i <= 30; i++){
@@ -64,10 +67,10 @@ public class frame3 extends javax.swing.JFrame {
         setSquareImage(13, "heal.png");
         setSquareImage(15, "poison.png");
 
-        JLabel playerPawn = new JLabel();
+        playerPawn = new JLabel();
         playerPawn.setBounds(50, 50, 50, 50);
 
-        playerPanel.add(playerPawn, JLayeredPane.DEFAULT_LAYER);
+        playerPanel.add(playerPawn, JLayeredPane.POPUP_LAYER);
 
         setLabelIcon(playerPawn, "pirateship.png");
 
@@ -79,12 +82,18 @@ public class frame3 extends javax.swing.JFrame {
     Point initialClick;
 
     
+    private int totalDistance = 0;
+    private int lastX, lastY;
+    private final int SHAKE_THRESHOLD = 500; // Adjust this sensitivity
+    
+    
+    private int number = 1; // remove this
     private void initCup(){
         JLabel cup = new JLabel();
 
-        cup.setBounds(500, 20, 80, 80); // adjust to your UI
+        cup.setBounds(400, 10, 80, 80); // adjust to your UI
         topLayeredPanel.add(cup, JLayeredPane.DRAG_LAYER);
-        setLabelIcon(cup, "dicecup.png", 200, 200);
+        setLabelIcon(cup, "dicecup.png", 100, 100);
         
 
         cup.addMouseListener(new MouseAdapter() {
@@ -94,6 +103,14 @@ public class frame3 extends javax.swing.JFrame {
 
             public void mouseReleased(MouseEvent e) {
                 // When user releases → roll dice
+                
+                if (totalDistance > 300) {
+//                    moveEntityToSquare(playerPawn, number);
+//                    number++;
+                      animateDiceAndRoll();
+                }
+                totalDistance = 0; // Reset for next turn
+                cup.setLocation(400, 10);
             }
         });
 
@@ -109,11 +126,21 @@ public class frame3 extends javax.swing.JFrame {
                 int Y = thisY + yMoved;
 
                 cup.setLocation(X, Y);
+                
+                
+                int deltaX = e.getX() - lastX;
+                int deltaY = e.getY() - lastY;
+                totalDistance += Math.abs(deltaX) + Math.abs(deltaY);
+
+                lastX = e.getX();
+                lastY = e.getY();
+                
             }
         });
         
         
     }
+    
     
     //Elouan
     private void askPlayerNames(){
@@ -140,78 +167,76 @@ public class frame3 extends javax.swing.JFrame {
 
     
     public void moveEntityToSquare(
-        JLabel entityLabel,
-        int squareNumber
-){
+            JLabel entityLabel,
+            int squareNumber
+    ){
 
-    JLabel square =
-            squares[getIndexFromSquareNumber(squareNumber)];
+        JLabel square =
+                squares[getIndexFromSquareNumber(squareNumber)];
 
-    Rectangle bounds = square.getBounds();
+        Rectangle bounds = square.getBounds();
 
-    // conversion vers coordonnées globales
-    Point p = SwingUtilities.convertPoint(
-            square.getParent(),
-            bounds.x,
-            bounds.y,
-            playerPanel
-    );
+        int pawnSize = 100;
 
-    int pawnSize = 40;
+        int x = bounds.x + (bounds.width - pawnSize) / 2;
+        int y = bounds.y + (bounds.height - pawnSize) / 2;
 
-    int x = p.x + (bounds.width - pawnSize) / 2;
-    int y = p.y + (bounds.height - pawnSize) / 2;
-
-    entityLabel.setBounds(
-            x,
-            y,
-            pawnSize,
-            pawnSize
-    );
-
-    playerPanel.repaint();
-}
-    
-    public void animateMovement(
-        JLabel entityLabel,
-        int position,
-        int moveAmount
-){
-
-    int start = position;
-    int target = start + moveAmount;
-
-    if(target > 30){
-        target = 30;
-    }
-
-    final int finalTarget = target;
-
-    final Timer timer = new Timer(300, null);
-
-    timer.addActionListener(e -> {
-
-        int current = position;
-
-        if(current >= finalTarget){
-            timer.stop();
-            return;
-        }
-
-        current++;
-
-        
-
-        moveEntityToSquare(
-                entityLabel,
-                current
+        entityLabel.setBounds(
+                x,
+                y,
+                pawnSize,
+                pawnSize
         );
 
-    });
-
-    timer.start();
-}
-    ///
+        playerPanel.moveToFront(entityLabel);
+        playerPanel.repaint();
+    }
+    
+//    public void animateMovement(
+//            JLabel entityLabel,
+//            PositionComponent position,
+//            int moveAmount
+//    ){
+//
+//        int start = position.getBoardPosition();
+//        int target = start + moveAmount;
+//
+//        // limite max du plateau
+//        if(target > 30){
+//            target = 30;
+//        }
+//
+//        final int finalTarget = target;
+//
+//        Timer timer = new Timer(300, null);
+//
+//        timer.addActionListener(e -> {
+//
+//            int current = position.getBoardPosition();
+//
+//            // arrivé à destination
+//            if(current >= finalTarget){
+//                timer.stop();
+//                return;
+//            }
+//
+//            // avance d'une case
+//            current++;
+//
+//            position.setBoardPosition(current);
+//
+//            moveEntityToSquare(
+//                    entityLabel,
+//                    current
+//            );
+//
+//        });
+//
+//        timer.start();
+//    }
+//    
+    
+    
     
     
     private int getIndexFromSquareNumber(int squareNumber){
@@ -236,6 +261,7 @@ public class frame3 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        playerPanel = new javax.swing.JLayeredPane();
         topLayeredPanel = new javax.swing.JLayeredPane();
         topPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -243,11 +269,11 @@ public class frame3 extends javax.swing.JFrame {
         jProgressBar1 = new javax.swing.JProgressBar();
         jProgressBar2 = new javax.swing.JProgressBar();
         jPanel3 = new javax.swing.JPanel();
+        lblDie1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        lblDie2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        playerPanel = new javax.swing.JLayeredPane();
         boardPanel = new javax.swing.JPanel() {
             private java.awt.Image bg = new javax.swing.ImageIcon(
                 getClass().getResource("ocean2.jpg")
@@ -261,42 +287,68 @@ public class frame3 extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        javax.swing.GroupLayout playerPanelLayout = new javax.swing.GroupLayout(playerPanel);
+        playerPanel.setLayout(playerPanelLayout);
+        playerPanelLayout.setHorizontalGroup(
+            playerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 699, Short.MAX_VALUE)
+        );
+        playerPanelLayout.setVerticalGroup(
+            playerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 543, Short.MAX_VALUE)
+        );
+
         jLabel1.setText("Joueur 1");
 
         jLabel2.setText("Joueur 2");
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(null));
+
+        lblDie1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblDie1.setText("0");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 49, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblDie1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 47, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(lblDie1)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(null));
+
+        lblDie2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblDie2.setText("0");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 48, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel4Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(lblDie2)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 47, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel4Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(lblDie2)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
-
-        jButton1.setText("Lancer les dés");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
         topPanel.setLayout(topPanelLayout);
@@ -308,19 +360,13 @@ public class frame3 extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 134, Short.MAX_VALUE)
                 .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(topPanelLayout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 134, Short.MAX_VALUE)
-                        .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jProgressBar2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(topPanelLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jButton1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jProgressBar2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22))
         );
         topPanelLayout.setVerticalGroup(
@@ -333,9 +379,7 @@ public class frame3 extends javax.swing.JFrame {
                         .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
-                        .addGap(22, 22, 22))
+                        .addGap(51, 51, 51))
                     .addGroup(topPanelLayout.createSequentialGroup()
                         .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
@@ -370,17 +414,6 @@ public class frame3 extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jTextArea1.setText("qsdqsf\nqsf\nqsf\nqsf\nazrzarazr\nqsf\nqsf\ngezezrazzz\nar\nzra\naz\nrzarazrzarzarr");
         jScrollPane1.setViewportView(jTextArea1);
-
-        javax.swing.GroupLayout playerPanelLayout = new javax.swing.GroupLayout(playerPanel);
-        playerPanel.setLayout(playerPanelLayout);
-        playerPanelLayout.setHorizontalGroup(
-            playerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 699, Short.MAX_VALUE)
-        );
-        playerPanelLayout.setVerticalGroup(
-            playerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 543, Short.MAX_VALUE)
-        );
 
         boardPanel.setLayout(new java.awt.GridLayout(6, 5));
 
@@ -421,10 +454,6 @@ public class frame3 extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -520,10 +549,54 @@ public class frame3 extends javax.swing.JFrame {
     // Make text visible on image
     label.setForeground(Color.WHITE);
     }
+    
+    
+    public void animateDiceAndRoll(int de1, int de2) {
+        // How fast the dice change faces (50 milliseconds)
+        Timer rollTimer = new Timer(50, null);
+        
+        // We use an array of size 1 so we can modify the counter inside the timer
+        int[] ticks = {0}; 
+        int maxTicks = 15; // Total number of "spins" before stopping
+
+        rollTimer.addActionListener(e -> {
+            if (ticks[0] >= maxTicks) {
+                rollTimer.stop();
+                
+                lblDie1.setText(String.valueOf(de1));
+                lblDie2.setText(String.valueOf(de2));
+            } else {
+                int temp1 = (int)(Math.random() * 6) + 1;
+                int temp2 = (int)(Math.random() * 6) + 1;
+                
+                lblDie1.setText(String.valueOf(temp1));
+                lblDie2.setText(String.valueOf(temp2));
+                
+                ticks[0]++;
+            }
+        });
+
+        rollTimer.start();
+    }
+    
+    public void lancerLesDes() {
+        int die1 = (int)(Math.random() * 6) + 1;
+        int die2 = (int)(Math.random() * 6) + 1;
+        int total = die1 + die2;
+
+        // Set the FINAL numbers on the screen
+        lblDie1.setText(String.valueOf(die1));
+        lblDie2.setText(String.valueOf(die2));
+
+        // Log the result
+        jTextArea1.append("\n" + player1Name + " a lancé un " + total + " !");
+
+        // Move the ship
+//        animateMovement(total);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel boardPanel;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel3;
@@ -532,6 +605,8 @@ public class frame3 extends javax.swing.JFrame {
     private javax.swing.JProgressBar jProgressBar2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JLabel lblDie1;
+    private javax.swing.JLabel lblDie2;
     private javax.swing.JLayeredPane playerPanel;
     private javax.swing.JLayeredPane topLayeredPanel;
     private javax.swing.JPanel topPanel;
