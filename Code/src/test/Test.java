@@ -2,14 +2,14 @@ package TESTFONCTIONS;
 
 import Controleurs.ControlDéplacer;
 import Controleurs.ControlLancerDeDés;
-import Controleurs.ControleurPirate;
+import Controleurs.ControlPirate;
 import Entite.Pirate;
 
 public class Test {
 	
 	public static void main(String[] args) {
 		//Elouan
-		Pirate pirate=ControleurPirate.creationPirate();
+		Pirate pirate = ControlPirate.creationPirate();
 		System.out.println("Pirate : \n -Vie : " + pirate.getVie() + "\n -Position : " + pirate.getPosition() + "\n -empoisonnement : " +pirate.getDuréeEmpoisonnement());
 		System.out.println("\nLancé de 2 Dés : \n");
 		int[] dés=ControlLancerDeDés.lancerDés(2);
