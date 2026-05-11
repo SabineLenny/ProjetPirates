@@ -1,5 +1,6 @@
 package Controleurs;
 
+import Entite.Pirate;
 import Entite.Plateau;
 import Entite.TypeCase;
 import java.util.ArrayList;
@@ -54,5 +55,11 @@ public class ControlPlateau {
             
             plateau.getPlateau().put(caseSelection, caseType);
         }
+    }
+    
+    public static void activerCase (Plateau plateau, Pirate p1, Pirate p2) {
+        TypeCase tc = plateau.getPlateau().get(p1.getPosition());
+        System.out.println(tc);
+        ControlCase.selectCase(tc, p1, p2);
     }
 }

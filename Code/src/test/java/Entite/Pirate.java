@@ -10,7 +10,7 @@ public class Pirate {
 	
 	public Pirate(String nom) {
 		vie=5;
-		position=0;
+		position=1;
 		duréeEmpoisonnement=0;
                 this.nom=nom;
 	}

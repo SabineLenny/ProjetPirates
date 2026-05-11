@@ -11,22 +11,21 @@ import Controleurs.ControlLancerDeDés;
 import java.util.Scanner;
 
 
-public class BoundarieJeuPirate {
+public class VieuxBoundarieMoche {
     //Ulysse
     public static void main (String[] args) {
         
         Scanner s = new Scanner(System.in);
         ControlJeuPirate cjp = new ControlJeuPirate();
+        boolean run = true;
+        cjp.instancierJeu();
         
-        while (cjp.getRun()) {
-            
+        while (run) {
             System.out.println("Entrez votre action, \nvie : " + cjp.getMapPirate().get(cjp.getIndicePirate()).getVie() +
                     "\nposition : " + cjp.getMapPirate().get(cjp.getIndicePirate()).getPosition() +
                     "\nduree empoisonnement : " + cjp.getMapPirate().get(cjp.getIndicePirate()).getDuréeEmpoisonnement() + "\n");
             String action = s.next();
-            if (action.equals("start")) {
-                
-            }else if (action.equals("deplacer")) {
+            if (action.equals("deplacer")) {
                 System.out.println("Tirage des ?");
                 String actionLigne = ControlDéplacer.deplacer(cjp.getMapPirate().get(cjp.getIndicePirate()));
                 System.out.println(actionLigne);
