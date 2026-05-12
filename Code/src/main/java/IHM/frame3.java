@@ -341,6 +341,7 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
     private void initBoardNumber(){
         for(int i = 0; i < squares.length; i++){
             squares[i].setText(String.valueOf(getIndexFromSquareNumber(i+1) + 1));
+            squares[i].setForeground(Color.BLACK);
         }
     }
     
@@ -367,7 +368,6 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         label.setHorizontalTextPosition(JLabel.LEFT);
         label.setVerticalTextPosition(JLabel.CENTER);
 
-        label.setForeground(Color.WHITE);
     }
 
     @SuppressWarnings("unchecked")
@@ -389,7 +389,7 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         jTextArea1 = new javax.swing.JTextArea();
         boardPanel = new javax.swing.JPanel() {
             private java.awt.Image bg = new javax.swing.ImageIcon(
-                getClass().getResource("ocean2.jpg")
+                getClass().getResource("ocean3.jpg")
             ).getImage();
             @Override
             protected void paintComponent(java.awt.Graphics g) {
@@ -415,7 +415,7 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
 
         jLabel2.setText("Joueur 2");
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(null));
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel3.setMaximumSize(new java.awt.Dimension(50, 50));
         jPanel3.setMinimumSize(new java.awt.Dimension(50, 50));
 
@@ -435,7 +435,7 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
             .addComponent(lblDie1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(null));
+        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel4.setMaximumSize(new java.awt.Dimension(50, 50));
         jPanel4.setMinimumSize(new java.awt.Dimension(50, 50));
 

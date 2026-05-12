@@ -287,7 +287,7 @@
     </Container>
     <Container class="javax.swing.JPanel" name="boardPanel">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JPanel() {&#xa;    private java.awt.Image bg = new javax.swing.ImageIcon(&#xa;        getClass().getResource(&quot;ocean2.jpg&quot;)&#xa;    ).getImage();&#xa;    @Override&#xa;    protected void paintComponent(java.awt.Graphics g) {&#xa;        super.paintComponent(g);&#xa;        g.drawImage(bg, 0, 0, getWidth(), getHeight(), this);&#xa;    }&#xa;}"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JPanel() {&#xa;    private java.awt.Image bg = new javax.swing.ImageIcon(&#xa;        getClass().getResource(&quot;ocean3.jpg&quot;)&#xa;    ).getImage();&#xa;    @Override&#xa;    protected void paintComponent(java.awt.Graphics g) {&#xa;        super.paintComponent(g);&#xa;        g.drawImage(bg, 0, 0, getWidth(), getHeight(), this);&#xa;    }&#xa;}"/>
       </AuxValues>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
