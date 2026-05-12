@@ -272,10 +272,21 @@ public class frame3 extends javax.swing.JFrame {
 
         int x = bounds.x + (bounds.width - pawnSizeX) / 2;
         int y = bounds.y + (bounds.height - pawnSizeY) / 2;
+        
+        int row = (squareNumber - 1) / 5; 
+        
+
 
         Point globalPoint = SwingUtilities.convertPoint(boardPanel, x, y, this.getLayeredPane());
         
         if(playerLabel == player1PawnLabel){
+            
+            if (row % 2 != 0) {
+                setLabelIcon(playerLabel, "pirateshipleft.png");
+            } else {
+                setLabelIcon(playerLabel, "pirateship.png");
+            }
+            
             playerLabel.setBounds(
                 globalPoint.x,
                 globalPoint.y,
@@ -285,6 +296,13 @@ public class frame3 extends javax.swing.JFrame {
         }
         
         else {
+            
+            if (row % 2 != 0) {
+                setLabelIcon(playerLabel, "pirateship2left.png");
+            } else {
+                setLabelIcon(playerLabel, "pirateship2.png");
+            }
+            
             playerLabel.setBounds(
                 globalPoint.x - 20,
                 globalPoint.y + 20,
