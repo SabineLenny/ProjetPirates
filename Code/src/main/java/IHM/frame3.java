@@ -30,7 +30,8 @@ public class frame3 extends javax.swing.JFrame {
     // --- PLAYER & GAME STATE VARIABLES ---
     private String player1Name;
     private String player2Name;
-    private JLabel playerPawn; 
+    private JLabel player1PawnLabel;
+    private JLabel player2PawnLabel;
     private int playerPos = 1; 
     
     // --- CUP ANIMATION VARIABLES ---
@@ -59,26 +60,26 @@ public class frame3 extends javax.swing.JFrame {
         
         setResizable(false); 
         
-        lblDie1 = new JLabel("?", SwingConstants.CENTER);
-        lblDie1.setFont(new java.awt.Font("Segoe UI", 1, 24));
+        dice1Label = new JLabel("?", SwingConstants.CENTER);
+        dice1Label.setFont(new java.awt.Font("Segoe UI", 1, 24));
         jPanel3.setLayout(new java.awt.BorderLayout());
-        jPanel3.add(lblDie1, java.awt.BorderLayout.CENTER);
+        jPanel3.add(dice1Label, java.awt.BorderLayout.CENTER);
         
-        lblDie2 = new JLabel("?", SwingConstants.CENTER);
-        lblDie2.setFont(new java.awt.Font("Segoe UI", 1, 24));
+        dice2Label = new JLabel("?", SwingConstants.CENTER);
+        dice2Label.setFont(new java.awt.Font("Segoe UI", 1, 24));
         jPanel4.setLayout(new java.awt.BorderLayout());
-        jPanel4.add(lblDie2, java.awt.BorderLayout.CENTER);
+        jPanel4.add(dice2Label, java.awt.BorderLayout.CENTER);
         
         
-        lblDie1.setPreferredSize(new Dimension(50, 50));
-        lblDie1.setMinimumSize(new Dimension(50, 50));
-        lblDie2.setPreferredSize(new Dimension(50, 50));
-        lblDie2.setMinimumSize(new Dimension(50, 50));
+        dice1Label.setPreferredSize(new Dimension(50, 50));
+        dice1Label.setMinimumSize(new Dimension(50, 50));
+        dice2Label.setPreferredSize(new Dimension(50, 50));
+        dice2Label.setMinimumSize(new Dimension(50, 50));
         
 
         // Elouan
-        jLabel1.setText(player1Name);
-        jLabel2.setText(player2Name);
+        player1NameLabel.setText(player1Name);
+        player2NameLabel.setText(player2Name);
         //
         createBoard();
 
@@ -93,15 +94,26 @@ public class frame3 extends javax.swing.JFrame {
         setSquareImage(13, "heal.png");
         setSquareImage(15, "poison.png");
 
-        playerPawn = new JLabel(); // removed JLabel declaration here
-        playerPawn.setBounds(50, 50, pawnSizeX, pawnSizeY);
+        player1PawnLabel = new JLabel(); // removed JLabel declaration here
+        player1PawnLabel.setBounds(50, 50, pawnSizeX, pawnSizeY);
 
-        this.getLayeredPane().add(playerPawn, JLayeredPane.POPUP_LAYER);
-        setLabelIcon(playerPawn, "pirateship.png", pawnSizeX, pawnSizeY);
+        this.getLayeredPane().add(player1PawnLabel, JLayeredPane.POPUP_LAYER);
+        setLabelIcon(player1PawnLabel, "pirateship.png", pawnSizeX, pawnSizeY);
         
         SwingUtilities.invokeLater(() -> {
-            moveEntityToSquare(playerPawn, playerPos);
+            movePlayerToSquare(player1PawnLabel, playerPos);
         });
+        
+        player2PawnLabel = new JLabel(); // removed JLabel declaration here
+        player2PawnLabel.setBounds(75, 75, pawnSizeX, pawnSizeY);
+
+        this.getLayeredPane().add(player2PawnLabel, JLayeredPane.POPUP_LAYER);
+        setLabelIcon(player2PawnLabel, "pirateship2.png", pawnSizeX, pawnSizeY);
+        
+        SwingUtilities.invokeLater(() -> {
+            movePlayerToSquare(player2PawnLabel, playerPos);
+        });
+        
         initCup();
     }
 
@@ -219,14 +231,14 @@ public class frame3 extends javax.swing.JFrame {
     }
 
     public int lancerLesDes() {
-        int die1 = (int)(Math.random() * 6) + 1;
-        int die2 = (int)(Math.random() * 6) + 1;
-        int total = die1 + die2;
+        int dice1 = (int)(Math.random() * 6) + 1;
+        int dice2 = (int)(Math.random() * 6) + 1;
+        int total = dice1 + dice2;
 
-        lblDie1.setText(String.valueOf(die1));
-        lblDie2.setText(String.valueOf(die2));
+        dice1Label.setText(String.valueOf(dice1));
+        dice2Label.setText(String.valueOf(dice2));
 
-        jTextArea1.append("\n" + player1Name + " a lancé un " + die1 + " et un " + die2 + " (Total: " + total + ")");
+        jTextArea1.append("\n" + player1Name + " a lancé un " + dice1 + " et un " + dice2 + " (Total: " + total + ")");
 
         return total;
     }
@@ -248,13 +260,13 @@ public class frame3 extends javax.swing.JFrame {
             }
 
             playerPos++;
-            moveEntityToSquare(playerPawn, playerPos);
+            movePlayerToSquare(player1PawnLabel, playerPos);
         });
 
         timer.start();
     }
 
-    public void moveEntityToSquare(JLabel entityLabel, int squareNumber){
+    public void movePlayerToSquare(JLabel playerLabel, int squareNumber){
         JLabel square = squares[getIndexFromSquareNumber(squareNumber)];
         Rectangle bounds = square.getBounds();
 
@@ -262,15 +274,29 @@ public class frame3 extends javax.swing.JFrame {
         int y = bounds.y + (bounds.height - pawnSizeY) / 2;
 
         Point globalPoint = SwingUtilities.convertPoint(boardPanel, x, y, this.getLayeredPane());
-
-        entityLabel.setBounds(
+        
+        if(playerLabel == player1PawnLabel){
+            playerLabel.setBounds(
                 globalPoint.x,
                 globalPoint.y,
                 pawnSizeX,
                 pawnSizeY
-        );
+            );
+        }
+        
+        else {
+            playerLabel.setBounds(
+                globalPoint.x - 20,
+                globalPoint.y + 20,
+                pawnSizeX,
+                pawnSizeY
+            );
+            
+        }
+        
 
-        this.getLayeredPane().moveToFront(entityLabel);
+
+        this.getLayeredPane().moveToFront(playerLabel);
         this.repaint();
     }
 
@@ -377,14 +403,14 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         playerPanel = new javax.swing.JLayeredPane();
         topLayeredPanel = new javax.swing.JLayeredPane();
         topPanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jProgressBar1 = new javax.swing.JProgressBar();
-        jProgressBar2 = new javax.swing.JProgressBar();
+        player1NameLabel = new javax.swing.JLabel();
+        player2NameLabel = new javax.swing.JLabel();
+        player1Bar = new javax.swing.JProgressBar();
+        player2Bar = new javax.swing.JProgressBar();
         jPanel3 = new javax.swing.JPanel();
-        lblDie1 = new javax.swing.JLabel();
+        dice1Label = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        lblDie2 = new javax.swing.JLabel();
+        dice2Label = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         boardPanel = new javax.swing.JPanel() {
@@ -411,38 +437,38 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
             .addGap(0, 527, Short.MAX_VALUE)
         );
 
-        jLabel1.setText("Joueur 1");
+        player1NameLabel.setText("Joueur 1");
 
-        jLabel2.setText("Joueur 2");
+        player2NameLabel.setText("Joueur 2");
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel3.setMaximumSize(new java.awt.Dimension(50, 50));
         jPanel3.setMinimumSize(new java.awt.Dimension(50, 50));
 
-        lblDie1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblDie1.setMaximumSize(new java.awt.Dimension(50, 50));
-        lblDie1.setMinimumSize(new java.awt.Dimension(50, 50));
-        lblDie1.setPreferredSize(new java.awt.Dimension(50, 50));
+        dice1Label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dice1Label.setMaximumSize(new java.awt.Dimension(50, 50));
+        dice1Label.setMinimumSize(new java.awt.Dimension(50, 50));
+        dice1Label.setPreferredSize(new java.awt.Dimension(50, 50));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblDie1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(dice1Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblDie1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(dice1Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel4.setMaximumSize(new java.awt.Dimension(50, 50));
         jPanel4.setMinimumSize(new java.awt.Dimension(50, 50));
 
-        lblDie2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblDie2.setMaximumSize(new java.awt.Dimension(50, 50));
-        lblDie2.setMinimumSize(new java.awt.Dimension(50, 50));
-        lblDie2.setPreferredSize(new java.awt.Dimension(50, 50));
+        dice2Label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dice2Label.setMaximumSize(new java.awt.Dimension(50, 50));
+        dice2Label.setMinimumSize(new java.awt.Dimension(50, 50));
+        dice2Label.setPreferredSize(new java.awt.Dimension(50, 50));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -450,13 +476,13 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 50, Short.MAX_VALUE)
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(lblDie2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 48, Short.MAX_VALUE))
+                .addComponent(dice2Label, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 48, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 50, Short.MAX_VALUE)
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(lblDie2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, Short.MAX_VALUE))
+                .addComponent(dice2Label, javax.swing.GroupLayout.PREFERRED_SIZE, 47, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
@@ -466,16 +492,16 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
             .addGroup(topPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(player1NameLabel)
+                    .addComponent(player1Bar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(140, 140, 140)
                 .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jProgressBar2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(player2NameLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(player2Bar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22))
         );
         topPanelLayout.setVerticalGroup(
@@ -485,12 +511,12 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
                     .addGroup(topPanelLayout.createSequentialGroup()
                         .addGap(15, 15, 15)
                         .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
+                            .addComponent(player1NameLabel)
+                            .addComponent(player2NameLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(player1Bar, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(player2Bar, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(topPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -549,7 +575,7 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
                 .addContainerGap()
                 .addComponent(topLayeredPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(playerPanel)
+                .addComponent(playerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -566,16 +592,16 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel boardPanel;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel dice1Label;
+    private javax.swing.JLabel dice2Label;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JProgressBar jProgressBar1;
-    private javax.swing.JProgressBar jProgressBar2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JLabel lblDie1;
-    private javax.swing.JLabel lblDie2;
+    private javax.swing.JProgressBar player1Bar;
+    private javax.swing.JLabel player1NameLabel;
+    private javax.swing.JProgressBar player2Bar;
+    private javax.swing.JLabel player2NameLabel;
     private javax.swing.JLayeredPane playerPanel;
     private javax.swing.JLayeredPane topLayeredPanel;
     private javax.swing.JPanel topPanel;

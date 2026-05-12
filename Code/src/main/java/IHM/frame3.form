@@ -49,7 +49,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="topLayeredPanel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="playerPanel" max="32767" attributes="0"/>
+              <Component id="playerPanel" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -111,8 +111,8 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jProgressBar1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="player1NameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="player1Bar" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
@@ -121,8 +121,8 @@
                       </Group>
                       <EmptySpace min="-2" pref="140" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel2" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="jProgressBar2" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="player2NameLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="player2Bar" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                   </Group>
@@ -135,13 +135,13 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="player1NameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="player2NameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jProgressBar1" alignment="0" min="-2" pref="12" max="-2" attributes="0"/>
-                                  <Component id="jProgressBar2" alignment="0" min="-2" pref="12" max="-2" attributes="0"/>
+                                  <Component id="player1Bar" alignment="0" min="-2" pref="12" max="-2" attributes="0"/>
+                                  <Component id="player2Bar" alignment="0" min="-2" pref="12" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -157,19 +157,19 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel1">
+            <Component class="javax.swing.JLabel" name="player1NameLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Joueur 1"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel2">
+            <Component class="javax.swing.JLabel" name="player2NameLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Joueur 2"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JProgressBar" name="jProgressBar1">
+            <Component class="javax.swing.JProgressBar" name="player1Bar">
             </Component>
-            <Component class="javax.swing.JProgressBar" name="jProgressBar2">
+            <Component class="javax.swing.JProgressBar" name="player2Bar">
             </Component>
             <Container class="javax.swing.JPanel" name="jPanel3">
               <Properties>
@@ -189,17 +189,17 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lblDie1" alignment="0" max="32767" attributes="0"/>
+                      <Component id="dice1Label" alignment="0" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lblDie1" alignment="0" max="32767" attributes="0"/>
+                      <Component id="dice1Label" alignment="0" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JLabel" name="lblDie1">
+                <Component class="javax.swing.JLabel" name="dice1Label">
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -235,7 +235,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <EmptySpace min="0" pref="50" max="32767" attributes="0"/>
                       <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                          <Component id="lblDie2" alignment="1" pref="48" max="32767" attributes="0"/>
+                          <Component id="dice2Label" alignment="1" pref="48" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -243,13 +243,13 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <EmptySpace min="0" pref="50" max="32767" attributes="0"/>
                       <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                          <Component id="lblDie2" alignment="0" pref="47" max="32767" attributes="0"/>
+                          <Component id="dice2Label" alignment="0" pref="47" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JLabel" name="lblDie2">
+                <Component class="javax.swing.JLabel" name="dice2Label">
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
