@@ -1,6 +1,7 @@
 package Boundaries;
 
 import Controleurs.ControlDéplacer;
+import Controleurs.ControlFinJeu;
 import Controleurs.ControlJeuPirate;
 import Controleurs.ControlPlateau;
 import java.util.Scanner;
@@ -13,13 +14,23 @@ public class BoundariesJeuTextuel {
         ControlJeuPirate cjp = new ControlJeuPirate();
         boolean run = true;
         cjp.instancierJeu();
+        String deplacement;
+        String effetCase;
         
         while (run) {
             ControlDéplacer.deplacer(cjp.getMapPirate().get(cjp.getIndicePirate()));
             System.out.println(cjp.getMapPirate().get(cjp.getIndicePirate()).getPosition());
             ControlPlateau.activerCase(cjp.getPlateau(),cjp.getMapPirate().get(cjp.getIndicePirate()),cjp.getMapPirate().get((cjp.getIndicePirate()+1)%2));
+            deplacement = ControlDéplacer.deplacer(cjp.getMapPirate().get(cjp.getIndicePirate()));
+            System.out.println(deplacement);
+            effetCase = ControlPlateau.activerCase(cjp.getPlateau(),cjp.getMapPirate().get(cjp.getIndicePirate()),cjp.getMapPirate().get((cjp.getIndicePirate()+1)%2));
+            System.out.println(effetCase);
             cjp.incrementIndicePirate();
             s.next();
+            run = ControlFinJeu.finJeu(cjp.getMapPirate().get(cjp.getIndicePirate()));
+            if (run == false) {
+                System.out.println("Victoire de " + cjp.getMapPirate().get(cjp.getIndicePirate()).getNom());
+            }
         }
     }
 }

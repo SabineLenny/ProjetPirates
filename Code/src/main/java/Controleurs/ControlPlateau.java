@@ -57,9 +57,9 @@ public class ControlPlateau {
         }
     }
     
-    public static void activerCase (Plateau plateau, Pirate p1, Pirate p2) {
+    public static String activerCase (Plateau plateau, Pirate p1, Pirate p2) {
         TypeCase tc = plateau.getPlateau().get(p1.getPosition());
         System.out.println(tc);
-        ControlCase.selectCase(tc, p1, p2);
+        return ControlCase.selectCase(tc, p1, p2);
     }
 }
