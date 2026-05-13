@@ -1,6 +1,6 @@
 package Boundaries;
 
-import Controleurs.ControlDéplacer;
+import Controleurs.ControlDeplacer;
 import Controleurs.ControlFinJeu;
 import Controleurs.ControlJeuPirate;
 import Controleurs.ControlPlateau;
@@ -20,7 +20,7 @@ public class BoundariesJeuTextuel {
         ControlVerifierVie controlVie = new ControlVerifierVie();
         ControlVerifierPoison controlPoison = new ControlVerifierPoison();
         ControlPlateau controlPlateau = new ControlPlateau();
-        ControlDéplacer controlDeplacer = new ControlDéplacer();
+        ControlDeplacer controlDeplacer = new ControlDeplacer();
         ControlFinJeu controlFin = new ControlFinJeu();
         
         cjp.instancierJeu();
@@ -29,7 +29,7 @@ public class BoundariesJeuTextuel {
                 
         while (run && piratesEnVie) {
             
-            String poison = controlPoison.vérificationPoison(cjp.getMapPirate().get(cjp.getIndicePirate()));
+            String poison = controlPoison.verificationPoison(cjp.getMapPirate().get(cjp.getIndicePirate()));
             System.out.println(poison);
             
             deplacement = controlDeplacer.deplacer(cjp.getMapPirate().get(cjp.getIndicePirate()));

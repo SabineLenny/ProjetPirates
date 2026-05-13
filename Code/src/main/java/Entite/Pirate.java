@@ -5,13 +5,13 @@ public class Pirate {
 	//Elouan
 	private int vie;
 	private int position;
-	private int duréeEmpoisonnement;
+	private int dureeEmpoisonnement;
         private String nom;
 	
 	public Pirate(String nom) {
 		vie=5;
 		position=1;
-		duréeEmpoisonnement=0;
+		dureeEmpoisonnement=0;
                 this.nom=nom;
 	}
 	
@@ -21,11 +21,11 @@ public class Pirate {
 	public void setPosition(int position) {
 		this.position = position;
 	}
-	public int getDuréeEmpoisonnement() {
-		return duréeEmpoisonnement;
+	public int getDureeEmpoisonnement() {
+		return dureeEmpoisonnement;
 	}
-	public void setDuréeEmpoisonnement(int duréeEmpoisonnement) {
-		this.duréeEmpoisonnement = duréeEmpoisonnement;
+	public void setDureeEmpoisonnement(int dureeEmpoisonnement) {
+		this.dureeEmpoisonnement = dureeEmpoisonnement;
 	}
 	public int getVie() {
 		return vie;
