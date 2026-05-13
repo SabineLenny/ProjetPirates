@@ -4,10 +4,10 @@ import Entite.Pirate;
 
 public class ControlCaseBombe {
     
-    private final ControlLancerDeDés controlDés = new ControlLancerDeDés();
+    private final ControlLancerDeDes controlDés = new ControlLancerDeDes();
     
     public String appliquerEffet(Pirate pirate){
-        int[] resultat = controlDés.lancerDés(1);
+        int[] resultat = controlDés.lancerDes(1);
         int degats = resultat[0]/2;
         if (degats == 0) degats = 1;
         pirate.prendreDegats(degats);
