@@ -242,7 +242,7 @@ public class frame3 extends javax.swing.JFrame {
 
         return total;
     }
-
+    //Elouan
     public void animateMovement(int moveAmount) {
         int target = playerPos + moveAmount;
 
@@ -320,7 +320,7 @@ public class frame3 extends javax.swing.JFrame {
 
    
     
-    //Elouan
+    
     private void askPlayerNames(){
         player1Name = JOptionPane.showInputDialog(this, "Nom du Joueur 1 :");
         player2Name = JOptionPane.showInputDialog(this, "Nom du Joueur 2 :");
@@ -332,7 +332,7 @@ public class frame3 extends javax.swing.JFrame {
             player2Name = "Joueur 2";
         }
     }
-
+    //
     private int getIndexFromSquareNumber(int squareNumber){
         int totalCols = 5;
         int n = squareNumber - 1;
