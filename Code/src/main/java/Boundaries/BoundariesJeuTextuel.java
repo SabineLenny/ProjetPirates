@@ -12,19 +12,22 @@ public class BoundariesJeuTextuel {
     
     public static void main (String[] args) {
         
-        Scanner s = new Scanner(System.in);
+        Scanner s = new Scanner(System.in); 
+        boolean run = true;
+        boolean piratesEnVie = true;
+        
         ControlJeuPirate cjp = new ControlJeuPirate();
         ControlVerifierVie controlVie = new ControlVerifierVie();
         ControlVerifierPoison controlPoison = new ControlVerifierPoison();
         ControlPlateau controlPlateau = new ControlPlateau();
         ControlDéplacer controlDeplacer = new ControlDéplacer();
         ControlFinJeu controlFin = new ControlFinJeu();
-        boolean run = true;
+        
         cjp.instancierJeu();
         String deplacement;
         String effetCase;
-        
-        while (run) {
+                
+        while (run && piratesEnVie) {
             
             String poison = controlPoison.vérificationPoison(cjp.getMapPirate().get(cjp.getIndicePirate()));
             System.out.println(poison);
@@ -42,8 +45,8 @@ public class BoundariesJeuTextuel {
                 System.out.println("Victoire de " + cjp.getMapPirate().get(cjp.getIndicePirate()).getNom());
             }
             
-            run = controlVie.VerifierVie(cjp.getMapPirate().get(cjp.getIndicePirate()));
-            if (run == false) {
+            piratesEnVie = controlVie.VerifierVie(cjp.getMapPirate().get(cjp.getIndicePirate()));
+            if (piratesEnVie == false) {
                 System.out.println(controlVie.VerifierVie(cjp.getMapPirate().get(cjp.getIndicePirate())));
             }
         }

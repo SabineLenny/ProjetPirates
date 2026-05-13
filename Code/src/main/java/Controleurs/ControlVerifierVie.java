@@ -14,7 +14,7 @@ public class ControlVerifierVie {
     }
     
     public boolean VerifierVie(Pirate pirate) {
-        return pirate.getVie()<=0;
+        return !(pirate.getVie()<=0);
     }
     
 }
