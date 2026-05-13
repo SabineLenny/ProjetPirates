@@ -5,6 +5,7 @@ import Controleurs.ControlFinJeu;
 import Controleurs.ControlJeuPirate;
 import Controleurs.ControlPlateau;
 import Controleurs.ControlVerifierPoison;
+import Controleurs.ControlVerifierVie;
 import java.util.Scanner;
 
 public class BoundariesJeuTextuel {
@@ -37,6 +38,11 @@ public class BoundariesJeuTextuel {
             run = ControlFinJeu.finJeu(cjp.getMapPirate().get(cjp.getIndicePirate()));
             if (run == false) {
                 System.out.println("Victoire de " + cjp.getMapPirate().get(cjp.getIndicePirate()).getNom());
+            }
+            
+            run = ControlVerifierVie.VerifierVie(cjp.getMapPirate().get(cjp.getIndicePirate()));
+            if (run == false) {
+                System.out.println(ControlVerifierVie.VerifierVie(cjp.getMapPirate().get(cjp.getIndicePirate())));
             }
         }
     }
