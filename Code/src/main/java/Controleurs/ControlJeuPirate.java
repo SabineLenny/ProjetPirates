@@ -3,7 +3,6 @@ package Controleurs;
 import Entite.Pirate;
 import Entite.Plateau;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.TreeMap;
 
 public class ControlJeuPirate{
@@ -12,7 +11,8 @@ public class ControlJeuPirate{
     private Plateau p;
     int indicePirate;
     boolean run;
-    Scanner s = new Scanner(System.in);
+    private final ControlPlateau controlPlateau = new ControlPlateau();
+    private final ControlPirate controlPirate = new ControlPirate();
     
     public Map<Integer,Pirate> getMapPirate () {
         return this.mapPirate;
@@ -36,10 +36,10 @@ public class ControlJeuPirate{
     
     public void instancierJeu () {
         mapPirate = new TreeMap<>();
-        mapPirate.put(0, ControlPirate.creationPirate("Pirate 1"));
-        mapPirate.put(1, ControlPirate.creationPirate("Pirate 2"));
-        p = ControlPlateau.creationPlateau();
-        System.out.println(ControlPlateau.affichagePlateau(p));
+        mapPirate.put(0, controlPirate.creationPirate("Pirate 1"));
+        mapPirate.put(1, controlPirate.creationPirate("Pirate 2"));
+        p = controlPlateau.creationPlateau();
+        System.out.println(controlPlateau.affichagePlateau(p));
         indicePirate = 0;
         run = true; 
     }

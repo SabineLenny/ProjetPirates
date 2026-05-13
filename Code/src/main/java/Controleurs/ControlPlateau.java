@@ -12,7 +12,9 @@ import java.util.TreeMap;
 
 public class ControlPlateau {
     
-    public static Plateau creationPlateau () {
+    private final ControlCase controlCase = new ControlCase();
+    
+    public Plateau creationPlateau () {
         Map<Integer,TypeCase> plateau = new TreeMap<>();
         for (int i = 0; i < 29; i++) {
             plateau.put(i, TypeCase.NORMAL);
@@ -22,7 +24,7 @@ public class ControlPlateau {
         return plateauAleatoire;
     }
     
-    public static String affichagePlateau (Plateau plateau) {
+    public String affichagePlateau (Plateau plateau) {
         String affichage = "Plateau \n";
         for (int i = 0; i < plateau.getPlateau().size(); i++) {
             affichage += plateau.getPlateau().get(i) + " " + (i+1) + "\n";
@@ -30,7 +32,7 @@ public class ControlPlateau {
         return affichage;
     }
     
-    public static void distributionCaseSpecial (Plateau plateau) {
+    public void distributionCaseSpecial (Plateau plateau) {
         List<Integer> dejaDistribue = new ArrayList<>();
         List<TypeCase> listeCase = new ArrayList<>();
         Random random=new Random();
@@ -57,9 +59,9 @@ public class ControlPlateau {
         }
     }
     
-    public static String activerCase (Plateau plateau, Pirate p1, Pirate p2) {
+    public String activerCase (Plateau plateau, Pirate p1, Pirate p2) {
         TypeCase tc = plateau.getPlateau().get(p1.getPosition());
         System.out.println(tc);
-        return ControlCase.selectCase(tc, p1, p2);
+        return controlCase.selectCase(tc, p1, p2);
     }
 }

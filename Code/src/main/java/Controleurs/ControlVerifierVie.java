@@ -4,7 +4,7 @@ import Entite.Pirate;
 
 public class ControlVerifierVie {
     
-    public static String affichageVie(Pirate pirate){
+    public String affichageVie(Pirate pirate){
          if(pirate.getVie()<=0){
             return pirate.getNom()+"est mort !\n";
           }
@@ -13,7 +13,7 @@ public class ControlVerifierVie {
           }
     }
     
-    public static boolean VerifierVie(Pirate pirate) {
+    public boolean VerifierVie(Pirate pirate) {
         return pirate.getVie()<=0;
     }
     

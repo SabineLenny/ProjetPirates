@@ -3,7 +3,8 @@ package Controleurs;
 import Entite.Pirate;
 
 public class ControlVerifierPoison {
-    public static String vérificationPoison(Pirate pirate){
+    
+    public String vérificationPoison(Pirate pirate){
         if(pirate.getDuréeEmpoisonnement()>0){
             pirate.prendreDegats(1);
             pirate.setDuréeEmpoisonnement(pirate.getDuréeEmpoisonnement()-1);

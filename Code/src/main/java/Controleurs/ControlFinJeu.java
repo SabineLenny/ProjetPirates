@@ -4,7 +4,7 @@ import Entite.Pirate;
 
 public class ControlFinJeu {
     
-    public static Boolean finJeu(Pirate pirate){
+    public Boolean finJeu(Pirate pirate){
         return !(pirate.getPosition()==29);
     }
 }

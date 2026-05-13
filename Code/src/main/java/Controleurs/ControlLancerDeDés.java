@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class ControlLancerDeDés {
 	//Elouan
-	public static int[] lancerDés(int nbDés) {
+	public int[] lancerDés(int nbDés) {
 		Random random=new Random();
 		int[] result=new int[nbDés];
 		for(int i=0;i<nbDés;i++) {
@@ -14,7 +14,7 @@ public class ControlLancerDeDés {
 	}
 	//
 
-        public static String affichageDés (int[] resDés) {
+        public String affichageDés (int[] resDés) {
             String resultat ="Resultat du tirage de des : ";
             int totalDés = 0;
             for (int i = 0; i < resDés.length; i++) {
@@ -24,7 +24,7 @@ public class ControlLancerDeDés {
             return resultat + "\ndistance : " + totalDés;
         }
         
-        public static int additionDés (int[] resDés) {
+        public int additionDés (int[] resDés) {
             int totalDés = 0;
             for (int i = 0; i < resDés.length; i++) {
                 totalDés += resDés[i];

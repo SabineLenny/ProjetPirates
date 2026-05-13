@@ -1,6 +1,5 @@
 package Boundaries;
 
-import Controleurs.ControlCaseArrivee;
 import Controleurs.ControlCaseBombe;
 import Controleurs.ControlCaseEchange;
 import Controleurs.ControlCasePoison;

@@ -14,6 +14,11 @@ public class BoundariesJeuTextuel {
         
         Scanner s = new Scanner(System.in);
         ControlJeuPirate cjp = new ControlJeuPirate();
+        ControlVerifierVie controlVie = new ControlVerifierVie();
+        ControlVerifierPoison controlPoison = new ControlVerifierPoison();
+        ControlPlateau controlPlateau = new ControlPlateau();
+        ControlDéplacer controlDeplacer = new ControlDéplacer();
+        ControlFinJeu controlFin = new ControlFinJeu();
         boolean run = true;
         cjp.instancierJeu();
         String deplacement;
@@ -21,28 +26,25 @@ public class BoundariesJeuTextuel {
         
         while (run) {
             
-            String poison = ControlVerifierPoison.vérificationPoison(cjp.getMapPirate().get(cjp.getIndicePirate()));
+            String poison = controlPoison.vérificationPoison(cjp.getMapPirate().get(cjp.getIndicePirate()));
             System.out.println(poison);
             
-            ControlDéplacer.deplacer(cjp.getMapPirate().get(cjp.getIndicePirate()));
-            System.out.println(cjp.getMapPirate().get(cjp.getIndicePirate()).getPosition());
-            
-            deplacement = ControlDéplacer.deplacer(cjp.getMapPirate().get(cjp.getIndicePirate()));
+            deplacement = controlDeplacer.deplacer(cjp.getMapPirate().get(cjp.getIndicePirate()));
             System.out.println(deplacement);
             
-            effetCase = ControlPlateau.activerCase(cjp.getPlateau(),cjp.getMapPirate().get(cjp.getIndicePirate()),cjp.getMapPirate().get((cjp.getIndicePirate()+1)%2));
+            effetCase = controlPlateau.activerCase(cjp.getPlateau(),cjp.getMapPirate().get(cjp.getIndicePirate()),cjp.getMapPirate().get((cjp.getIndicePirate()+1)%2));
             System.out.println(effetCase);
             
             cjp.incrementIndicePirate();
             s.next();
-            run = ControlFinJeu.finJeu(cjp.getMapPirate().get(cjp.getIndicePirate()));
+            run = controlFin.finJeu(cjp.getMapPirate().get(cjp.getIndicePirate()));
             if (run == false) {
                 System.out.println("Victoire de " + cjp.getMapPirate().get(cjp.getIndicePirate()).getNom());
             }
             
-            run = ControlVerifierVie.VerifierVie(cjp.getMapPirate().get(cjp.getIndicePirate()));
+            run = controlVie.VerifierVie(cjp.getMapPirate().get(cjp.getIndicePirate()));
             if (run == false) {
-                System.out.println(ControlVerifierVie.VerifierVie(cjp.getMapPirate().get(cjp.getIndicePirate())));
+                System.out.println(controlVie.VerifierVie(cjp.getMapPirate().get(cjp.getIndicePirate())));
             }
         }
     }
