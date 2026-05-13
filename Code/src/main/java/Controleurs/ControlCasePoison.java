@@ -6,10 +6,10 @@ public class ControlCasePoison {
     
     private final ControlLancerDeDes controlDés = new ControlLancerDeDes();
     
-    public String appliquerEffet(Pirate pirate){
+    public String appliquerEffet(Pirate pirate1, Pirate pirate2){
         int[] resultat = controlDés.lancerDes(1);
-        pirate.setDureeEmpoisonnement(resultat[0]);
-        pirate.soigner();
-        return pirate.getNom() + " est empoisonne pendant " + resultat[0] + " tours.";
+        pirate1.setDureeEmpoisonnement(resultat[0]);
+        pirate1.soigner();
+        return pirate1.getNom() + " est empoisonne pendant " + resultat[0] + " tours.";
     }
 }

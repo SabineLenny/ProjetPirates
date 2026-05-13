@@ -2,7 +2,7 @@ package Controleurs;
 
 import Entite.Pirate;
 
-public class ControlCaseEchange {
+public class ControlCaseEchange implements ControlCaseSpecial{
     
     public String appliquerEffet(Pirate pirate1, Pirate pirate2){
         int temp = pirate1.getPosition();

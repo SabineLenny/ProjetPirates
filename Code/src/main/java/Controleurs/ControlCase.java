@@ -18,13 +18,13 @@ public class ControlCase {
             return pirate.getNom() + " a atteint une case sans effet";
         }
         case BOMBE: {
-            return controlBombe.appliquerEffet(pirate);
+            return controlBombe.appliquerEffet(pirate,null);
         }
         case EMPOISONNEMENT:{
-            return controlPoison.appliquerEffet(pirate);
+            return controlPoison.appliquerEffet(pirate,null);
         }
         case SOIN:{
-            return controlSoin.appliquerEffet(pirate);
+            return controlSoin.appliquerEffet(pirate,null);
         }
         case ECHANGE:{
             return controlEchange.appliquerEffet(pirate, autrePirate);

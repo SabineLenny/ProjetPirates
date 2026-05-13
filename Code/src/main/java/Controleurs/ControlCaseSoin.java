@@ -2,11 +2,11 @@ package Controleurs;
 
 import Entite.Pirate;
 
-public class ControlCaseSoin {
+public class ControlCaseSoin implements ControlCaseSpecial {
     
-    public String appliquerEffet(Pirate pirate){
-        pirate.setDureeEmpoisonnement(0);
-        pirate.soigner();
-        return pirate.getNom() + " est soigne de 1 pv!";
+    public String appliquerEffet(Pirate pirate1, Pirate pirate2){
+        pirate1.setDureeEmpoisonnement(0);
+        pirate1.soigner();
+        return pirate1.getNom() + " est soigne de 1 pv!";
     }
 }

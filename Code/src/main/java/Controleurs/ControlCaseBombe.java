@@ -2,15 +2,15 @@ package Controleurs;
 
 import Entite.Pirate;
 
-public class ControlCaseBombe {
+public class ControlCaseBombe implements ControlCaseSpecial {
     
     private final ControlLancerDeDes controlDés = new ControlLancerDeDes();
     
-    public String appliquerEffet(Pirate pirate){
+    public String appliquerEffet(Pirate pirate1, Pirate pirate2){
         int[] resultat = controlDés.lancerDes(1);
         int degats = resultat[0]/2;
         if (degats == 0) degats = 1;
-        pirate.prendreDegats(degats);
-        return pirate.getNom() + " est tombe sur une BOMBAAAA ! Il a pris " + Integer.toString(degats) + "!\n";
+        pirate1.prendreDegats(degats);
+        return pirate1.getNom() + " est tombe sur une BOMBAAAA ! Il a pris " + Integer.toString(degats) + "!\n";
     }
 }
