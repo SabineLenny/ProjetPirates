@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 
 public class ControlPlateau {
@@ -16,20 +17,17 @@ public class ControlPlateau {
     
     public Plateau creationPlateau () {
         Map<Integer,TypeCase> plateau = new TreeMap<>();
-        for (int i = 0; i < 29; i++) {
-            plateau.put(i, TypeCase.NORMAL);
-        }
+        Stream.iterate(1, i -> i+1).limit(29).forEach(i -> plateau.put(i,TypeCase.NORMAL));
         Plateau plateauAleatoire = new Plateau(plateau);
         distributionCaseSpecial(plateauAleatoire);
         return plateauAleatoire;
     }
     
     public String affichagePlateau (Plateau plateau) {
-        String affichage = "Plateau \n";
-        for (int i = 0; i < plateau.getPlateau().size(); i++) {
-            affichage += plateau.getPlateau().get(i) + " " + (i+1) + "\n";
-        }
-        return affichage;
+        StringBuilder affichage = new StringBuilder("Plateau \n");
+        Stream.iterate(1, i -> i+1).limit(plateau.getPlateau().size()-1)
+                .forEach(i -> affichage.append(plateau.getPlateau().get(i)).append(" ").append(i).append("\n"));
+        return affichage.toString();
     }
     
     public void distributionCaseSpecial (Plateau plateau) {
@@ -60,8 +58,6 @@ public class ControlPlateau {
     }
     
     public String activerCase (Plateau plateau, Pirate p1, Pirate p2) {
-        TypeCase tc = plateau.getPlateau().get(p1.getPosition());
-        System.out.println(tc);
-        return controlCase.selectCase(tc, p1, p2);
+        return controlCase.selectCase(plateau.getPlateau().get(p1.getPosition()), p1, p2);
     }
 }
