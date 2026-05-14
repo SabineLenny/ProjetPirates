@@ -16,38 +16,38 @@ public class BoundariesJeuTextuel {
         boolean run = true;
         boolean piratesEnVie = true;
         
-        ControlJeuPirate cjp = new ControlJeuPirate();
-        ControlVerifierVie controlVie = new ControlVerifierVie();
-        ControlVerifierPoison controlPoison = new ControlVerifierPoison();
-        ControlPlateau controlPlateau = new ControlPlateau();
-        ControlDeplacer controlDeplacer = new ControlDeplacer();
-        ControlFinJeu controlFin = new ControlFinJeu();
+        final ControlJeuPirate CONTROL_JEU_PIRATE = new ControlJeuPirate();
+        final ControlVerifierVie CONTROL_VIE = new ControlVerifierVie();
+        final ControlVerifierPoison CONTROL_POISON = new ControlVerifierPoison();
+        final ControlPlateau CONTROL_PLATEAU = new ControlPlateau();
+        final ControlDeplacer CONTROL_DEPLACER = new ControlDeplacer();
+        final ControlFinJeu CONTROL_FIN = new ControlFinJeu();
         
-        cjp.instancierJeu();
+        CONTROL_JEU_PIRATE.instancierJeu();
         String deplacement;
         String effetCase;
                 
         while (run && piratesEnVie) {
             
-            String poison = controlPoison.verificationPoison(cjp.getMapPirate().get(cjp.getIndicePirate()));
+            String poison = CONTROL_POISON.verificationPoison(CONTROL_JEU_PIRATE.getMapPirate().get(CONTROL_JEU_PIRATE.getIndicePirate()));
             System.out.println(poison);
             
-            deplacement = controlDeplacer.deplacer(cjp.getMapPirate().get(cjp.getIndicePirate()));
+            deplacement = CONTROL_DEPLACER.deplacer(CONTROL_JEU_PIRATE.getMapPirate().get(CONTROL_JEU_PIRATE.getIndicePirate()));
             System.out.println(deplacement);
             
-            effetCase = controlPlateau.activerCase(cjp.getPlateau(),cjp.getMapPirate().get(cjp.getIndicePirate()),cjp.getMapPirate().get((cjp.getIndicePirate()+1)%2));
+            effetCase = CONTROL_PLATEAU.activerCase(CONTROL_JEU_PIRATE.getPlateau(),CONTROL_JEU_PIRATE.getMapPirate().get(CONTROL_JEU_PIRATE.getIndicePirate()),CONTROL_JEU_PIRATE.getMapPirate().get((CONTROL_JEU_PIRATE.getIndicePirate()+1)%2));
             System.out.println(effetCase);
             
-            cjp.incrementIndicePirate();
+            CONTROL_JEU_PIRATE.incrementIndicePirate();
             s.next();
-            run = controlFin.finJeu(cjp.getMapPirate().get(cjp.getIndicePirate()));
+            run = CONTROL_FIN.finJeu(CONTROL_JEU_PIRATE.getMapPirate().get(CONTROL_JEU_PIRATE.getIndicePirate()));
             if (run == false) {
-                System.out.println("Victoire de " + cjp.getMapPirate().get(cjp.getIndicePirate()).getNom());
+                System.out.println("Victoire de " + CONTROL_JEU_PIRATE.getMapPirate().get(CONTROL_JEU_PIRATE.getIndicePirate()).getNom());
             }
             
-            piratesEnVie = controlVie.VerifierVie(cjp.getMapPirate().get(cjp.getIndicePirate()));
+            piratesEnVie = CONTROL_VIE.VerifierVie(CONTROL_JEU_PIRATE.getMapPirate().get(CONTROL_JEU_PIRATE.getIndicePirate()));
             if (piratesEnVie == false) {
-                System.out.println(controlVie.VerifierVie(cjp.getMapPirate().get(cjp.getIndicePirate())));
+                System.out.println(CONTROL_VIE.VerifierVie(CONTROL_JEU_PIRATE.getMapPirate().get(CONTROL_JEU_PIRATE.getIndicePirate())));
             }
         }
     }

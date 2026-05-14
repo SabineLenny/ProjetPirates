@@ -4,11 +4,11 @@ import Entite.Pirate;
 
 public class ControlDeplacer {
     
-    private final ControlLancerDeDes controlDes = new ControlLancerDeDes();
+    private final ControlLancerDeDes CONTROL_DES = new ControlLancerDeDes();
     //Elouan
     public String deplacer(Pirate pirate) {
-        int[] dés = controlDes.lancerDes(2);
-        int distance = controlDes.additionDes(dés);
+        int[] dés = CONTROL_DES.lancerDes(2);
+        int distance = CONTROL_DES.additionDes(dés);
         int position= pirate.getPosition()+distance;
         if (position>30) {
                 position=30 - (position-30);

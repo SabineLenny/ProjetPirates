@@ -11,8 +11,8 @@ public class ControlJeuPirate{
     private Plateau p;
     int indicePirate;
     boolean run;
-    private final ControlPlateau controlPlateau = new ControlPlateau();
-    private final ControlPirate controlPirate = new ControlPirate();
+    private final ControlPlateau CONTROL_PLATEAU = new ControlPlateau();
+    private final ControlPirate CONTROL_PIRATE = new ControlPirate();
     
     public Map<Integer,Pirate> getMapPirate () {
         return this.mapPirate;
@@ -36,10 +36,10 @@ public class ControlJeuPirate{
     
     public void instancierJeu () {
         mapPirate = new TreeMap<>();
-        mapPirate.put(0, controlPirate.creationPirate("Pirate 1"));
-        mapPirate.put(1, controlPirate.creationPirate("Pirate 2"));
-        p = controlPlateau.creationPlateau();
-        System.out.println(controlPlateau.affichagePlateau(p));
+        mapPirate.put(0, CONTROL_PIRATE.creationPirate("Pirate 1"));
+        mapPirate.put(1, CONTROL_PIRATE.creationPirate("Pirate 2"));
+        p = CONTROL_PLATEAU.creationPlateau();
+        System.out.println(CONTROL_PLATEAU.affichagePlateau(p));
         indicePirate = 0;
         run = true; 
     }

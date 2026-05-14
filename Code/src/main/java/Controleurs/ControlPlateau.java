@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 public class ControlPlateau {
     
-    private final ControlCase controlCase = new ControlCase();
+    private final ControlCase CONTROL_CASE = new ControlCase();
     
     public Plateau creationPlateau () {
         Map<Integer,TypeCase> plateau = new TreeMap<>();
@@ -58,6 +58,6 @@ public class ControlPlateau {
     }
     
     public String activerCase (Plateau plateau, Pirate p1, Pirate p2) {
-        return controlCase.selectCase(plateau.getPlateau().get(p1.getPosition()), p1, p2);
+        return CONTROL_CASE.selectCase(plateau.getPlateau().get(p1.getPosition()), p1, p2);
     }
 }
