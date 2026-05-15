@@ -45,9 +45,9 @@ public class BoundariesJeuTextuel {
                 System.out.println("Victoire de " + CONTROL_JEU_PIRATE.getMapPirate().get(CONTROL_JEU_PIRATE.getIndicePirate()).getNom());
             }
             
-            piratesEnVie = CONTROL_VIE.VerifierVie(CONTROL_JEU_PIRATE.getMapPirate().get(CONTROL_JEU_PIRATE.getIndicePirate()));
+            piratesEnVie = CONTROL_VIE.verifierVie(CONTROL_JEU_PIRATE.getMapPirate().get(CONTROL_JEU_PIRATE.getIndicePirate()));
             if (piratesEnVie == false) {
-                System.out.println(CONTROL_VIE.VerifierVie(CONTROL_JEU_PIRATE.getMapPirate().get(CONTROL_JEU_PIRATE.getIndicePirate())));
+                System.out.println(CONTROL_VIE.verifierVie(CONTROL_JEU_PIRATE.getMapPirate().get(CONTROL_JEU_PIRATE.getIndicePirate())));
             }
         }
     }

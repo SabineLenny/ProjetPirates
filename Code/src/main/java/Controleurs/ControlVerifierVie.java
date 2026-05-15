@@ -13,8 +13,8 @@ public class ControlVerifierVie {
           }
     }
     
-    public boolean VerifierVie(Pirate pirate) {
-        return !(pirate.getVie()<=0);
+    public boolean verifierVie(Pirate pirate) {
+        return pirate.getVie()>0;
     }
     
 }
