@@ -10,18 +10,20 @@ import java.util.Scanner;
 
 public class BoundariesJeuTextuel {
     
+    static final ControlJeuPirate CONTROL_JEU_PIRATE = new ControlJeuPirate();
+    static final ControlVerifierVie CONTROL_VIE = new ControlVerifierVie();
+    static final ControlVerifierPoison CONTROL_POISON = new ControlVerifierPoison();
+    static final ControlPlateau CONTROL_PLATEAU = new ControlPlateau();
+    static final ControlDeplacer CONTROL_DEPLACER = new ControlDeplacer();
+    static final ControlFinJeu CONTROL_FIN = new ControlFinJeu();
+    
     public static void main (String[] args) {
         
         Scanner s = new Scanner(System.in); 
         boolean run = true;
         boolean piratesEnVie = true;
         
-        final ControlJeuPirate CONTROL_JEU_PIRATE = new ControlJeuPirate();
-        final ControlVerifierVie CONTROL_VIE = new ControlVerifierVie();
-        final ControlVerifierPoison CONTROL_POISON = new ControlVerifierPoison();
-        final ControlPlateau CONTROL_PLATEAU = new ControlPlateau();
-        final ControlDeplacer CONTROL_DEPLACER = new ControlDeplacer();
-        final ControlFinJeu CONTROL_FIN = new ControlFinJeu();
+        
         
         CONTROL_JEU_PIRATE.instancierJeu();
         String deplacement;
