@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -33,33 +35,24 @@ public class GameFrame extends javax.swing.JFrame {
 
     private PlayerPawn pawnPlayer1;
     private PlayerPawn pawnPlayer2;
-    private int playerPos = 1; 
+    private boolean isPlayer1Turn = true;
+    
+    // TODO : removed / replaced
+    private int player1Pos = 1;
+    private int player2Pos = 1;
     
     // --- DICE ---
-    private DiceManager diceManager;
+    private final DiceManager diceManager;
     
     // --- CUP ---
     private final DiceCup cup;
-    private int cupStartingX = 400;
-    private int cupStartingY = 0;  
+    private final int cupStartingX = 400;
+    private final int cupStartingY = 0;  
     
     // --- PAWN ---
-    private int pawnSizeX = 80;
-    private int pawnSizeY = 50;
+    private final int pawnSizeX = 80;
+    private final int pawnSizeY = 50;
     
-
-
-    public JPanel getTopPanel(){
-        return topPanel;
-    }
-    
-    public JPanel getDice1Panel(){
-        return dice1Panel;
-    }
-    
-    public JPanel getDice2Panel(){
-        return dice2Panel;
-    }
     
     public GameFrame() {
 
@@ -75,6 +68,7 @@ public class GameFrame extends javax.swing.JFrame {
         player1NameLabel.setText(player1Name);
         player2NameLabel.setText(player2Name);
         //
+        
         createBoard();
         
         setSquareSpecialType(8, BoardSquare.SquareType.BOMB);
@@ -87,13 +81,26 @@ public class GameFrame extends javax.swing.JFrame {
         pawnPlayer2 = new PlayerPawn(this, "pirateship2.png", "pirateship2left.png", 75, 75);
         
         SwingUtilities.invokeLater(() -> {
-            movePlayerToSquare(pawnPlayer1, playerPos);
-            movePlayerToSquare(pawnPlayer2, playerPos);
+            movePlayerToSquare(pawnPlayer1, player1Pos);
+            movePlayerToSquare(pawnPlayer2, player2Pos);
         });
         
 
         cup = new DiceCup(this, cupStartingX, cupStartingY);
         this.getLayeredPane().add(cup, JLayeredPane.DRAG_LAYER);
+    }
+    
+    private void createBoard() {
+        for(int i = 0; i < 30; i++) {
+            int displayNum = getIndexFromSquareNumber(i + 1) + 1;
+            
+            BoardSquare square = new BoardSquare(this, displayNum);
+            
+            squares[i] = square;
+            boardPanel.add(square);
+        }
+        boardPanel.revalidate();
+        boardPanel.repaint();
     }
     
     private void setSquareSpecialType(int squareNumber, BoardSquare.SquareType squareType){
@@ -102,6 +109,7 @@ public class GameFrame extends javax.swing.JFrame {
 
 
 
+    // to delete
     public int lancerLesDes() {
         int dice1 = (int)(Math.random() * 6) + 1;
         int dice2 = (int)(Math.random() * 6) + 1;
@@ -114,32 +122,63 @@ public class GameFrame extends javax.swing.JFrame {
         return total;
     }
     
+    public void playTurn(){
+        int roll = lancerLesDes();
+        
+        PlayerPawn activePawn = isPlayer1Turn ? pawnPlayer1 : pawnPlayer2;
+        
+        animateMovement(activePawn, roll);
+        
+        isPlayer1Turn = !isPlayer1Turn;
+        
+    }
+    
     //Elouan
-    public void animateMovement(int moveAmount) {
+    public void animateMovement(PlayerPawn playerPawn, int moveAmount) {
         
         cup.setLocked(true);
         
-        int target = playerPos + moveAmount;
+        int startPos;
+        
+        if(playerPawn == pawnPlayer1) 
+            startPos = player1Pos;
+        else 
+            startPos = player2Pos;
+        
+        final int[] visualPos = { startPos };
+        
+        int target = startPos + moveAmount;
 
         if(target > 30){
             target = 30;
         }
 
         final int finalTarget = target;
+        
+        
+        if(playerPawn == pawnPlayer1) 
+            player1Pos = finalTarget;
+        else 
+            player2Pos = finalTarget;
+        
         Timer timer = new Timer(300, null);
 
-        timer.addActionListener(e -> {
-            if(playerPos >= finalTarget){
-                timer.stop();
+        timer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(visualPos[0] >= finalTarget){
+                    timer.stop();
+                  
+                    
+                    cup.setLocked(false);
+                    
+                    
+                    return;
+                }
                 
-                cup.setLocked(false);
-
-                
-                return;
+                visualPos[0]++;
+                movePlayerToSquare(playerPawn, visualPos[0]);
             }
-
-            playerPos++;
-            movePlayerToSquare(pawnPlayer1, playerPos);
         });
 
         timer.start();
@@ -164,8 +203,6 @@ public class GameFrame extends javax.swing.JFrame {
         
         int row = (squareNumber - 1) / 5; 
         
-
-
         Point globalPoint = SwingUtilities.convertPoint(boardPanel, x, y, this.getLayeredPane());
    
         
@@ -215,6 +252,19 @@ public class GameFrame extends javax.swing.JFrame {
         
         return (row * totalCols) + col;
     }
+    
+    
+    public JPanel getTopPanel(){
+        return topPanel;
+    }
+    
+    public JPanel getDice1Panel(){
+        return dice1Panel;
+    }
+    
+    public JPanel getDice2Panel(){
+        return dice2Panel;
+    }
                          
 
     public static void main(String args[]) {
@@ -231,23 +281,6 @@ public class GameFrame extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(() -> new GameFrame().setVisible(true));
     }
-    
-    
-    private void createBoard() {
-        for(int i = 0; i < 30; i++) {
-            int displayNum = getIndexFromSquareNumber(i + 1) + 1;
-            
-            BoardSquare square = new BoardSquare(this, displayNum);
-            
-            squares[i] = square;
-            boardPanel.add(square);
-        }
-        boardPanel.revalidate();
-        boardPanel.repaint();
-    }
-        
-
- 
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

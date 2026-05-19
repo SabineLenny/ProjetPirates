@@ -40,8 +40,8 @@ public class DiceCup extends JLabel {
                 if (isAnimating || isLocked) return; 
                 if (isCoveringDice) {
                     revealDiceSequence();
-                    // Tell the main frame to roll and move!
-                    mainFrame.animateMovement(mainFrame.lancerLesDes()); 
+//                    mainFrame.animateMovement(mainFrame.lancerLesDes());
+                      mainFrame.playTurn();
                     return; 
                 }
                 initialClick = e.getPoint();
