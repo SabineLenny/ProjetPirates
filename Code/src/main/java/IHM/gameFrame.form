@@ -168,16 +168,8 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JProgressBar" name="player1Bar">
-              <Properties>
-                <Property name="maximum" type="int" value="5"/>
-                <Property name="value" type="int" value="5"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JProgressBar" name="player2Bar">
-              <Properties>
-                <Property name="maximum" type="int" value="5"/>
-                <Property name="value" type="int" value="5"/>
-              </Properties>
             </Component>
             <Container class="javax.swing.JPanel" name="dice1Panel">
               <Properties>

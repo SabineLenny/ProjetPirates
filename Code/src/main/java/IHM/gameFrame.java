@@ -21,16 +21,6 @@ import javax.swing.Timer;
 import javax.swing.SwingUtilities; 
 import javax.swing.SwingConstants; 
 
-import Controleurs.ControlDeplacer;
-import Controleurs.ControlFinJeu;
-import Controleurs.ControlJeuPirate;
-import Controleurs.ControlPlateau;
-import Controleurs.ControlVerifierPoison;
-import Controleurs.ControlVerifierVie;
-import Entite.Plateau;
-import Entite.TypeCase;
-
-
 /**
  * @author DWR4418A
  */
@@ -63,14 +53,6 @@ public class GameFrame extends javax.swing.JFrame {
     private final int pawnSizeX = 80;
     private final int pawnSizeY = 50;
     
-    //Lenny
-    static final ControlJeuPirate CONTROL_JEU_PIRATE = new ControlJeuPirate();
-    static final ControlVerifierVie CONTROL_VIE = new ControlVerifierVie();
-    static final ControlVerifierPoison CONTROL_POISON = new ControlVerifierPoison();
-    static final ControlPlateau CONTROL_PLATEAU = new ControlPlateau();
-    static final ControlDeplacer CONTROL_DEPLACER = new ControlDeplacer();
-    static final ControlFinJeu CONTROL_FIN = new ControlFinJeu();
-    
     
     public GameFrame() {
 
@@ -86,15 +68,14 @@ public class GameFrame extends javax.swing.JFrame {
         player1NameLabel.setText(player1Name);
         player2NameLabel.setText(player2Name);
         //
+        
         createBoard();
-        //Lenny
-        CONTROL_JEU_PIRATE.instancierJeu(player1Name,player2Name);  
-        Plateau Board =CONTROL_JEU_PIRATE.getPlateau();
-        setSquareSpecialType(CONTROL_PLATEAU.positionCase(Board,TypeCase.BOMBE), BoardSquare.SquareType.BOMB);
-        setSquareSpecialType(CONTROL_PLATEAU.positionCase(Board,TypeCase.ECHANGE), BoardSquare.SquareType.EXCHANGE);
-        setSquareSpecialType(CONTROL_PLATEAU.positionCase(Board,TypeCase.SOIN), BoardSquare.SquareType.HEAL);
-        setSquareSpecialType(CONTROL_PLATEAU.positionCase(Board,TypeCase.EMPOISONNEMENT), BoardSquare.SquareType.POISON);
-        //
+        
+        setSquareSpecialType(8, BoardSquare.SquareType.BOMB);
+        setSquareSpecialType(15, BoardSquare.SquareType.EXCHANGE);
+        setSquareSpecialType(21, BoardSquare.SquareType.HEAL);
+        setSquareSpecialType(28, BoardSquare.SquareType.POISON);
+
 
         pawnPlayer1 = new PlayerPawn(this, "pirateship.png", "pirateshipleft.png", 50, 50);
         pawnPlayer2 = new PlayerPawn(this, "pirateship2.png", "pirateship2left.png", 75, 75);
@@ -300,7 +281,7 @@ public class GameFrame extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(() -> new GameFrame().setVisible(true));
     }
-   
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -345,12 +326,6 @@ public class GameFrame extends javax.swing.JFrame {
         player1NameLabel.setText("Joueur 1");
 
         player2NameLabel.setText("Joueur 2");
-
-        player1Bar.setMaximum(5);
-        player1Bar.setValue(5);
-
-        player2Bar.setMaximum(5);
-        player2Bar.setValue(5);
 
         dice1Panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         dice1Panel.setMaximumSize(new java.awt.Dimension(50, 50));

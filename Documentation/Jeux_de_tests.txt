@@ -1,0 +1,40 @@
+ Cas 01: Le joueur appuie plusieurs fois sur le bouton « lancer le dé » pendant l'animation du lancer
+ Résultat:  Le bouton est verrouillé et une seule animation s'affiche 
+
+ Cas 2: Un échange de case s'effectue entre la case échange activée (joueur1) et une autre case spéciale (joueur2) qui n'est pas une case échange
+ Résultat: La deuxième case spéciale est activée sur le joueur1
+
+Cas 03: Le joueur perd 5 vies
+Résultat: Son adversaire gagne et la partie recommence 
+
+Cas 04: Le joueur arrive à la dernière case
+Résultat: Le joueur gagne et la partie recommence 
+
+Cas 05: Un échange de case s'effectue entre la case échange activée (joueur1) et une autre case échange (joueur2)
+ Résultat: La deuxième case échange n'est pas activée sur le joueur1
+ 
+Cas 06: Le joueur, empoisonné, arrive à la dernière case et perd sa dernière vie
+Résultat: Le joueur gagne 
+
+Cas 07: Le joueur tombe sur une case soin avec ses points de vie au complet
+Résultat: Ses points de vie ne dépassent pas ses points de vie maximums (5pv)
+
+Cas 08: Le joueur tombe sur une case soin avec ses points de vie inférieurs au maximum
+Résultat: Le joueur regagne un point de vie
+
+Cas 09: Le joueur se trouve sur l'avant-dernière case et obtient n>1 au dé
+Résultat: Il se déplacera jusqu'à la dernière case, puis fera n-1 pas en direction de la case de départ
+
+Cas 10: Le joueur 2 appuie sur le bouton « lancer le dé » avant que le tour de joueur 1 soit fini
+Résultat: Le bouton « lancer le dé » est bloqué
+
+
+                     /|~~~   
+                  ///|      
+               /////|      
+            ///////|      
+         /////////|     
+   \==========|===/  
+~~~~~~~~~~~~~~~~~~~~~
+
+
