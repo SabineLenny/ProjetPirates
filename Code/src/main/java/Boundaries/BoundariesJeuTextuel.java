@@ -23,9 +23,12 @@ public class BoundariesJeuTextuel {
         boolean run = true;
         boolean piratesEnVie = true;
         
+        System.out.println("Nom du pirate 1 : ");
+        String nom1 = s.next();
+        System.out.println("Nom du pirate 2 : ");
+        String nom2 = s.next();
         
-        
-        CONTROL_JEU_PIRATE.instancierJeu();
+        CONTROL_JEU_PIRATE.instancierJeu(nom1,nom2);
         String deplacement;
         String effetCase;
                 
@@ -40,7 +43,6 @@ public class BoundariesJeuTextuel {
             effetCase = CONTROL_PLATEAU.activerCase(CONTROL_JEU_PIRATE.getPlateau(),CONTROL_JEU_PIRATE.getMapPirate().get(CONTROL_JEU_PIRATE.getIndicePirate()),CONTROL_JEU_PIRATE.getMapPirate().get((CONTROL_JEU_PIRATE.getIndicePirate()+1)%2));
             System.out.println(effetCase);
             
-            CONTROL_JEU_PIRATE.incrementIndicePirate();
             s.next();
             run = CONTROL_FIN.finJeu(CONTROL_JEU_PIRATE.getMapPirate().get(CONTROL_JEU_PIRATE.getIndicePirate()));
             if (run == false) {
@@ -51,6 +53,8 @@ public class BoundariesJeuTextuel {
             if (piratesEnVie == false) {
                 System.out.println(CONTROL_VIE.verifierVie(CONTROL_JEU_PIRATE.getMapPirate().get(CONTROL_JEU_PIRATE.getIndicePirate())));
             }
+            
+            CONTROL_JEU_PIRATE.incrementIndicePirate();
         }
     }
 }

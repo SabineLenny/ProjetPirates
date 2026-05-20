@@ -34,10 +34,10 @@ public class ControlJeuPirate{
         this.indicePirate = (this.indicePirate + 1) % 2;
     }
     
-    public void instancierJeu () {
+    public void instancierJeu (String pirate1, String pirate2) {
         mapPirate = new TreeMap<>();
-        mapPirate.put(0, CONTROL_PIRATE.creationPirate("Pirate 1"));
-        mapPirate.put(1, CONTROL_PIRATE.creationPirate("Pirate 2"));
+        mapPirate.put(0, CONTROL_PIRATE.creationPirate(pirate1));
+        mapPirate.put(1, CONTROL_PIRATE.creationPirate(pirate2));
         p = CONTROL_PLATEAU.creationPlateau();
         System.out.println(CONTROL_PLATEAU.affichagePlateau(p));
         indicePirate = 0;
