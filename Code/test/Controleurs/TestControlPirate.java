@@ -20,7 +20,7 @@ class TestControlPirate {
         assertNotNull(pirate);
         assertEquals("Barbe Noire", pirate.getNom());
         assertEquals(5, pirate.getVie());
-        assertEquals(0, pirate.getPosition());
+        assertEquals(1, pirate.getPosition());
     }
     
     @Test
