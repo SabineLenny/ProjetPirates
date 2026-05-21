@@ -60,4 +60,13 @@ public class ControlPlateau {
     public String activerCase (Plateau plateau, Pirate p1, Pirate p2) {
         return CONTROL_CASE.selectCase(plateau.getPlateau().get(p1.getPosition()), p1, p2);
     }
+    
+    public int positionCase (Plateau plateau, TypeCase caseType) {
+        for (int i = 0; i < plateau.getPlateau().size(); i++) {
+            if (plateau.getPlateau().get(i).equals(caseType)) {
+                return i;
+            }
+        }
+        return -1;
+    }
 }
