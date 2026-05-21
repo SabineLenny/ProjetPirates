@@ -1,6 +1,8 @@
 package Controleurs;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import Entite.Pirate;
@@ -8,7 +10,10 @@ import Entite.Pirate;
 class TestControlPirate {
 	
     private ControlPirate controlPirate;
-    
+    @BeforeEach
+    void setUp() {
+        controlPirate= new ControlPirate();
+    }
     @Test
     void testCreationPirate() {
         Pirate pirate = controlPirate.creationPirate("Barbe Noire");

@@ -13,6 +13,7 @@ class TestControlCaseSoin {
     @BeforeEach
     void setUp() {
         pirate = new Pirate("Pirate");
+        controlCaseSoin= new ControlCaseSoin();
     }
     
     @Test

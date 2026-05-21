@@ -15,6 +15,7 @@ class TestControlPlateau {
     
     @BeforeEach
     void setUp() {
+    	controlPlateau=new ControlPlateau();
         plateau = controlPlateau.creationPlateau();
     }
     

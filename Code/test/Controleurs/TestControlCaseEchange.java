@@ -17,6 +17,7 @@ class TestControlCaseEchange {
         pirate2 = new Pirate("Pirate2");
         pirate1.setPosition(10);
         pirate2.setPosition(20);
+        controlCaseEchange=new ControlCaseEchange();
     }
     
     @Test

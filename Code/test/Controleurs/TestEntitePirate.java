@@ -12,6 +12,8 @@ class TestEntitePirate {
     @BeforeEach
     void setUp() {
         pirate = new Pirate("Barbe Noire");
+        pirate.setPosition(0);
+        pirate.setDureeEmpoisonnement(0);
     }
     
     @Test

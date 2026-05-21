@@ -14,6 +14,7 @@ class TestControlCaseBombe {
     @BeforeEach
     void setUp() {
         pirate = new Pirate("Pirate");
+        controlCaseBombe=new ControlCaseBombe();
     }
     
     @Test

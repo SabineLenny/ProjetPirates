@@ -13,6 +13,7 @@ class TestControlCasePoison {
     @BeforeEach
     void setUp() {
         pirate = new Pirate("Pirate");
+        controlCasePoison=new ControlCasePoison();
     }
     
     @Test

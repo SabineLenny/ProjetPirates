@@ -13,6 +13,7 @@ class TestControlDeplacer {
     @BeforeEach
     void setUp() {
         pirate = new Pirate("Test");
+        controlDeplacer=new ControlDeplacer();
     }
     
     @Test

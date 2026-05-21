@@ -12,6 +12,7 @@ class TestControlVerifierPoison {
     
     @BeforeEach
     void setUp() {
+    	controlVerifierPoison=new ControlVerifierPoison();
         pirate = new Pirate("Pirate");
     }
     
