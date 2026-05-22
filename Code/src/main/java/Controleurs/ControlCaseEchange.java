@@ -9,6 +9,6 @@ public class ControlCaseEchange implements ControlCaseSpecial{
         pirate1.setPosition(pirate2.getPosition());
         pirate2.setPosition(temp);
         return "Les positions de " + pirate1.getNom() + " et " 
-                + pirate2.getNom() + " sont echangees. " + pirate1.getNom() + " est sur la case " + Integer.toString(pirate1.getPosition()) + " et " + pirate2.getNom() + " est sur la case " + Integer.toString(pirate2.getPosition()) + ".\n";
+                + pirate2.getNom() + " sont echangees. " + pirate1.getNom() + " est sur la case " + Integer.toString(pirate1.getPosition()) + " et " + pirate2.getNom() + " est sur la case " + Integer.toString(pirate2.getPosition());
     }
 }
