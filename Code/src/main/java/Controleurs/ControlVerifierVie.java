@@ -6,7 +6,7 @@ public class ControlVerifierVie {
     
     public String affichageVie(Pirate pirate){
          if(pirate.getVie()<=0){
-            return pirate.getNom()+"est mort !\n";
+            return pirate.getNom()+" est mort !\n";
           }
           else{
               return "Personne n'est encore mort.\n";
