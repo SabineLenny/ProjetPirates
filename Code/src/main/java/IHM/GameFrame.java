@@ -1,6 +1,7 @@
 package IHM;
 
 import Boundaries.BoundarieIHM;
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -65,6 +66,8 @@ public class GameFrame extends javax.swing.JFrame {
         player1NameLabel.setText(player1Name);
         player2NameLabel.setText(player2Name);
         //
+        PSNJoueur1.setVisible(false);
+        PSNJoueur2.setVisible(false);
         
         createBoard();
         
@@ -121,6 +124,28 @@ public class GameFrame extends javax.swing.JFrame {
            player2Bar.setValue(player2Bar.getValue()+ Changement);
         }
     }
+    
+    public void Poison(int Joueur,int Duree){
+        if(Joueur==1){
+            player1NameLabel.setForeground(Color.MAGENTA);
+            PSNJoueur1.setVisible(true);          
+        }
+        else{
+            player2NameLabel.setForeground(Color.MAGENTA);
+            PSNJoueur2.setVisible(true);
+        }   
+    }
+    public void PoisonHeal(int Joueur){
+        if(Joueur==1){
+            player1NameLabel.setForeground(Color.BLACK);
+            PSNJoueur1.setVisible(false);          
+        }
+        else{
+            player2NameLabel.setForeground(Color.BLACK);
+            PSNJoueur2.setVisible(false);
+        } 
+    }
+    
     
     public void playTurn(){
         
@@ -324,6 +349,8 @@ public class GameFrame extends javax.swing.JFrame {
         dice1Label = new javax.swing.JLabel();
         dice2Panel = new javax.swing.JPanel();
         dice2Label = new javax.swing.JLabel();
+        PSNJoueur2 = new javax.swing.JButton();
+        PSNJoueur1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         boardPanel = new javax.swing.JPanel() {
@@ -355,6 +382,7 @@ public class GameFrame extends javax.swing.JFrame {
         player2NameLabel.setText("Joueur 2");
 
         player1Bar.setMaximum(5);
+        player1Bar.setValue(5);
         player1Bar.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 player1BarStateChanged(evt);
@@ -408,6 +436,24 @@ public class GameFrame extends javax.swing.JFrame {
                 .addComponent(dice2Label, javax.swing.GroupLayout.PREFERRED_SIZE, 47, Short.MAX_VALUE))
         );
 
+        PSNJoueur2.setBackground(new java.awt.Color(183, 0, 255));
+        PSNJoueur2.setForeground(new java.awt.Color(255, 255, 255));
+        PSNJoueur2.setText("PSN");
+        PSNJoueur2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PSNJoueur2ActionPerformed(evt);
+            }
+        });
+
+        PSNJoueur1.setBackground(new java.awt.Color(183, 0, 255));
+        PSNJoueur1.setForeground(new java.awt.Color(255, 255, 255));
+        PSNJoueur1.setText("PSN");
+        PSNJoueur1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PSNJoueur1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
         topPanel.setLayout(topPanelLayout);
         topPanelLayout.setHorizontalGroup(
@@ -416,15 +462,17 @@ public class GameFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(player1NameLabel)
-                    .addComponent(player1Bar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(player1Bar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PSNJoueur1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(dice2Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(dice1Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(140, 140, 140)
-                .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(player2NameLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(player2Bar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(player2NameLabel)
+                    .addComponent(player2Bar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PSNJoueur2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22))
         );
         topPanelLayout.setVerticalGroup(
@@ -439,7 +487,11 @@ public class GameFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(player1Bar, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(player2Bar, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(player2Bar, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(PSNJoueur2)
+                            .addComponent(PSNJoueur1)))
                     .addGroup(topPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(dice1Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -515,8 +567,18 @@ public class GameFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_player1BarStateChanged
 
+    private void PSNJoueur2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PSNJoueur2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PSNJoueur2ActionPerformed
+
+    private void PSNJoueur1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PSNJoueur1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PSNJoueur1ActionPerformed
+
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton PSNJoueur1;
+    private javax.swing.JButton PSNJoueur2;
     private javax.swing.JPanel boardPanel;
     private javax.swing.JLabel dice1Label;
     private javax.swing.JPanel dice1Panel;
