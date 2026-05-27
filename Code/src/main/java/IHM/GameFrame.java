@@ -55,6 +55,8 @@ public class GameFrame extends javax.swing.JFrame {
 
         initComponents();
         
+        jTextArea1.append(boundary.affichagePlateau() + "\n\n");
+        
         setResizable(false); 
         
         diceManager = new DiceManager(dice1Label, dice2Label);
@@ -106,7 +108,6 @@ public class GameFrame extends javax.swing.JFrame {
     }
     
     private void setSquareSpecialType(int squareNumber, BoardSquare.SquareType squareType){
-        System.out.println(squareNumber);
         squares[getIndexFromSquareNumber(squareNumber)].setSpecialType(squareType);
     }
 
@@ -125,12 +126,19 @@ public class GameFrame extends javax.swing.JFrame {
         
         PlayerPawn activePawn = isPlayer1Turn ? pawnPlayer1 : pawnPlayer2;
         int pirateCourant = isPlayer1Turn ? player1ID : player2ID;
+        String nomPirateCourant = isPlayer1Turn ? player1Name : player2Name;
         
-        int deplacement = boundary.deplacementPirate(pirateCourant);
+        jTextArea1.append("Au tour de " + nomPirateCourant+"\n");
+        
+        String verifierPoison = boundary.verificationPoison(pirateCourant);
+        jTextArea1.append(verifierPoison);
+        
+        int[] lancer = boundary.lancerDes();
+        int deplacement = boundary.deplacementPirate(pirateCourant,lancer);
         jTextArea1.append(boundary.deplacementPirateAffichage(pirateCourant, deplacement));
+        diceManager.showResult(lancer[0], lancer[1]);
         
         animateMovement(activePawn, deplacement);
-        System.out.println(deplacement);
         
         isPlayer1Turn = !isPlayer1Turn;
         

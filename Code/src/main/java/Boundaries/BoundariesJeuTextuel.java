@@ -43,7 +43,8 @@ public class BoundariesJeuTextuel {
             String poison = CONTROL_POISON.verificationPoison(CONTROL_JEU_PIRATE.getMapPirate().get(CONTROL_JEU_PIRATE.getIndicePirate()));
             System.out.println(poison);
             
-            deplacement = CONTROL_DEPLACER.deplacer(CONTROL_JEU_PIRATE.getMapPirate().get(CONTROL_JEU_PIRATE.getIndicePirate()));
+            int [] lancer = CONTROL_DEPLACER.lancerDes();
+            deplacement = CONTROL_DEPLACER.deplacer(CONTROL_JEU_PIRATE.getMapPirate().get(CONTROL_JEU_PIRATE.getIndicePirate()),lancer);
             System.out.println(CONTROL_DEPLACER.affichageDeplacement(CONTROL_JEU_PIRATE.getMapPirate().get(CONTROL_JEU_PIRATE.getIndicePirate()), deplacement));
             
                           

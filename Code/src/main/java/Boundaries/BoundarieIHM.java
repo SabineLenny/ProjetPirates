@@ -29,12 +29,24 @@ public class BoundarieIHM extends BoundariesJeuTextuel{
         CONTROL_JEU_PIRATE.instancierJeu(pirate1, pirate2);
     }
     
-    public int deplacementPirate (Integer pirate) {
-        return CONTROL_DEPLACER.deplacer(CONTROL_JEU_PIRATE.getMapPirate().get(pirate));
+    public int[] lancerDes () {
+        return CONTROL_DEPLACER.lancerDes();
+    }
+    
+    public int deplacementPirate (Integer pirate, int[] lancer) {
+        return CONTROL_DEPLACER.deplacer(CONTROL_JEU_PIRATE.getMapPirate().get(pirate),lancer);
     }
     
     public String deplacementPirateAffichage (Integer pirate, int distance) {
         return CONTROL_DEPLACER.affichageDeplacement(CONTROL_JEU_PIRATE.getMapPirate().get(pirate), distance);
+    }
+    
+    public String affichagePlateau () {
+        return CONTROL_PLATEAU.affichagePlateau(CONTROL_JEU_PIRATE.getPlateau());
+    }
+    
+    public String verificationPoison(Integer pirate) {
+        return CONTROL_POISON.verificationPoison(CONTROL_JEU_PIRATE.getMapPirate().get(pirate));
     }
     
 }

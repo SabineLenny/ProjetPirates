@@ -7,12 +7,16 @@ public class ControlDeplacer {
     private final ControlLancerDeDes CONTROL_DES = new ControlLancerDeDes();
     
     public String affichageDeplacement (Pirate pirate, int distance) {
-        return "Le pirate " + pirate.getNom() + " s'est deplace de " + distance +" cases";
+        return "Le pirate " + pirate.getNom() + " s'est deplace de " + distance +" cases\n";
     }
+    
+    public int[] lancerDes (){
+        return CONTROL_DES.lancerDes(2);
+    }
+    
     //Elouan
-    public int deplacer(Pirate pirate) {
-        int[] dés = CONTROL_DES.lancerDes(2);
-        int distance = CONTROL_DES.additionDes(dés);
+    public int deplacer(Pirate pirate, int[] des) {
+        int distance = CONTROL_DES.additionDes(des);
         int position= pirate.getPosition()+distance;
         if (position>30) {
                 position=30 - (position-30);
