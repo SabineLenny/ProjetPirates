@@ -107,7 +107,19 @@ public class GameFrame extends javax.swing.JFrame {
         squares[getIndexFromSquareNumber(squareNumber)].setSpecialType(squareType);
     }
 
+//Lenny
+public void PVIHM(int Changement,int Joueur){
+    
+    if(Joueur==1){
+         player1Bar.setValue(player1Bar.getValue()+ Changement);
+    }
+    else {
+       player2Bar.setValue(player2Bar.getValue()+ Changement);
+    }
+}
+    
 
+    
 
     // to delete
     public int lancerLesDes() {
@@ -327,6 +339,16 @@ public class GameFrame extends javax.swing.JFrame {
 
         player2NameLabel.setText("Joueur 2");
 
+        player1Bar.setMaximum(5);
+        player1Bar.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                player1BarStateChanged(evt);
+            }
+        });
+
+        player2Bar.setMaximum(5);
+        player2Bar.setValue(5);
+
         dice1Panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         dice1Panel.setMaximumSize(new java.awt.Dimension(50, 50));
         dice1Panel.setMinimumSize(new java.awt.Dimension(50, 50));
@@ -473,6 +495,10 @@ public class GameFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void player1BarStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_player1BarStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_player1BarStateChanged
 
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
