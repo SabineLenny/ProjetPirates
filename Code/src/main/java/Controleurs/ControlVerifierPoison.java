@@ -12,4 +12,8 @@ public class ControlVerifierPoison {
         }
         return "Le pirate " + pirate.getNom() + " n'est pas empoisonne, il ne prend pas de degats.\n";
     }
+    
+    public boolean estEmpoisonne (Pirate pirate) {
+        return pirate.getDureeEmpoisonnement()>0;
+    }
 }         

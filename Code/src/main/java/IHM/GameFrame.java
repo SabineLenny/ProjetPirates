@@ -115,7 +115,7 @@ public class GameFrame extends javax.swing.JFrame {
     }
 
     //Lenny
-    public void PVIHM(int Changement,int Joueur){
+    public void pVIHM(int Changement,int Joueur){
 
         if(Joueur==1){
              player1Bar.setValue(player1Bar.getValue()+ Changement);
@@ -125,7 +125,7 @@ public class GameFrame extends javax.swing.JFrame {
         }
     }
     
-    public void Poison(int Joueur,int Duree){
+    public void poison(int Joueur){
         if(Joueur==1){
             player1NameLabel.setForeground(Color.MAGENTA);
             PSNJoueur1.setVisible(true);          
@@ -135,7 +135,7 @@ public class GameFrame extends javax.swing.JFrame {
             PSNJoueur2.setVisible(true);
         }   
     }
-    public void PoisonHeal(int Joueur){
+    public void poisonHeal(int Joueur){
         if(Joueur==1){
             player1NameLabel.setForeground(Color.BLACK);
             PSNJoueur1.setVisible(false);          
@@ -163,10 +163,15 @@ public class GameFrame extends javax.swing.JFrame {
             nomPirateCourant = player2Name;
         }
 
-        
         jTextArea1.append("Au tour de " + nomPirateCourant+"\n");
         
         String verifierPoison = boundary.verificationPoison(pirateCourant);
+        if (boundary.estEmpoisonne(pirateCourant)){
+            pVIHM(-1,pirateCourant);
+            poison(pirateCourant);
+        } else {
+            poisonHeal(pirateCourant);
+        }
         jTextArea1.append(verifierPoison);
         
         int[] lancer = boundary.lancerDes();
@@ -176,6 +181,13 @@ public class GameFrame extends javax.swing.JFrame {
         
         String effetCase;
         effetCase = boundary.activerCase(pirateCourant, (pirateCourant+1)%2);
+        
+        if (effetCase.contains("soigne") && boundary.getPirateVie(pirateCourant) >= 5) {
+            pVIHM(1,pirateCourant);
+        }
+        if (effetCase.contains("BOMB")) {
+            pVIHM(-3,pirateCourant);
+        }
             
         jTextArea1.append(effetCase);
         
@@ -189,6 +201,7 @@ public class GameFrame extends javax.swing.JFrame {
             // ajouter ecran de victoire
             // desactiver fenetre de jeu
         }
+        
         animateMovement(activePawn, deplacement);
         
         isPlayer1Turn = !isPlayer1Turn;

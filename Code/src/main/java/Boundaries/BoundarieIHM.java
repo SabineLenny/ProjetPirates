@@ -70,4 +70,12 @@ public class BoundarieIHM extends BoundariesJeuTextuel{
     public int piratePos (Integer pirate) {
         return CONTROL_JEU_PIRATE.getMapPirate().get(pirate).getPosition();
     }
+    
+    public boolean estEmpoisonne (Integer pirate) {
+        return CONTROL_JEU_PIRATE.getMapPirate().get(pirate).getDureeEmpoisonnement()>0;
+    }
+    
+    public int getPirateVie (Integer pirate) {
+        return CONTROL_JEU_PIRATE.getMapPirate().get(pirate).getVie();
+    }
 }
