@@ -147,7 +147,7 @@ public class GameFrame extends javax.swing.JFrame {
         } 
     }
     
-    
+    //Ulysse
     public void playTurn(){
         
         PlayerPawn activePawn;
@@ -217,7 +217,7 @@ public class GameFrame extends javax.swing.JFrame {
         isPlayer1Turn = !isPlayer1Turn;
         
     }
-
+    //Ulysse
     
     //Elouan
     public void animateMovement(PlayerPawn playerPawn, int moveAmount) {

@@ -10,6 +10,7 @@ import java.util.Map;
 
 public class BoundarieIHM extends BoundariesJeuTextuel{
 
+    //Ulysse
     static final ControlJeuPirate CONTROL_JEU_PIRATE = new ControlJeuPirate();
     static final ControlVerifierVie CONTROL_VIE = new ControlVerifierVie();
     static final ControlVerifierPoison CONTROL_POISON = new ControlVerifierPoison();
@@ -78,4 +79,5 @@ public class BoundarieIHM extends BoundariesJeuTextuel{
     public int getPirateVie (Integer pirate) {
         return CONTROL_JEU_PIRATE.getMapPirate().get(pirate).getVie();
     }
+    //Ulysse
 }
