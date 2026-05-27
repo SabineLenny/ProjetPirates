@@ -1,25 +1,25 @@
-C:\Users\33778\Dropbox\Mon PC (DESKTOP-DCQ00II)\Desktop\pirates\ProjetPirates\Code\src\main\java\Boundaries\BoundarieIHM.java
-C:\Users\33778\Dropbox\Mon PC (DESKTOP-DCQ00II)\Desktop\pirates\ProjetPirates\Code\src\main\java\Boundaries\BoundariesJeuTextuel.java
-C:\Users\33778\Dropbox\Mon PC (DESKTOP-DCQ00II)\Desktop\pirates\ProjetPirates\Code\src\main\java\Controleurs\ControlCase.java
-C:\Users\33778\Dropbox\Mon PC (DESKTOP-DCQ00II)\Desktop\pirates\ProjetPirates\Code\src\main\java\Controleurs\ControlCaseBombe.java
-C:\Users\33778\Dropbox\Mon PC (DESKTOP-DCQ00II)\Desktop\pirates\ProjetPirates\Code\src\main\java\Controleurs\ControlCaseEchange.java
-C:\Users\33778\Dropbox\Mon PC (DESKTOP-DCQ00II)\Desktop\pirates\ProjetPirates\Code\src\main\java\Controleurs\ControlCasePoison.java
-C:\Users\33778\Dropbox\Mon PC (DESKTOP-DCQ00II)\Desktop\pirates\ProjetPirates\Code\src\main\java\Controleurs\ControlCaseSoin.java
-C:\Users\33778\Dropbox\Mon PC (DESKTOP-DCQ00II)\Desktop\pirates\ProjetPirates\Code\src\main\java\Controleurs\ControlCaseSpecial.java
-C:\Users\33778\Dropbox\Mon PC (DESKTOP-DCQ00II)\Desktop\pirates\ProjetPirates\Code\src\main\java\Controleurs\ControlDeplacer.java
-C:\Users\33778\Dropbox\Mon PC (DESKTOP-DCQ00II)\Desktop\pirates\ProjetPirates\Code\src\main\java\Controleurs\ControlFinJeu.java
-C:\Users\33778\Dropbox\Mon PC (DESKTOP-DCQ00II)\Desktop\pirates\ProjetPirates\Code\src\main\java\Controleurs\ControlJeuPirate.java
-C:\Users\33778\Dropbox\Mon PC (DESKTOP-DCQ00II)\Desktop\pirates\ProjetPirates\Code\src\main\java\Controleurs\ControlLancerDeDes.java
-C:\Users\33778\Dropbox\Mon PC (DESKTOP-DCQ00II)\Desktop\pirates\ProjetPirates\Code\src\main\java\Controleurs\ControlPirate.java
-C:\Users\33778\Dropbox\Mon PC (DESKTOP-DCQ00II)\Desktop\pirates\ProjetPirates\Code\src\main\java\Controleurs\ControlPlateau.java
-C:\Users\33778\Dropbox\Mon PC (DESKTOP-DCQ00II)\Desktop\pirates\ProjetPirates\Code\src\main\java\Controleurs\ControlVerifierPoison.java
-C:\Users\33778\Dropbox\Mon PC (DESKTOP-DCQ00II)\Desktop\pirates\ProjetPirates\Code\src\main\java\Controleurs\ControlVerifierVie.java
-C:\Users\33778\Dropbox\Mon PC (DESKTOP-DCQ00II)\Desktop\pirates\ProjetPirates\Code\src\main\java\Entite\Pirate.java
-C:\Users\33778\Dropbox\Mon PC (DESKTOP-DCQ00II)\Desktop\pirates\ProjetPirates\Code\src\main\java\Entite\Plateau.java
-C:\Users\33778\Dropbox\Mon PC (DESKTOP-DCQ00II)\Desktop\pirates\ProjetPirates\Code\src\main\java\Entite\TypeCase.java
-C:\Users\33778\Dropbox\Mon PC (DESKTOP-DCQ00II)\Desktop\pirates\ProjetPirates\Code\src\main\java\IHM\BoardSquare.java
-C:\Users\33778\Dropbox\Mon PC (DESKTOP-DCQ00II)\Desktop\pirates\ProjetPirates\Code\src\main\java\IHM\DiceCup.java
-C:\Users\33778\Dropbox\Mon PC (DESKTOP-DCQ00II)\Desktop\pirates\ProjetPirates\Code\src\main\java\IHM\DiceManager.java
-C:\Users\33778\Dropbox\Mon PC (DESKTOP-DCQ00II)\Desktop\pirates\ProjetPirates\Code\src\main\java\IHM\GameFrame.java
-C:\Users\33778\Dropbox\Mon PC (DESKTOP-DCQ00II)\Desktop\pirates\ProjetPirates\Code\src\main\java\IHM\ImageUtils.java
-C:\Users\33778\Dropbox\Mon PC (DESKTOP-DCQ00II)\Desktop\pirates\ProjetPirates\Code\src\main\java\IHM\PlayerPawn.java
+C:\Users\chass\OneDrive\Documents\Licence\S6\ProjetPirates\Code\src\main\java\Boundaries\BoundarieIHM.java
+C:\Users\chass\OneDrive\Documents\Licence\S6\ProjetPirates\Code\src\main\java\Boundaries\BoundariesJeuTextuel.java
+C:\Users\chass\OneDrive\Documents\Licence\S6\ProjetPirates\Code\src\main\java\Controleurs\ControlCase.java
+C:\Users\chass\OneDrive\Documents\Licence\S6\ProjetPirates\Code\src\main\java\Controleurs\ControlCaseBombe.java
+C:\Users\chass\OneDrive\Documents\Licence\S6\ProjetPirates\Code\src\main\java\Controleurs\ControlCaseEchange.java
+C:\Users\chass\OneDrive\Documents\Licence\S6\ProjetPirates\Code\src\main\java\Controleurs\ControlCasePoison.java
+C:\Users\chass\OneDrive\Documents\Licence\S6\ProjetPirates\Code\src\main\java\Controleurs\ControlCaseSoin.java
+C:\Users\chass\OneDrive\Documents\Licence\S6\ProjetPirates\Code\src\main\java\Controleurs\ControlCaseSpecial.java
+C:\Users\chass\OneDrive\Documents\Licence\S6\ProjetPirates\Code\src\main\java\Controleurs\ControlDeplacer.java
+C:\Users\chass\OneDrive\Documents\Licence\S6\ProjetPirates\Code\src\main\java\Controleurs\ControlFinJeu.java
+C:\Users\chass\OneDrive\Documents\Licence\S6\ProjetPirates\Code\src\main\java\Controleurs\ControlJeuPirate.java
+C:\Users\chass\OneDrive\Documents\Licence\S6\ProjetPirates\Code\src\main\java\Controleurs\ControlLancerDeDes.java
+C:\Users\chass\OneDrive\Documents\Licence\S6\ProjetPirates\Code\src\main\java\Controleurs\ControlPirate.java
+C:\Users\chass\OneDrive\Documents\Licence\S6\ProjetPirates\Code\src\main\java\Controleurs\ControlPlateau.java
+C:\Users\chass\OneDrive\Documents\Licence\S6\ProjetPirates\Code\src\main\java\Controleurs\ControlVerifierPoison.java
+C:\Users\chass\OneDrive\Documents\Licence\S6\ProjetPirates\Code\src\main\java\Controleurs\ControlVerifierVie.java
+C:\Users\chass\OneDrive\Documents\Licence\S6\ProjetPirates\Code\src\main\java\Entite\Pirate.java
+C:\Users\chass\OneDrive\Documents\Licence\S6\ProjetPirates\Code\src\main\java\Entite\Plateau.java
+C:\Users\chass\OneDrive\Documents\Licence\S6\ProjetPirates\Code\src\main\java\Entite\TypeCase.java
+C:\Users\chass\OneDrive\Documents\Licence\S6\ProjetPirates\Code\src\main\java\IHM\BoardSquare.java
+C:\Users\chass\OneDrive\Documents\Licence\S6\ProjetPirates\Code\src\main\java\IHM\DiceCup.java
+C:\Users\chass\OneDrive\Documents\Licence\S6\ProjetPirates\Code\src\main\java\IHM\DiceManager.java
+C:\Users\chass\OneDrive\Documents\Licence\S6\ProjetPirates\Code\src\main\java\IHM\GameFrame.java
+C:\Users\chass\OneDrive\Documents\Licence\S6\ProjetPirates\Code\src\main\java\IHM\ImageUtils.java
+C:\Users\chass\OneDrive\Documents\Licence\S6\ProjetPirates\Code\src\main\java\IHM\PlayerPawn.java

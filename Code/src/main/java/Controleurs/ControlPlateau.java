@@ -3,6 +3,7 @@ package Controleurs;
 import Entite.Pirate;
 import Entite.Plateau;
 import Entite.TypeCase;
+import static Entite.TypeCase.BOMBE;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -38,9 +39,7 @@ public class ControlPlateau {
         
         listeCase.add(TypeCase.BOMBE);
         listeCase.add(TypeCase.ECHANGE);
-        listeCase.add(TypeCase.ECHANGE);
         listeCase.add(TypeCase.EMPOISONNEMENT);
-        listeCase.add(TypeCase.SOIN);
         listeCase.add(TypeCase.SOIN);
         
         plateau.getPlateau().put(0, TypeCase.DEPART);
@@ -64,6 +63,48 @@ public class ControlPlateau {
     public int positionCase (Plateau plateau, TypeCase caseType) {
         for (int i = 0; i < plateau.getPlateau().size(); i++) {
             if (plateau.getPlateau().get(i).equals(caseType)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    public Map<Integer,String> getListCaseString (Plateau plateau) {
+        Map<Integer,String> mapString = new TreeMap<> ();
+        for (int i = 0; i < plateau.getPlateau().size(); i++) {
+            switch (plateau.getPlateau().get(i)) {
+                case BOMBE :
+                    mapString.put(i, "bombe");
+                    break;
+                case DEPART :
+                    mapString.put(i, "depart");
+                    break;
+                case ARRIVEE :
+                    mapString.put(i, "arrivee");
+                    break;
+                case EMPOISONNEMENT :
+                    mapString.put(i, "empoisonnement");
+                    break;
+                case SOIN :
+                    mapString.put(i, "soin");
+                    break;
+                case ECHANGE :
+                    mapString.put(i, "echange");
+                    break;
+                case NORMAL :
+                    mapString.put(i, "normal");
+                    break;
+                default :
+                    break;
+            }
+        }
+        return mapString;
+    }
+    
+    public int positionCaseAvecString (Plateau p, String caseNom) {
+        Map<Integer,String> plateau = getListCaseString(p);
+        for (int i = 0; i < plateau.size(); i++) {
+            if (plateau.get(i).equals(caseNom)) {
                 return i;
             }
         }

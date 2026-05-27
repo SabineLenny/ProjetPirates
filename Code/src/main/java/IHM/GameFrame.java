@@ -1,30 +1,23 @@
 package IHM;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
+import Boundaries.BoundarieIHM;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
-import java.net.URL;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.SwingUtilities; 
-import javax.swing.SwingConstants; 
 
 /**
  * @author DWR4418A
  */
 public class GameFrame extends javax.swing.JFrame {
+    
+    private final BoundarieIHM boundary = new BoundarieIHM();
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GameFrame.class.getName());
 
@@ -71,10 +64,17 @@ public class GameFrame extends javax.swing.JFrame {
         
         createBoard();
         
-        setSquareSpecialType(8, BoardSquare.SquareType.BOMB);
-        setSquareSpecialType(15, BoardSquare.SquareType.EXCHANGE);
-        setSquareSpecialType(21, BoardSquare.SquareType.HEAL);
-        setSquareSpecialType(28, BoardSquare.SquareType.POISON);
+        int positionBombe = boundary.getPositionCaseAvecString("bombe");
+        setSquareSpecialType(positionBombe, BoardSquare.SquareType.BOMB);
+        
+        int positionEchange = boundary.getPositionCaseAvecString("echange");
+        setSquareSpecialType(positionEchange, BoardSquare.SquareType.EXCHANGE);
+        
+        int positionSoin = boundary.getPositionCaseAvecString("soin");
+        setSquareSpecialType(positionSoin, BoardSquare.SquareType.HEAL);
+        
+        int positionPoison = boundary.getPositionCaseAvecString("empoisonnement");
+        setSquareSpecialType(positionPoison, BoardSquare.SquareType.POISON);
 
 
         pawnPlayer1 = new PlayerPawn(this, "pirateship.png", "pirateshipleft.png", 50, 50);
@@ -104,38 +104,23 @@ public class GameFrame extends javax.swing.JFrame {
     }
     
     private void setSquareSpecialType(int squareNumber, BoardSquare.SquareType squareType){
+        System.out.println(squareNumber);
         squares[getIndexFromSquareNumber(squareNumber)].setSpecialType(squareType);
     }
 
-//Lenny
-public void PVIHM(int Changement,int Joueur){
-    
-    if(Joueur==1){
-         player1Bar.setValue(player1Bar.getValue()+ Changement);
-    }
-    else {
-       player2Bar.setValue(player2Bar.getValue()+ Changement);
-    }
-}
-    
+    //Lenny
+    public void PVIHM(int Changement,int Joueur){
 
-    
-
-    // to delete
-    public int lancerLesDes() {
-        int dice1 = (int)(Math.random() * 6) + 1;
-        int dice2 = (int)(Math.random() * 6) + 1;
-        int total = dice1 + dice2;
-
-          diceManager.showResult(dice1, dice2);
-
-        jTextArea1.append("\n" + player1Name + " a lancé un " + dice1 + " et un " + dice2 + " (Total: " + total + ")");
-
-        return total;
+        if(Joueur==1){
+             player1Bar.setValue(player1Bar.getValue()+ Changement);
+        }
+        else {
+           player2Bar.setValue(player2Bar.getValue()+ Changement);
+        }
     }
     
     public void playTurn(){
-        int roll = lancerLesDes();
+        int roll = boundary.lancerDesTour();
         
         PlayerPawn activePawn = isPlayer1Turn ? pawnPlayer1 : pawnPlayer2;
         
@@ -144,6 +129,7 @@ public void PVIHM(int Changement,int Joueur){
         isPlayer1Turn = !isPlayer1Turn;
         
     }
+
     
     //Elouan
     public void animateMovement(PlayerPawn playerPawn, int moveAmount) {
@@ -249,7 +235,10 @@ public void PVIHM(int Changement,int Joueur){
         if(player2Name == null || player2Name.isBlank()){
             player2Name = "Joueur 2";
         }
+        
+        boundary.getControlJeuPirate().instancierJeu(player1Name, player2Name);
     }
+
     
     
     private int getIndexFromSquareNumber(int squareNumber){

@@ -11,6 +11,7 @@ IHM\GameFrame$3.class
 IHM\PlayerPawn.class
 Controleurs\ControlCaseSpecial.class
 Controleurs\ControlCaseBombe.class
+Controleurs\ControlPlateau$1.class
 IHM\BoardSquare.class
 Controleurs\ControlFinJeu.class
 Controleurs\ControlVerifierPoison.class

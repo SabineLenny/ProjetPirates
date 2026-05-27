@@ -17,4 +17,8 @@ public class ControlDeplacer {
         return "Le pirate " + pirate.getNom() + " s'est deplace de " + distance +" cases";
     }
     //Elouan
+    
+    public ControlLancerDeDes getControlDes () {
+        return CONTROL_DES;
+    }
 }

@@ -43,4 +43,6 @@ public class ControlJeuPirate{
         indicePirate = 0;
         run = true; 
     }
+    
+    
 }
