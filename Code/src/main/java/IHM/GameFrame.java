@@ -164,7 +164,7 @@ public class GameFrame extends javax.swing.JFrame {
             nomPirateCourant = player2Name;
         }
 
-        jTextArea1.append("Au tour de " + nomPirateCourant+"\n");
+        jTextArea1.append("\n\n\nAu tour de " + nomPirateCourant+"\n");
         
         String verifierPoison = boundary.verificationPoison(pirateCourant);
         if (boundary.estEmpoisonne(pirateCourant)){
@@ -188,6 +188,17 @@ public class GameFrame extends javax.swing.JFrame {
         }
         if (effetCase.contains("BOMB")) {
             pVIHM(-3,pirateCourant);
+        } 
+        
+        animateMovement(activePawn, deplacement);
+        
+        if (effetCase.contains("positions")) {
+            int pos1Temporaire = player1Pos;
+            int pos2Temporaire = player2Pos;
+            player1Pos = pos2Temporaire;
+            movePlayerToSquare(pawnPlayer1, pos2Temporaire);
+            player2Pos = pos1Temporaire;
+            movePlayerToSquare(pawnPlayer2, pos1Temporaire);
         }
             
         jTextArea1.append(effetCase);
@@ -203,8 +214,6 @@ public class GameFrame extends javax.swing.JFrame {
             this.dispose();
         }
         
-        animateMovement(activePawn, deplacement);
-        
         isPlayer1Turn = !isPlayer1Turn;
         
     }
@@ -216,6 +225,7 @@ public class GameFrame extends javax.swing.JFrame {
         cup.setLocked(true);
         
         int startPos;
+        
         
         if(playerPawn == pawnPlayer1) 
             startPos = player1Pos;
@@ -243,6 +253,8 @@ public class GameFrame extends javax.swing.JFrame {
         timer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                boolean depassement = false;
+                
                 if(visualPos[0] >= finalTarget){
                     timer.stop();
                   
@@ -252,9 +264,17 @@ public class GameFrame extends javax.swing.JFrame {
                     
                     return;
                 }
+                if (visualPos[0] >= 30) {
+                    depassement=true;
+                }
                 
                 visualPos[0]++;
                 movePlayerToSquare(playerPawn, visualPos[0]);
+                
+                if (depassement) {
+                    movePlayerToSquare(playerPawn, finalTarget);;
+                }
+                
             }
         });
 
