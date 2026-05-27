@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.Popup;
 import javax.swing.Timer;
 import javax.swing.SwingUtilities; 
 
@@ -193,13 +194,13 @@ public class GameFrame extends javax.swing.JFrame {
         
         if (!boundary.finJeu(pirateCourant)) {
             jTextArea1.append("Fin de jeu, victoire de " + nomPirateCourant + "\n");
-            // ajouter ecran de victoire
-            // desactiver fenetre de jeu
+            JOptionPane.showMessageDialog(this,nomPirateCourant + "est arrivee");
+            this.dispose();
         }
         if (!boundary.verificationVie(pirateCourant)) {
             jTextArea1.append(boundary.affichageVie(pirateCourant));
-            // ajouter ecran de victoire
-            // desactiver fenetre de jeu
+            JOptionPane.showMessageDialog(this,"Victoire de " + nomPirateCourant + " par perte de vie");
+            this.dispose();
         }
         
         animateMovement(activePawn, deplacement);
