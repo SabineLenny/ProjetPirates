@@ -220,68 +220,93 @@ public class GameFrame extends javax.swing.JFrame {
     //Ulysse
     
     //Elouan
-    public void animateMovement(PlayerPawn playerPawn, int moveAmount) {
-        
-        cup.setLocked(true);
-        
-        int startPos;
-        
-        boolean depassement = false;
-        
-        
-        if(playerPawn == pawnPlayer1) 
-            startPos = player1Pos;
-        else 
-            startPos = player2Pos;
-        
-        final int[] visualPos = { startPos };
-        
-        int target = startPos + moveAmount;
-
-        if(target > 30){
-            target = 30 - (target-30);
-            depassement = true;
-        }
-
-        final int finalTarget = target;
-        
-        
-        if(playerPawn == pawnPlayer1) 
-            player1Pos = finalTarget;
-        else 
-            player2Pos = finalTarget;
-        
-        if (!depassement) {
-        
-            Timer timer = new Timer(300, null);
-
-            timer.addActionListener(new ActionListener() {
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-
-
-                    if(visualPos[0] >= finalTarget){
+public void animateMovement(PlayerPawn playerPawn, int moveAmount) {
+    
+    cup.setLocked(true);
+    
+    int startPos;
+    
+    if(playerPawn == pawnPlayer1) 
+        startPos = player1Pos;
+    else 
+        startPos = player2Pos;
+    
+    final int[] visualPos = { startPos };
+    
+    int target = startPos + moveAmount;
+    
+    // Vérifier si le joueur dépasse 30
+    boolean goingBackward = false;
+    if(target > 30){
+        goingBackward = true;
+        target = 30 - (target - 30);
+    }
+    
+    final int finalTarget = target;
+    final boolean isGoingBackward = goingBackward;
+    
+    // Mettre à jour la position du joueur
+    if(playerPawn == pawnPlayer1) 
+        player1Pos = finalTarget;
+    else 
+        player2Pos = finalTarget;
+    
+    // Pour gérer les 2 phases du rebond
+    final int[] phase = { 0 }; // 0 = avancer vers 30, 1 = reculer
+    
+    Timer timer = new Timer(300, null);
+ 
+    timer.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            
+            if(isGoingBackward) {
+                // ===== ANIMATION AVEC REBOND =====
+                
+                // PHASE 0: Avancer jusqu'à 30 (inclus)
+                if(phase[0] == 0) {
+                    if(visualPos[0] < 30) {
+                        visualPos[0]++;
+                        movePlayerToSquare(playerPawn, visualPos[0]);
+                    }
+                    // Arrivé à 30, passer à phase 1 (reculer)
+                    else if(visualPos[0] == 30) {
+                        phase[0] = 1;
+                        // Rester à 30 pour au moins 1 frame avant de reculer
+                    }
+                }
+                // PHASE 1: Reculer de 30 vers finalTarget
+                else if(phase[0] == 1) {
+                    if(visualPos[0] > finalTarget) {
+                        visualPos[0]--;
+                        movePlayerToSquare(playerPawn, visualPos[0]);
+                    }
+                    // Arrivé à finalTarget
+                    else {
                         timer.stop();
-
-
                         cup.setLocked(false);
-
-
                         return;
                     }
-
-                    visualPos[0]++;
-                    movePlayerToSquare(playerPawn, visualPos[0]);
                 }
-            });
-
-            timer.start();
-        } else {
-            movePlayerToSquare(playerPawn, finalTarget);
-            cup.setLocked(false);
+            }
+            else {
+                // ===== ANIMATION NORMALE (SANS REBOND) =====
+                if(visualPos[0] >= finalTarget){
+                    timer.stop();
+                    cup.setLocked(false);
+                    return;
+                }
+                
+                visualPos[0]++;
+                movePlayerToSquare(playerPawn, visualPos[0]);
+            }
         }
-    }
+    });
+ 
+    timer.start();
+}
+
+
 
     public void movePlayerToSquare(PlayerPawn playerPawn, int squareNumber){
         JLabel square = squares[getIndexFromSquareNumber(squareNumber)];
