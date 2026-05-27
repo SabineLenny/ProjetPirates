@@ -15,7 +15,7 @@ public class ControlCase {
     public String selectCase (TypeCase caseType,Pirate pirate, Pirate autrePirate) {
         switch (caseType) {
         case NORMAL: {
-            return pirate.getNom() + " a atteint une case sans effet";
+            return pirate.getNom() + " a atteint une case sans effet\n";
         }
         case BOMBE: {
             return CONTROL_BOMBE.appliquerEffet(pirate,null);
@@ -30,10 +30,10 @@ public class ControlCase {
             return CONTROL_ECHANGE.appliquerEffet(pirate, autrePirate);
         }
         case DEPART:{
-            return pirate.getNom() + " est sur le depart";
+            return pirate.getNom() + " est sur le depart\n";
         }
         case ARRIVEE:{
-            return pirate.getNom() + " est arrive";
+            return pirate.getNom() + " est arrive\n";
         }
         default:
                 throw new IllegalArgumentException("Unexpected value: " + caseType);

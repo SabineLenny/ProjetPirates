@@ -149,9 +149,20 @@ public class GameFrame extends javax.swing.JFrame {
     
     public void playTurn(){
         
-        PlayerPawn activePawn = isPlayer1Turn ? pawnPlayer1 : pawnPlayer2;
-        int pirateCourant = isPlayer1Turn ? player1ID : player2ID;
-        String nomPirateCourant = isPlayer1Turn ? player1Name : player2Name;
+        PlayerPawn activePawn;
+        int pirateCourant;
+        String nomPirateCourant;
+        
+        if (isPlayer1Turn) {
+            activePawn = pawnPlayer1;
+            pirateCourant = 0;
+            nomPirateCourant = player1Name;
+        } else {
+            activePawn = pawnPlayer2;
+            pirateCourant = 1;
+            nomPirateCourant = player2Name;
+        }
+
         
         jTextArea1.append("Au tour de " + nomPirateCourant+"\n");
         
@@ -162,6 +173,11 @@ public class GameFrame extends javax.swing.JFrame {
         int deplacement = boundary.deplacementPirate(pirateCourant,lancer);
         jTextArea1.append(boundary.deplacementPirateAffichage(pirateCourant, deplacement));
         diceManager.showResult(lancer[0], lancer[1]);
+        
+        String effetCase;
+        effetCase = boundary.activerCase(pirateCourant, (pirateCourant+1)%2);
+            
+        jTextArea1.append(effetCase);
         
         if (!boundary.finJeu(pirateCourant)) {
             jTextArea1.append("Fin de jeu, victoire de " + nomPirateCourant + "\n");
@@ -197,7 +213,7 @@ public class GameFrame extends javax.swing.JFrame {
         int target = startPos + moveAmount;
 
         if(target > 30){
-            target = 30;
+            target = 30 - (target-30);
         }
 
         final int finalTarget = target;

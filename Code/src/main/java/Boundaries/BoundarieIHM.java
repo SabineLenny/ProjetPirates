@@ -60,4 +60,14 @@ public class BoundarieIHM extends BoundariesJeuTextuel{
     public String affichageVie (Integer pirate) {
         return CONTROL_VIE.affichageVie(CONTROL_JEU_PIRATE.getMapPirate().get(pirate));
     }
+    
+    public String activerCase (Integer pirate1, Integer pirate2) {
+        return CONTROL_PLATEAU.activerCase(CONTROL_JEU_PIRATE.getPlateau(),
+                CONTROL_JEU_PIRATE.getMapPirate().get(pirate1),
+                CONTROL_JEU_PIRATE.getMapPirate().get(pirate2));
+    }
+    
+    public int piratePos (Integer pirate) {
+        return CONTROL_JEU_PIRATE.getMapPirate().get(pirate).getPosition();
+    }
 }
