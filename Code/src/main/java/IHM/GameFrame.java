@@ -24,7 +24,9 @@ public class GameFrame extends javax.swing.JFrame {
     private BoardSquare[] squares = new BoardSquare[30];
     
     private String player1Name;
+    private int player1ID;
     private String player2Name;
+    private int player2ID;
 
     private PlayerPawn pawnPlayer1;
     private PlayerPawn pawnPlayer2;
@@ -120,11 +122,15 @@ public class GameFrame extends javax.swing.JFrame {
     }
     
     public void playTurn(){
-        int roll = boundary.lancerDesTour();
         
         PlayerPawn activePawn = isPlayer1Turn ? pawnPlayer1 : pawnPlayer2;
+        int pirateCourant = isPlayer1Turn ? player1ID : player2ID;
         
-        animateMovement(activePawn, roll);
+        int deplacement = boundary.deplacementPirate(pirateCourant);
+        jTextArea1.append(boundary.deplacementPirateAffichage(pirateCourant, deplacement));
+        
+        animateMovement(activePawn, deplacement);
+        System.out.println(deplacement);
         
         isPlayer1Turn = !isPlayer1Turn;
         
@@ -231,12 +237,14 @@ public class GameFrame extends javax.swing.JFrame {
 
         if(player1Name == null || player1Name.isBlank()){
             player1Name = "Joueur 1";
+            player1ID = 0;
         }
         if(player2Name == null || player2Name.isBlank()){
             player2Name = "Joueur 2";
+            player1ID = 1;
         }
         
-        boundary.getControlJeuPirate().instancierJeu(player1Name, player2Name);
+        boundary.instancierJeu(player1Name, player2Name);
     }
 
     

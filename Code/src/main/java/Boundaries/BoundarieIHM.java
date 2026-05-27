@@ -17,31 +17,24 @@ public class BoundarieIHM extends BoundariesJeuTextuel{
     static final ControlDeplacer CONTROL_DEPLACER = new ControlDeplacer();
     static final ControlFinJeu CONTROL_FIN = new ControlFinJeu();
     
-    public ControlJeuPirate getControlJeuPirate () {
-        return CONTROL_JEU_PIRATE;
-    }
-    public ControlVerifierVie getControlVerifierVie () {
-        return CONTROL_VIE;
-    }
-    public ControlVerifierPoison getControlVerifierPoison () {
-        return CONTROL_POISON;
-    }
-    public ControlPlateau getControlPlateau () {
-        return CONTROL_PLATEAU;
-    }
-    public ControlDeplacer getControlDeplacer () {
-        return CONTROL_DEPLACER;
-    }
-    public ControlFinJeu getControlFinJeu () {
-        return CONTROL_FIN;
-    }
-    
     public int lancerDesTour () {
         return CONTROL_DEPLACER.getControlDes().lancerDes(1)[0];
     }
     
     public int getPositionCaseAvecString (String nom) {
         return CONTROL_PLATEAU.positionCaseAvecString(CONTROL_JEU_PIRATE.getPlateau(), nom);
+    }
+    
+    public void instancierJeu(String pirate1, String pirate2) {
+        CONTROL_JEU_PIRATE.instancierJeu(pirate1, pirate2);
+    }
+    
+    public int deplacementPirate (Integer pirate) {
+        return CONTROL_DEPLACER.deplacer(CONTROL_JEU_PIRATE.getMapPirate().get(pirate));
+    }
+    
+    public String deplacementPirateAffichage (Integer pirate, int distance) {
+        return CONTROL_DEPLACER.affichageDeplacement(CONTROL_JEU_PIRATE.getMapPirate().get(pirate), distance);
     }
     
 }

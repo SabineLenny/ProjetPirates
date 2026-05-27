@@ -32,7 +32,7 @@ public class BoundariesJeuTextuel {
 
         
         CONTROL_JEU_PIRATE.instancierJeu(nom1,nom2);
-        String deplacement;
+        int deplacement;
         String effetCase;
             
         
@@ -44,7 +44,7 @@ public class BoundariesJeuTextuel {
             System.out.println(poison);
             
             deplacement = CONTROL_DEPLACER.deplacer(CONTROL_JEU_PIRATE.getMapPirate().get(CONTROL_JEU_PIRATE.getIndicePirate()));
-            System.out.println(deplacement);
+            System.out.println(CONTROL_DEPLACER.affichageDeplacement(CONTROL_JEU_PIRATE.getMapPirate().get(CONTROL_JEU_PIRATE.getIndicePirate()), deplacement));
             
                           
             effetCase = CONTROL_PLATEAU.activerCase(CONTROL_JEU_PIRATE.getPlateau(),CONTROL_JEU_PIRATE.getMapPirate().get(CONTROL_JEU_PIRATE.getIndicePirate()),CONTROL_JEU_PIRATE.getMapPirate().get((CONTROL_JEU_PIRATE.getIndicePirate()+1)%2));
