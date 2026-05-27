@@ -226,6 +226,8 @@ public class GameFrame extends javax.swing.JFrame {
         
         int startPos;
         
+        boolean depassement = false;
+        
         
         if(playerPawn == pawnPlayer1) 
             startPos = player1Pos;
@@ -238,6 +240,7 @@ public class GameFrame extends javax.swing.JFrame {
 
         if(target > 30){
             target = 30 - (target-30);
+            depassement = true;
         }
 
         final int finalTarget = target;
@@ -248,37 +251,36 @@ public class GameFrame extends javax.swing.JFrame {
         else 
             player2Pos = finalTarget;
         
-        Timer timer = new Timer(300, null);
+        if (!depassement) {
+        
+            Timer timer = new Timer(300, null);
 
-        timer.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                boolean depassement = false;
-                
-                if(visualPos[0] >= finalTarget){
-                    timer.stop();
-                  
-                    
-                    cup.setLocked(false);
-                    
-                    
-                    return;
-                }
-                if (visualPos[0] >= 30) {
-                    depassement=true;
-                }
-                
-                visualPos[0]++;
-                movePlayerToSquare(playerPawn, visualPos[0]);
-                
-                if (depassement) {
-                    movePlayerToSquare(playerPawn, finalTarget);;
-                }
-                
-            }
-        });
+            timer.addActionListener(new ActionListener() {
 
-        timer.start();
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+
+                    if(visualPos[0] >= finalTarget){
+                        timer.stop();
+
+
+                        cup.setLocked(false);
+
+
+                        return;
+                    }
+
+                    visualPos[0]++;
+                    movePlayerToSquare(playerPawn, visualPos[0]);
+                }
+            });
+
+            timer.start();
+        } else {
+            movePlayerToSquare(playerPawn, finalTarget);
+            cup.setLocked(false);
+        }
     }
 
     public void movePlayerToSquare(PlayerPawn playerPawn, int squareNumber){
