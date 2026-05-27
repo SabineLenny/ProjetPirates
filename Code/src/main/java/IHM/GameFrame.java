@@ -138,6 +138,16 @@ public class GameFrame extends javax.swing.JFrame {
         jTextArea1.append(boundary.deplacementPirateAffichage(pirateCourant, deplacement));
         diceManager.showResult(lancer[0], lancer[1]);
         
+        if (!boundary.finJeu(pirateCourant)) {
+            jTextArea1.append("Fin de jeu, victoire de " + nomPirateCourant + "\n");
+            // ajouter ecran de victoire
+            // desactiver fenetre de jeu
+        }
+        if (!boundary.verificationVie(pirateCourant)) {
+            jTextArea1.append(boundary.affichageVie(pirateCourant));
+            // ajouter ecran de victoire
+            // desactiver fenetre de jeu
+        }
         animateMovement(activePawn, deplacement);
         
         isPlayer1Turn = !isPlayer1Turn;

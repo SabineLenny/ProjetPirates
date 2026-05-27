@@ -49,4 +49,15 @@ public class BoundarieIHM extends BoundariesJeuTextuel{
         return CONTROL_POISON.verificationPoison(CONTROL_JEU_PIRATE.getMapPirate().get(pirate));
     }
     
+    public boolean finJeu (Integer pirate) {
+        return CONTROL_FIN.finJeu(CONTROL_JEU_PIRATE.getMapPirate().get(pirate));
+    }
+    
+    public boolean verificationVie (Integer pirate) {
+        return CONTROL_VIE.verifierVie(CONTROL_JEU_PIRATE.getMapPirate().get(pirate));
+    }
+    
+    public String affichageVie (Integer pirate) {
+        return CONTROL_VIE.affichageVie(CONTROL_JEU_PIRATE.getMapPirate().get(pirate));
+    }
 }
