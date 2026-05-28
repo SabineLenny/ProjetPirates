@@ -78,6 +78,7 @@ public class GameFrame extends javax.swing.JFrame {
         int positionEchange = boundary.getPositionCaseAvecString("echange");
         setSquareSpecialType(positionEchange, BoardSquare.SquareType.EXCHANGE);
         
+        
         int positionSoin = boundary.getPositionCaseAvecString("soin");
         setSquareSpecialType(positionSoin, BoardSquare.SquareType.HEAL);
         
@@ -118,7 +119,7 @@ public class GameFrame extends javax.swing.JFrame {
     //Lenny
     public void pVIHM(int Changement,int Joueur){
 
-        if(Joueur==1){
+        if(Joueur==0){
              player1Bar.setValue(player1Bar.getValue()+ Changement);
         }
         else {
@@ -127,17 +128,20 @@ public class GameFrame extends javax.swing.JFrame {
     }
     
     public void poison(int Joueur){
-        if(Joueur==1){
+        if(Joueur==0){
             player1NameLabel.setForeground(Color.MAGENTA);
-            PSNJoueur1.setVisible(true);          
+            PSNJoueur1.setVisible(true);
+            
+                    
         }
         else{
             player2NameLabel.setForeground(Color.MAGENTA);
             PSNJoueur2.setVisible(true);
+            
         }   
     }
     public void poisonHeal(int Joueur){
-        if(Joueur==1){
+        if(Joueur==0){
             player1NameLabel.setForeground(Color.BLACK);
             PSNJoueur1.setVisible(false);          
         }
@@ -146,6 +150,7 @@ public class GameFrame extends javax.swing.JFrame {
             PSNJoueur2.setVisible(false);
         } 
     }
+    //
     
     //Ulysse
     public void playTurn(){
@@ -169,7 +174,7 @@ public class GameFrame extends javax.swing.JFrame {
         String verifierPoison = boundary.verificationPoison(pirateCourant);
         if (boundary.estEmpoisonne(pirateCourant)){
             pVIHM(-1,pirateCourant);
-            poison(pirateCourant);
+            
         } else {
             poisonHeal(pirateCourant);
         }
@@ -182,15 +187,19 @@ public class GameFrame extends javax.swing.JFrame {
         
         String effetCase;
         effetCase = boundary.activerCase(pirateCourant, (pirateCourant+1)%2);
-        
+        animateMovement(activePawn, deplacement);
         if (effetCase.contains("soigne") && boundary.getPirateVie(pirateCourant) >= 5) {
             pVIHM(1,pirateCourant);
+            poisonHeal(pirateCourant);
         }
         if (effetCase.contains("BOMB")) {
+            JOptionPane.showMessageDialog(this,"BOOM");
             pVIHM(-3,pirateCourant);
         } 
-        
-        animateMovement(activePawn, deplacement);
+        if (effetCase.contains("empoisonne")){
+            poison(pirateCourant);
+        }
+       
         
         if (effetCase.contains("positions")) {
             int pos1Temporaire = player1Pos;
