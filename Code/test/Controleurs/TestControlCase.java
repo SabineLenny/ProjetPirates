@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import Entite.Pirate;
 import Entite.TypeCase;
+// Code par Maksym, édité et testé par Elouan
 
 class TestControlCase {
     

@@ -7,11 +7,14 @@ Controleurs\ControlCaseSoin.class
 Controleurs\ControlPirate.class
 Controleurs\ControlCasePoison.class
 IHM\GameFrame.class
+IHM\GameFrame$3.class
 IHM\PlayerPawn.class
 Controleurs\ControlCaseSpecial.class
 Controleurs\ControlCaseBombe.class
+Controleurs\ControlPlateau$1.class
 IHM\BoardSquare.class
 Controleurs\ControlFinJeu.class
+IHM\GameFrame$4.class
 Controleurs\ControlVerifierPoison.class
 Controleurs\ControlJeuPirate.class
 Controleurs\ControlPlateau.class
@@ -27,5 +30,6 @@ Entite\Pirate.class
 Boundaries\BoundarieIHM.class
 Controleurs\ControlDeplacer.class
 IHM\GameFrame$2.class
+IHM\GameFrame$5.class
 Entite\Plateau.class
 IHM\ImageUtils.class

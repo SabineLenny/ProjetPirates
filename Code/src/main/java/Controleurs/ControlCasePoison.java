@@ -10,6 +10,6 @@ public class ControlCasePoison {
         int[] resultat = CONTROL_DES.lancerDes(1);
         pirate1.setDureeEmpoisonnement(resultat[0]);
         pirate1.soigner();
-        return pirate1.getNom() + " est empoisonne pendant " + resultat[0] + " tours.";
+        return pirate1.getNom() + " est empoisonne pendant " + resultat[0] + " tours.\n";
     }
 }

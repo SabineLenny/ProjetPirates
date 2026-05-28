@@ -41,5 +41,5 @@ public class PlayerPawn extends JLabel {
     }
 
     public int getSizeX() { return sizeX; }
-    public int getSizeY() { return sizeY; }
+    public int getSizeY() { return sizeY; }    
 }

@@ -1,37 +1,34 @@
 package IHM;
 
+import Boundaries.BoundarieIHM;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
-import java.net.URL;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.Popup;
 import javax.swing.Timer;
 import javax.swing.SwingUtilities; 
-import javax.swing.SwingConstants; 
 
 /**
  * @author DWR4418A
  */
 public class GameFrame extends javax.swing.JFrame {
     
+    private final BoundarieIHM boundary = new BoundarieIHM();
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GameFrame.class.getName());
 
     private BoardSquare[] squares = new BoardSquare[30];
     
     private String player1Name;
+    private int player1ID;
     private String player2Name;
+    private int player2ID;
 
     private PlayerPawn pawnPlayer1;
     private PlayerPawn pawnPlayer2;
@@ -60,6 +57,8 @@ public class GameFrame extends javax.swing.JFrame {
 
         initComponents();
         
+        jTextArea1.append(boundary.affichagePlateau() + "\n\n");
+        
         setResizable(false); 
         
         diceManager = new DiceManager(dice1Label, dice2Label);
@@ -68,13 +67,23 @@ public class GameFrame extends javax.swing.JFrame {
         player1NameLabel.setText(player1Name);
         player2NameLabel.setText(player2Name);
         //
+        PSNJoueur1.setVisible(false);
+        PSNJoueur2.setVisible(false);
         
         createBoard();
         
-        setSquareSpecialType(8, BoardSquare.SquareType.BOMB);
-        setSquareSpecialType(15, BoardSquare.SquareType.EXCHANGE);
-        setSquareSpecialType(21, BoardSquare.SquareType.HEAL);
-        setSquareSpecialType(28, BoardSquare.SquareType.POISON);
+        int positionBombe = boundary.getPositionCaseAvecString("bombe");
+        setSquareSpecialType(positionBombe, BoardSquare.SquareType.BOMB);
+        
+        int positionEchange = boundary.getPositionCaseAvecString("echange");
+        setSquareSpecialType(positionEchange, BoardSquare.SquareType.EXCHANGE);
+        
+        
+        int positionSoin = boundary.getPositionCaseAvecString("soin");
+        setSquareSpecialType(positionSoin, BoardSquare.SquareType.HEAL);
+        
+        int positionPoison = boundary.getPositionCaseAvecString("empoisonnement");
+        setSquareSpecialType(positionPoison, BoardSquare.SquareType.POISON);
 
 
         pawnPlayer1 = new PlayerPawn(this, "pirateship.png", "pirateshipleft.png", 50, 50);
@@ -107,82 +116,206 @@ public class GameFrame extends javax.swing.JFrame {
         squares[getIndexFromSquareNumber(squareNumber)].setSpecialType(squareType);
     }
 
+    //Lenny
+    public void pVIHM(int Changement,int Joueur){
 
-
-    // to delete
-    public int lancerLesDes() {
-        int dice1 = (int)(Math.random() * 6) + 1;
-        int dice2 = (int)(Math.random() * 6) + 1;
-        int total = dice1 + dice2;
-
-          diceManager.showResult(dice1, dice2);
-
-        jTextArea1.append("\n" + player1Name + " a lancé un " + dice1 + " et un " + dice2 + " (Total: " + total + ")");
-
-        return total;
+        if(Joueur==0){
+             player1Bar.setValue(player1Bar.getValue()+ Changement);
+        }
+        else {
+           player2Bar.setValue(player2Bar.getValue()+ Changement);
+        }
     }
     
+    public void poison(int Joueur){
+        if(Joueur==0){
+            player1NameLabel.setForeground(Color.MAGENTA);
+            PSNJoueur1.setVisible(true);
+            
+                    
+        }
+        else{
+            player2NameLabel.setForeground(Color.MAGENTA);
+            PSNJoueur2.setVisible(true);
+            
+        }   
+    }
+    public void poisonHeal(int Joueur){
+        if(Joueur==0){
+            player1NameLabel.setForeground(Color.BLACK);
+            PSNJoueur1.setVisible(false);          
+        }
+        else{
+            player2NameLabel.setForeground(Color.BLACK);
+            PSNJoueur2.setVisible(false);
+        } 
+    }
+    //
+    
+    //Ulysse
     public void playTurn(){
-        int roll = lancerLesDes();
         
-        PlayerPawn activePawn = isPlayer1Turn ? pawnPlayer1 : pawnPlayer2;
+        PlayerPawn activePawn;
+        int pirateCourant;
+        String nomPirateCourant;
         
-        animateMovement(activePawn, roll);
+        if (isPlayer1Turn) {
+            activePawn = pawnPlayer1;
+            pirateCourant = 0;
+            nomPirateCourant = player1Name;
+        } else {
+            activePawn = pawnPlayer2;
+            pirateCourant = 1;
+            nomPirateCourant = player2Name;
+        }
+
+        jTextArea1.append("\n\n\nAu tour de " + nomPirateCourant+"\n");
+        
+        String verifierPoison = boundary.verificationPoison(pirateCourant);
+        if (boundary.estEmpoisonne(pirateCourant)){
+            pVIHM(-1,pirateCourant);
+            
+        } else {
+            poisonHeal(pirateCourant);
+        }
+        jTextArea1.append(verifierPoison);
+        
+        int[] lancer = boundary.lancerDes();
+        int deplacement = boundary.deplacementPirate(pirateCourant,lancer);
+        jTextArea1.append(boundary.deplacementPirateAffichage(pirateCourant, deplacement));
+        diceManager.showResult(lancer[0], lancer[1]);
+        
+        String effetCase;
+        effetCase = boundary.activerCase(pirateCourant, (pirateCourant+1)%2);
+        animateMovement(activePawn, deplacement);
+        if (effetCase.contains("soigne") && boundary.getPirateVie(pirateCourant) >= 5) {
+            pVIHM(1,pirateCourant);
+            poisonHeal(pirateCourant);
+        }
+        if (effetCase.contains("BOMB")) {
+            JOptionPane.showMessageDialog(this,"BOOM");
+            pVIHM(-3,pirateCourant);
+        } 
+        if (effetCase.contains("empoisonne")){
+            poison(pirateCourant);
+        }
+       
+        
+        if (effetCase.contains("positions")) {
+            int pos1Temporaire = player1Pos;
+            int pos2Temporaire = player2Pos;
+            player1Pos = pos2Temporaire;
+            movePlayerToSquare(pawnPlayer1, pos2Temporaire);
+            player2Pos = pos1Temporaire;
+            movePlayerToSquare(pawnPlayer2, pos1Temporaire);
+        }
+            
+        jTextArea1.append(effetCase);
+        
+        if (!boundary.finJeu(pirateCourant)) {
+            jTextArea1.append("Fin de jeu, victoire de " + nomPirateCourant + "\n");
+            JOptionPane.showMessageDialog(this,nomPirateCourant + "est arrivee");
+            this.dispose();
+        }
+        if (!boundary.verificationVie(pirateCourant)) {
+            jTextArea1.append(boundary.affichageVie(pirateCourant));
+            JOptionPane.showMessageDialog(this,"Victoire de " + nomPirateCourant + " par perte de vie");
+            this.dispose();
+        }
         
         isPlayer1Turn = !isPlayer1Turn;
         
     }
+    //Ulysse
     
     //Elouan
-    public void animateMovement(PlayerPawn playerPawn, int moveAmount) {
-        
-        cup.setLocked(true);
-        
-        int startPos;
-        
-        if(playerPawn == pawnPlayer1) 
-            startPos = player1Pos;
-        else 
-            startPos = player2Pos;
-        
-        final int[] visualPos = { startPos };
-        
-        int target = startPos + moveAmount;
-
-        if(target > 30){
-            target = 30;
-        }
-
-        final int finalTarget = target;
-        
-        
-        if(playerPawn == pawnPlayer1) 
-            player1Pos = finalTarget;
-        else 
-            player2Pos = finalTarget;
-        
-        Timer timer = new Timer(300, null);
-
-        timer.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+public void animateMovement(PlayerPawn playerPawn, int moveAmount) {
+    
+    cup.setLocked(true);
+    
+    int startPos;
+    
+    if(playerPawn == pawnPlayer1) 
+        startPos = player1Pos;
+    else 
+        startPos = player2Pos;
+    
+    final int[] visualPos = { startPos };
+    
+    int target = startPos + moveAmount;
+    
+    // Vérifier si le joueur dépasse 30
+    boolean goingBackward = false;
+    if(target > 30){
+        goingBackward = true;
+        target = 30 - (target - 30);
+    }
+    
+    final int finalTarget = target;
+    final boolean isGoingBackward = goingBackward;
+    
+    // Mettre à jour la position du joueur
+    if(playerPawn == pawnPlayer1) 
+        player1Pos = finalTarget;
+    else 
+        player2Pos = finalTarget;
+    
+    // Pour gérer les 2 phases du rebond
+    final int[] phase = { 0 }; // 0 = avancer vers 30, 1 = reculer
+    
+    Timer timer = new Timer(300, null);
+ 
+    timer.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            
+            if(isGoingBackward) {
+                // ===== ANIMATION AVEC REBOND =====
+                
+                // PHASE 0: Avancer jusqu'à 30 (inclus)
+                if(phase[0] == 0) {
+                    if(visualPos[0] < 30) {
+                        visualPos[0]++;
+                        movePlayerToSquare(playerPawn, visualPos[0]);
+                    }
+                    // Arrivé à 30, passer à phase 1 (reculer)
+                    else if(visualPos[0] == 30) {
+                        phase[0] = 1;
+                        // Rester à 30 pour au moins 1 frame avant de reculer
+                    }
+                }
+                // PHASE 1: Reculer de 30 vers finalTarget
+                else if(phase[0] == 1) {
+                    if(visualPos[0] > finalTarget) {
+                        visualPos[0]--;
+                        movePlayerToSquare(playerPawn, visualPos[0]);
+                    }
+                    // Arrivé à finalTarget
+                    else {
+                        timer.stop();
+                        cup.setLocked(false);
+                        return;
+                    }
+                }
+            }
+            else {
+                // ===== ANIMATION NORMALE (SANS REBOND) =====
                 if(visualPos[0] >= finalTarget){
                     timer.stop();
-                  
-                    
                     cup.setLocked(false);
-                    
-                    
                     return;
                 }
                 
                 visualPos[0]++;
                 movePlayerToSquare(playerPawn, visualPos[0]);
             }
-        });
+        }
+    });
+ 
+    timer.start();
+}
 
-        timer.start();
-    }
+
 
     public void movePlayerToSquare(PlayerPawn playerPawn, int squareNumber){
         JLabel square = squares[getIndexFromSquareNumber(squareNumber)];
@@ -233,11 +366,16 @@ public class GameFrame extends javax.swing.JFrame {
 
         if(player1Name == null || player1Name.isBlank()){
             player1Name = "Joueur 1";
+            player1ID = 0;
         }
         if(player2Name == null || player2Name.isBlank()){
             player2Name = "Joueur 2";
+            player1ID = 1;
         }
+        
+        boundary.instancierJeu(player1Name, player2Name);
     }
+
     
     
     private int getIndexFromSquareNumber(int squareNumber){
@@ -297,6 +435,8 @@ public class GameFrame extends javax.swing.JFrame {
         dice1Label = new javax.swing.JLabel();
         dice2Panel = new javax.swing.JPanel();
         dice2Label = new javax.swing.JLabel();
+        PSNJoueur2 = new javax.swing.JButton();
+        PSNJoueur1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         boardPanel = new javax.swing.JPanel() {
@@ -326,6 +466,17 @@ public class GameFrame extends javax.swing.JFrame {
         player1NameLabel.setText("Joueur 1");
 
         player2NameLabel.setText("Joueur 2");
+
+        player1Bar.setMaximum(5);
+        player1Bar.setValue(5);
+        player1Bar.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                player1BarStateChanged(evt);
+            }
+        });
+
+        player2Bar.setMaximum(5);
+        player2Bar.setValue(5);
 
         dice1Panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         dice1Panel.setMaximumSize(new java.awt.Dimension(50, 50));
@@ -371,6 +522,24 @@ public class GameFrame extends javax.swing.JFrame {
                 .addComponent(dice2Label, javax.swing.GroupLayout.PREFERRED_SIZE, 47, Short.MAX_VALUE))
         );
 
+        PSNJoueur2.setBackground(new java.awt.Color(183, 0, 255));
+        PSNJoueur2.setForeground(new java.awt.Color(255, 255, 255));
+        PSNJoueur2.setText("PSN");
+        PSNJoueur2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PSNJoueur2ActionPerformed(evt);
+            }
+        });
+
+        PSNJoueur1.setBackground(new java.awt.Color(183, 0, 255));
+        PSNJoueur1.setForeground(new java.awt.Color(255, 255, 255));
+        PSNJoueur1.setText("PSN");
+        PSNJoueur1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PSNJoueur1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
         topPanel.setLayout(topPanelLayout);
         topPanelLayout.setHorizontalGroup(
@@ -379,15 +548,17 @@ public class GameFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(player1NameLabel)
-                    .addComponent(player1Bar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(player1Bar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PSNJoueur1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(dice2Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(dice1Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(140, 140, 140)
-                .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(player2NameLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(player2Bar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(player2NameLabel)
+                    .addComponent(player2Bar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PSNJoueur2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22))
         );
         topPanelLayout.setVerticalGroup(
@@ -402,7 +573,11 @@ public class GameFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(player1Bar, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(player2Bar, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(player2Bar, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(PSNJoueur2)
+                            .addComponent(PSNJoueur1)))
                     .addGroup(topPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(dice1Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -474,8 +649,22 @@ public class GameFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void player1BarStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_player1BarStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_player1BarStateChanged
+
+    private void PSNJoueur2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PSNJoueur2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PSNJoueur2ActionPerformed
+
+    private void PSNJoueur1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PSNJoueur1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PSNJoueur1ActionPerformed
+
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton PSNJoueur1;
+    private javax.swing.JButton PSNJoueur2;
     private javax.swing.JPanel boardPanel;
     private javax.swing.JLabel dice1Label;
     private javax.swing.JPanel dice1Panel;

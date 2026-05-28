@@ -39,7 +39,6 @@ public class ControlJeuPirate{
         mapPirate.put(0, CONTROL_PIRATE.creationPirate(pirate1));
         mapPirate.put(1, CONTROL_PIRATE.creationPirate(pirate2));
         p = CONTROL_PLATEAU.creationPlateau();
-        System.out.println(CONTROL_PLATEAU.affichagePlateau(p));
         indicePirate = 0;
         run = true; 
     }

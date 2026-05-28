@@ -8,8 +8,12 @@ public class ControlVerifierPoison {
         if(pirate.getDureeEmpoisonnement()>0){
             pirate.prendreDegats(1);
             pirate.setDureeEmpoisonnement(pirate.getDureeEmpoisonnement()-1);
-            return "Le pirate " + pirate.getNom() + " prend 1 degat de poison.";
+            return "Le pirate " + pirate.getNom() + " prend 1 degat de poison.\n";
         }
-        return "Le pirate " + pirate.getNom() + " n'est pas empoisonne, il ne prend pas de degats.";
+        return "Le pirate " + pirate.getNom() + " n'est pas empoisonne, il ne prend pas de degats.\n";
+    }
+    
+    public boolean estEmpoisonne (Pirate pirate) {
+        return pirate.getDureeEmpoisonnement()>0;
     }
 }         

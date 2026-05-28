@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import Entite.Pirate;
 import Entite.Plateau;
 import java.util.Map;
-
+//Code par Maksym, édité et testé par Elouan
 class TestControlJeuPirate {
     
     private ControlJeuPirate controlJeu;
