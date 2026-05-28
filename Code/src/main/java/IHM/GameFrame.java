@@ -50,6 +50,11 @@ public class GameFrame extends javax.swing.JFrame {
     private final int pawnSizeX = 80;
     private final int pawnSizeY = 50;
     
+    // --- ANIMATION ROUTING CONSTANTS ---
+    private static final int STEP_NONE = 0;     // Ne rien faire une fois terminé
+    private static final int STEP_EFFECT = 1;   // Traiter l'effet de la case
+    private static final int STEP_FINALIZE = 2; // Fin du tour
+    
     
     public GameFrame() {
 
@@ -153,167 +158,175 @@ public class GameFrame extends javax.swing.JFrame {
     //
     
     //Ulysse
-    public void playTurn(){
-        
-        PlayerPawn activePawn;
-        int pirateCourant;
-        String nomPirateCourant;
-        
-        if (isPlayer1Turn) {
-            activePawn = pawnPlayer1;
-            pirateCourant = 0;
-            nomPirateCourant = player1Name;
-        } else {
-            activePawn = pawnPlayer2;
-            pirateCourant = 1;
-            nomPirateCourant = player2Name;
-        }
+    public void playTurn() {
+        int pirateCourant = isPlayer1Turn ? 0 : 1;
+        String nomPirateCourant = isPlayer1Turn ? player1Name : player2Name;
+        PlayerPawn activePawn = isPlayer1Turn ? pawnPlayer1 : pawnPlayer2;
 
         jTextArea1.append("\n\n\nAu tour de " + nomPirateCourant+"\n");
         
-        String verifierPoison = boundary.verificationPoison(pirateCourant);
-        if (boundary.estEmpoisonne(pirateCourant)){
-            pVIHM(-1,pirateCourant);
-            
-        } else {
+        if (boundary.estEmpoisonne(pirateCourant)){ 
+            pVIHM(-1, pirateCourant);
+        }
+        else {
             poisonHeal(pirateCourant);
         }
-        jTextArea1.append(verifierPoison);
+        jTextArea1.append(boundary.verificationPoison(pirateCourant));
         
         int[] lancer = boundary.lancerDes();
-        int deplacement = boundary.deplacementPirate(pirateCourant,lancer);
+        int deplacement = boundary.deplacementPirate(pirateCourant, lancer);
         jTextArea1.append(boundary.deplacementPirateAffichage(pirateCourant, deplacement));
         diceManager.showResult(lancer[0], lancer[1]);
         
-        String effetCase;
-        effetCase = boundary.activerCase(pirateCourant, (pirateCourant+1)%2);
-        animateMovement(activePawn, deplacement);
+        // Quand c'est fini, traiterEffetCase
+        animateMovement(activePawn, deplacement, STEP_EFFECT);
+    }
+    //Ulysse
+    
+    private void traiterEffetCase() {
+        int pirateCourant = isPlayer1Turn ? 0 : 1;
+        
+        String effetCase = boundary.activerCase(pirateCourant, (pirateCourant+1)%2);
+        jTextArea1.append(effetCase);
+        
         if (effetCase.contains("soigne") && boundary.getPirateVie(pirateCourant) >= 5) {
-            pVIHM(1,pirateCourant);
+            pVIHM(1, pirateCourant);
             poisonHeal(pirateCourant);
         }
         if (effetCase.contains("BOMB")) {
-            JOptionPane.showMessageDialog(this,"BOOM");
-            pVIHM(-3,pirateCourant);
+            JOptionPane.showMessageDialog(this, "BOOM");
+            pVIHM(-3, pirateCourant);
         } 
         if (effetCase.contains("empoisonne")){
             poison(pirateCourant);
         }
-       
         
+
         if (effetCase.contains("positions")) {
-            int pos1Temporaire = player1Pos;
-            int pos2Temporaire = player2Pos;
-            player1Pos = pos2Temporaire;
-            movePlayerToSquare(pawnPlayer1, pos2Temporaire);
-            player2Pos = pos1Temporaire;
-            movePlayerToSquare(pawnPlayer2, pos1Temporaire);
+            executerEchange();
+        } else {
+            finalizeTurn();
         }
-            
-        jTextArea1.append(effetCase);
+    }
+    
+    private void executerEchange() {
+        int distancePourP1 = player2Pos - player1Pos;
+        int distancePourP2 = player1Pos - player2Pos;
+        
+        //  on met 0 pour ne pas déclencher deux fois la fin du tour
+        animateMovement(pawnPlayer1, distancePourP1, STEP_NONE);
+        
+        // on met '2' pour déclencher finalizeTurn() à la fin
+        animateMovement(pawnPlayer2, distancePourP2, STEP_FINALIZE);
+    }
+
+    private void finalizeTurn() {
+        int pirateCourant = isPlayer1Turn ? 0 : 1;
+        String nomPirateCourant = isPlayer1Turn ? player1Name : player2Name;
         
         if (!boundary.finJeu(pirateCourant)) {
             jTextArea1.append("Fin de jeu, victoire de " + nomPirateCourant + "\n");
-            JOptionPane.showMessageDialog(this,nomPirateCourant + "est arrivee");
+            JOptionPane.showMessageDialog(this, nomPirateCourant + " est arrivee");
             this.dispose();
+            return;
         }
         if (!boundary.verificationVie(pirateCourant)) {
             jTextArea1.append(boundary.affichageVie(pirateCourant));
-            JOptionPane.showMessageDialog(this,"Victoire de " + nomPirateCourant + " par perte de vie");
+            JOptionPane.showMessageDialog(this, "Victoire de " + nomPirateCourant + " par perte de vie");
             this.dispose();
+            return;
         }
         
+        // au joueur suivant
         isPlayer1Turn = !isPlayer1Turn;
-        
     }
-    //Ulysse
     
     //Elouan
-public void animateMovement(PlayerPawn playerPawn, int moveAmount) {
-    
-    cup.setLocked(true);
-    
-    int startPos;
-    
-    if(playerPawn == pawnPlayer1) 
-        startPos = player1Pos;
-    else 
-        startPos = player2Pos;
-    
-    final int[] visualPos = { startPos };
-    
-    int target = startPos + moveAmount;
-    
-    // Vérifier si le joueur dépasse 30
-    boolean goingBackward = false;
-    if(target > 30){
-        goingBackward = true;
-        target = 30 - (target - 30);
-    }
-    
-    final int finalTarget = target;
-    final boolean isGoingBackward = goingBackward;
-    
-    // Mettre à jour la position du joueur
-    if(playerPawn == pawnPlayer1) 
-        player1Pos = finalTarget;
-    else 
-        player2Pos = finalTarget;
-    
-    // Pour gérer les 2 phases du rebond
-    final int[] phase = { 0 }; // 0 = avancer vers 30, 1 = reculer
-    
-    Timer timer = new Timer(300, null);
- 
-    timer.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            
-            if(isGoingBackward) {
-                // ===== ANIMATION AVEC REBOND =====
-                
-                // PHASE 0: Avancer jusqu'à 30 (inclus)
-                if(phase[0] == 0) {
-                    if(visualPos[0] < 30) {
-                        visualPos[0]++;
-                        movePlayerToSquare(playerPawn, visualPos[0]);
-                    }
-                    // Arrivé à 30, passer à phase 1 (reculer)
-                    else if(visualPos[0] == 30) {
-                        phase[0] = 1;
-                        // Rester à 30 pour au moins 1 frame avant de reculer
+public void animateMovement(PlayerPawn playerPawn, int moveAmount, int nextStep) {
+        cup.setLocked(true);
+        
+        int startPos = (playerPawn == pawnPlayer1) ? player1Pos : player2Pos;
+        final int[] visualPos = { startPos };
+        int target = startPos + moveAmount;
+        
+        // Vrai si le jet de dés fait dépasser la case finale (30).
+        // Nécessite une animation en deux phases : avancer jusqu'à 30, 
+        // puis "rebondir" en reculant du surplus.
+        final boolean isBouncing;
+        
+        // Vrai si la case d'arrivée est inférieure à la case de départ.
+        // Se déclenche lors de l'échange de positions.
+        // Nécessite une animation en une seule phase vers l'arrière (marche arrière).
+        final boolean isSimpleBackward;
+        
+        if(target > 30){
+            isBouncing = true;
+            isSimpleBackward = false;
+            target = 30 - (target - 30);
+        } else if(target < startPos){
+            isBouncing = false;
+            isSimpleBackward = true;
+        } else {
+            isBouncing = false;
+            isSimpleBackward = false;
+        }
+        
+        final int finalTarget = target;
+        
+        if(playerPawn == pawnPlayer1) player1Pos = finalTarget;
+        else player2Pos = finalTarget;
+        
+        final int[] phase = { 0 }; 
+        
+        Timer timer = new Timer(300, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(isBouncing) {
+                    if(phase[0] == 0) {
+                        if(visualPos[0] < 30) {
+                            visualPos[0]++;
+                            movePlayerToSquare(playerPawn, visualPos[0]);
+                        } else if(visualPos[0] == 30) {
+                            phase[0] = 1;
+                        }
+                    } else if(phase[0] == 1) {
+                        if(visualPos[0] > finalTarget) {
+                            visualPos[0]--;
+                            movePlayerToSquare(playerPawn, visualPos[0]);
+                        } else {
+                            ((Timer) e.getSource()).stop();
+                            cup.setLocked(false);
+                            if (nextStep == 1) traiterEffetCase();
+                            else if (nextStep == 2) finalizeTurn();
+                        }
                     }
                 }
-                // PHASE 1: Reculer de 30 vers finalTarget
-                else if(phase[0] == 1) {
+                else if (isSimpleBackward) {
                     if(visualPos[0] > finalTarget) {
                         visualPos[0]--;
                         movePlayerToSquare(playerPawn, visualPos[0]);
-                    }
-                    // Arrivé à finalTarget
-                    else {
-                        timer.stop();
+                    } else {
+                        ((Timer) e.getSource()).stop();
                         cup.setLocked(false);
-                        return;
+                        if (nextStep == 1) traiterEffetCase();
+                        else if (nextStep == 2) finalizeTurn();
+                    }
+                }
+                else {
+                    if(visualPos[0] < finalTarget){
+                        visualPos[0]++;
+                        movePlayerToSquare(playerPawn, visualPos[0]);
+                    } else {
+                        ((Timer) e.getSource()).stop();
+                        cup.setLocked(false);
+                        if (nextStep == 1) traiterEffetCase();
+                        else if (nextStep == 2) finalizeTurn();
                     }
                 }
             }
-            else {
-                // ===== ANIMATION NORMALE (SANS REBOND) =====
-                if(visualPos[0] >= finalTarget){
-                    timer.stop();
-                    cup.setLocked(false);
-                    return;
-                }
-                
-                visualPos[0]++;
-                movePlayerToSquare(playerPawn, visualPos[0]);
-            }
-        }
-    });
- 
-    timer.start();
-}
+        });
+        timer.start();
+    }
 
 
 
