@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import Entite.Pirate;
 import Entite.Plateau;
 import Entite.TypeCase;
-
+//Code par Maksym, édité et testé par Elouan
 class TestControlPlateau {
     
     private ControlPlateau controlPlateau;

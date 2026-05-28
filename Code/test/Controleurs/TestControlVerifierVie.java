@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import Entite.Pirate;
-
+// Code par Maksym, édité et testé par Elouan
 class TestControlVerifierVie {
     
     private ControlVerifierVie controlVie;
