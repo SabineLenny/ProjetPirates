@@ -62,7 +62,7 @@ public class GameFrame extends javax.swing.JFrame {
 
         initComponents();
         
-        jTextArea1.append(boundary.affichagePlateau() + "\n\n");
+        historyTextArea.append(boundary.affichagePlateau() + "\n\n");
         
         setResizable(false); 
         
@@ -163,7 +163,7 @@ public class GameFrame extends javax.swing.JFrame {
         String nomPirateCourant = isPlayer1Turn ? player1Name : player2Name;
         PlayerPawn activePawn = isPlayer1Turn ? pawnPlayer1 : pawnPlayer2;
 
-        jTextArea1.append("\n\n\nAu tour de " + nomPirateCourant+"\n");
+        historyTextArea.append("\n\n\nAu tour de " + nomPirateCourant+"\n");
         
         if (boundary.estEmpoisonne(pirateCourant)){ 
             pVIHM(-1, pirateCourant);
@@ -171,11 +171,11 @@ public class GameFrame extends javax.swing.JFrame {
         else {
             poisonHeal(pirateCourant);
         }
-        jTextArea1.append(boundary.verificationPoison(pirateCourant));
+        historyTextArea.append(boundary.verificationPoison(pirateCourant));
         
         int[] lancer = boundary.lancerDes();
         int deplacement = boundary.deplacementPirate(pirateCourant, lancer);
-        jTextArea1.append(boundary.deplacementPirateAffichage(pirateCourant, deplacement));
+        historyTextArea.append(boundary.deplacementPirateAffichage(pirateCourant, deplacement));
         diceManager.showResult(lancer[0], lancer[1]);
         
         // Quand c'est fini, traiterEffetCase
@@ -187,7 +187,7 @@ public class GameFrame extends javax.swing.JFrame {
         int pirateCourant = isPlayer1Turn ? 0 : 1;
         
         String effetCase = boundary.activerCase(pirateCourant, (pirateCourant+1)%2);
-        jTextArea1.append(effetCase);
+        historyTextArea.append(effetCase);
         
         if (effetCase.contains("soigne") && boundary.getPirateVie(pirateCourant) >= 5) {
             pVIHM(1, pirateCourant);
@@ -223,16 +223,17 @@ public class GameFrame extends javax.swing.JFrame {
     private void finalizeTurn() {
         int pirateCourant = isPlayer1Turn ? 0 : 1;
         String nomPirateCourant = isPlayer1Turn ? player1Name : player2Name;
+        String nomAutrePirate = isPlayer1Turn ? player2Name : player1Name; // pour victoire par perte de vie
         
         if (!boundary.finJeu(pirateCourant)) {
-            jTextArea1.append("Fin de jeu, victoire de " + nomPirateCourant + "\n");
+            historyTextArea.append("Fin de jeu, victoire de " + nomPirateCourant + "\n");
             JOptionPane.showMessageDialog(this, nomPirateCourant + " est arrivee");
             this.dispose();
             return;
         }
         if (!boundary.verificationVie(pirateCourant)) {
-            jTextArea1.append(boundary.affichageVie(pirateCourant));
-            JOptionPane.showMessageDialog(this, "Victoire de " + nomPirateCourant + " par perte de vie");
+            historyTextArea.append(boundary.affichageVie(pirateCourant));
+            JOptionPane.showMessageDialog(this, "Victoire de " + nomAutrePirate + " par perte de vie");
             this.dispose();
             return;
         }
@@ -451,7 +452,7 @@ public void animateMovement(PlayerPawn playerPawn, int moveAmount, int nextStep)
         PSNJoueur2 = new javax.swing.JButton();
         PSNJoueur1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        historyTextArea = new javax.swing.JTextArea();
         boardPanel = new javax.swing.JPanel() {
             private java.awt.Image bg = new javax.swing.ImageIcon(
                 getClass().getResource("ocean3.jpg")
@@ -618,9 +619,9 @@ public void animateMovement(PlayerPawn playerPawn, int moveAmount, int nextStep)
                 .addContainerGap())
         );
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        historyTextArea.setColumns(20);
+        historyTextArea.setRows(5);
+        jScrollPane1.setViewportView(historyTextArea);
 
         boardPanel.setLayout(new java.awt.GridLayout(6, 5));
 
@@ -683,8 +684,8 @@ public void animateMovement(PlayerPawn playerPawn, int moveAmount, int nextStep)
     private javax.swing.JPanel dice1Panel;
     private javax.swing.JLabel dice2Label;
     private javax.swing.JPanel dice2Panel;
+    private javax.swing.JTextArea historyTextArea;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JProgressBar player1Bar;
     private javax.swing.JLabel player1NameLabel;
     private javax.swing.JProgressBar player2Bar;
