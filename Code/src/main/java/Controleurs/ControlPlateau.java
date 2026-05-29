@@ -47,7 +47,7 @@ public class ControlPlateau {
         
         for (TypeCase caseType : listeCase) {
             do {
-                caseSelection = random.nextInt(1,plateau.getPlateau().size()-1);
+                caseSelection = random.nextInt(2,plateau.getPlateau().size()-1);
             } while (dejaDistribue.contains(caseSelection));
             
             dejaDistribue.add(caseSelection);
