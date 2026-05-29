@@ -91,6 +91,8 @@ public class GameFrame extends javax.swing.JFrame {
         pawnPlayer1 = new PlayerPawn(this, "pirateship.png", "pirateshipleft.png", 50, 50);
         pawnPlayer2 = new PlayerPawn(this, "pirateship2.png", "pirateship2left.png", 75, 75);
         
+        updateTurnDisplay();
+        
         SwingUtilities.invokeLater(() -> {
             movePlayerToSquare(pawnPlayer1, player1Pos);
             movePlayerToSquare(pawnPlayer2, player2Pos);
@@ -238,6 +240,8 @@ public class GameFrame extends javax.swing.JFrame {
         
         // au joueur suivant
         isPlayer1Turn = !isPlayer1Turn;
+        updateTurnDisplay();
+
     }
     
     private void affichageVictoire(String message){
@@ -386,6 +390,19 @@ public void animateMovement(PlayerPawn playerPawn, int moveAmount, int nextStep)
         }
         
         boundary.instancierJeu(player1Name, player2Name);
+    }
+    
+    private void updateTurnDisplay() {
+        if (isPlayer1Turn) {
+            player1NameLabel.setText("▶ " + player1Name + " (Tour en cours)");          
+            player2NameLabel.setText(player2Name);
+        } 
+        
+        else {
+            player1NameLabel.setText(player1Name);         
+            player2NameLabel.setText("▶ " + player2Name + " (Tour en cours)");
+        }
+        
     }
 
     //Elouan
@@ -562,7 +579,7 @@ public void animateMovement(PlayerPawn playerPawn, int moveAmount, int nextStep)
                     .addComponent(player1NameLabel)
                     .addComponent(player1Bar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(PSNJoueur1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 175, Short.MAX_VALUE)
                 .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(dice2Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(dice1Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -576,26 +593,25 @@ public void animateMovement(PlayerPawn playerPawn, int moveAmount, int nextStep)
         topPanelLayout.setVerticalGroup(
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(topPanelLayout.createSequentialGroup()
-                .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(topPanelLayout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(player1NameLabel)
-                            .addComponent(player2NameLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(player1Bar, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(player2Bar, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(PSNJoueur2)
-                            .addComponent(PSNJoueur1)))
-                    .addGroup(topPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(dice1Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dice2Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap()
+                .addComponent(dice1Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(dice2Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(15, Short.MAX_VALUE))
+            .addGroup(topPanelLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(player1NameLabel)
+                    .addComponent(player2NameLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(player1Bar, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(player2Bar, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(PSNJoueur2)
+                    .addComponent(PSNJoueur1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         topLayeredPanel.setLayer(topPanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -619,6 +635,7 @@ public void animateMovement(PlayerPawn playerPawn, int moveAmount, int nextStep)
 
         historyTextArea.setColumns(20);
         historyTextArea.setRows(5);
+        historyTextArea.setFocusable(false);
         jScrollPane1.setViewportView(historyTextArea);
 
         boardPanel.setLayout(new java.awt.GridLayout(6, 5));
@@ -648,14 +665,14 @@ public void animateMovement(PlayerPawn playerPawn, int moveAmount, int nextStep)
                 .addComponent(topLayeredPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(playerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(121, 121, 121)
-                    .addComponent(boardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 543, Short.MAX_VALUE)
-                    .addGap(122, 122, 122)))
+                    .addGap(129, 129, 129)
+                    .addComponent(boardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(122, Short.MAX_VALUE)))
         );
 
         pack();
