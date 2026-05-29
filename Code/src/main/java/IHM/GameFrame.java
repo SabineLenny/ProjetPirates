@@ -389,7 +389,7 @@ public void animateMovement(PlayerPawn playerPawn, int moveAmount, int nextStep)
         boundary.instancierJeu(player1Name, player2Name);
     }
 
-    
+    //Elouan
     
     private int getIndexFromSquareNumber(int squareNumber){
         int totalCols = 5;
