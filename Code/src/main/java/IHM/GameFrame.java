@@ -178,7 +178,6 @@ public class GameFrame extends javax.swing.JFrame {
         historyTextArea.append(boundary.deplacementPirateAffichage(pirateCourant, deplacement));
         diceManager.showResult(lancer[0], lancer[1]);
         
-        // Quand c'est fini, traiterEffetCase
         animateMovement(activePawn, deplacement, STEP_EFFECT);
     }
     //Ulysse
@@ -250,14 +249,8 @@ public void animateMovement(PlayerPawn playerPawn, int moveAmount, int nextStep)
         final int[] visualPos = { startPos };
         int target = startPos + moveAmount;
         
-        // Vrai si le jet de dés fait dépasser la case finale (30).
-        // Nécessite une animation en deux phases : avancer jusqu'à 30, 
-        // puis "rebondir" en reculant du surplus.
-        final boolean isBouncing;
+                   final boolean isBouncing;
         
-        // Vrai si la case d'arrivée est inférieure à la case de départ.
-        // Se déclenche lors de l'échange de positions.
-        // Nécessite une animation en une seule phase vers l'arrière (marche arrière).
         final boolean isSimpleBackward;
         
         if(target > 30){
