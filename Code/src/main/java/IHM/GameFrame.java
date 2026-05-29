@@ -163,8 +163,8 @@ public class GameFrame extends javax.swing.JFrame {
         String nomAutrePirate = isPlayer1Turn ? player2Name : player1Name;
         PlayerPawn activePawn = isPlayer1Turn ? pawnPlayer1 : pawnPlayer2;
 
-        historyTextArea.append("\n\n\nAu tour de " + nomPirateCourant+"\n");      
-        
+        historyTextArea.append("\n\n\nAu tour de " + nomPirateCourant+"\n");    
+                
         if (boundary.estEmpoisonne(pirateCourant)){ 
             pVIHM(-1, pirateCourant);
             if (!boundary.verificationVie(pirateCourant)) {
@@ -192,9 +192,18 @@ public class GameFrame extends javax.swing.JFrame {
         String effetCase = boundary.activerCase(pirateCourant, (pirateCourant+1)%2);
         historyTextArea.append(effetCase);
         
-        if (effetCase.contains("soigne") && boundary.getPirateVie(pirateCourant) >= 5) {
-            pVIHM(1, pirateCourant);
+        if (effetCase.contains("soigne") && boundary.getPirateVie(pirateCourant) < 5) {
+            if(boundary.estEmpoisonne(pirateCourant)){
+                pVIHM(2, pirateCourant);                
+            }
+            
+            else {
+                pVIHM(1, pirateCourant);
+            }
+            
             poisonHeal(pirateCourant);
+
+            
         }
         if (effetCase.contains("BOMB")) {
             JOptionPane.showMessageDialog(this, "BOOM");
