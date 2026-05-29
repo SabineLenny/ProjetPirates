@@ -180,7 +180,6 @@ public class GameFrame extends javax.swing.JFrame {
         historyTextArea.append(boundary.deplacementPirateAffichage(pirateCourant, deplacement));
         diceManager.showResult(lancer[0], lancer[1]);
         
-        // Quand c'est fini, traiterEffetCase
         animateMovement(activePawn, deplacement, STEP_EFFECT);
     }
     //Ulysse

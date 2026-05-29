@@ -6,8 +6,7 @@ TODO List IHM :
     - Bombes
     - Poison
     - Échange
-     
-- Gestion de la barre de vie
+    
 
 
 Extrait de l'avancement du projet (Update du 22/04/2026)
