@@ -23,18 +23,15 @@ public class GameFrame extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GameFrame.class.getName());
 
-    private BoardSquare[] squares = new BoardSquare[30];
+    private final BoardSquare[] squares = new BoardSquare[30];
     
     private String player1Name;
-    private int player1ID;
     private String player2Name;
-    private int player2ID;
 
     private PlayerPawn pawnPlayer1;
     private PlayerPawn pawnPlayer2;
     private boolean isPlayer1Turn = true;
     
-    // TODO : removed / replaced
     private int player1Pos = 1;
     private int player2Pos = 1;
     
@@ -50,7 +47,7 @@ public class GameFrame extends javax.swing.JFrame {
     private final int pawnSizeX = 80;
     private final int pawnSizeY = 50;
     
-    // --- ANIMATION ROUTING CONSTANTS ---
+    // --- ANIMATION CONSTANTS ---
     private static final int STEP_NONE = 0;     // Ne rien faire une fois terminé
     private static final int STEP_EFFECT = 1;   // Traiter l'effet de la case
     private static final int STEP_FINALIZE = 2; // Fin du tour
@@ -161,12 +158,17 @@ public class GameFrame extends javax.swing.JFrame {
     public void playTurn() {
         int pirateCourant = isPlayer1Turn ? 0 : 1;
         String nomPirateCourant = isPlayer1Turn ? player1Name : player2Name;
+        String nomAutrePirate = isPlayer1Turn ? player2Name : player1Name;
         PlayerPawn activePawn = isPlayer1Turn ? pawnPlayer1 : pawnPlayer2;
 
-        historyTextArea.append("\n\n\nAu tour de " + nomPirateCourant+"\n");
+        historyTextArea.append("\n\n\nAu tour de " + nomPirateCourant+"\n");      
         
         if (boundary.estEmpoisonne(pirateCourant)){ 
             pVIHM(-1, pirateCourant);
+            if (!boundary.verificationVie(pirateCourant)) {
+                affichageVictoire("Fin de jeu, victoire de " + nomAutrePirate + " par perte de vie \n");
+            }
+                    
         }
         else {
             poisonHeal(pirateCourant);
@@ -198,6 +200,7 @@ public class GameFrame extends javax.swing.JFrame {
         } 
         if (effetCase.contains("empoisonne")){
             poison(pirateCourant);
+            pVIHM(-1, pirateCourant);
         }
         
 
@@ -215,7 +218,7 @@ public class GameFrame extends javax.swing.JFrame {
         //  on met 0 pour ne pas déclencher deux fois la fin du tour
         animateMovement(pawnPlayer1, distancePourP1, STEP_NONE);
         
-        // on met '2' pour déclencher finalizeTurn() à la fin
+        // on met 2 pour déclencher finalizeTurn() à la fin
         animateMovement(pawnPlayer2, distancePourP2, STEP_FINALIZE);
     }
 
@@ -225,20 +228,24 @@ public class GameFrame extends javax.swing.JFrame {
         String nomAutrePirate = isPlayer1Turn ? player2Name : player1Name; // pour victoire par perte de vie
         
         if (!boundary.finJeu(pirateCourant)) {
-            historyTextArea.append("Fin de jeu, victoire de " + nomPirateCourant + "\n");
-            JOptionPane.showMessageDialog(this, nomPirateCourant + " est arrivee");
-            this.dispose();
+            affichageVictoire("Fin de jeu, victoire de " + nomPirateCourant + "\n");
             return;
         }
         if (!boundary.verificationVie(pirateCourant)) {
-            historyTextArea.append(boundary.affichageVie(pirateCourant));
-            JOptionPane.showMessageDialog(this, "Victoire de " + nomAutrePirate + " par perte de vie");
-            this.dispose();
+            affichageVictoire("Fin de jeu, victoire de " + nomAutrePirate + " par perte de vie \n");
             return;
         }
         
         // au joueur suivant
         isPlayer1Turn = !isPlayer1Turn;
+    }
+    
+    private void affichageVictoire(String message){
+            historyTextArea.append(message);
+            JOptionPane.showMessageDialog(this, message);
+            this.dispose();
+
+        
     }
     
     //Elouan
@@ -249,8 +256,8 @@ public void animateMovement(PlayerPawn playerPawn, int moveAmount, int nextStep)
         final int[] visualPos = { startPos };
         int target = startPos + moveAmount;
         
-                   final boolean isBouncing;
-        
+       
+        final boolean isBouncing;
         final boolean isSimpleBackward;
         
         if(target > 30){
@@ -373,11 +380,9 @@ public void animateMovement(PlayerPawn playerPawn, int moveAmount, int nextStep)
 
         if(player1Name == null || player1Name.isBlank()){
             player1Name = "Joueur 1";
-            player1ID = 0;
         }
         if(player2Name == null || player2Name.isBlank()){
             player2Name = "Joueur 2";
-            player1ID = 1;
         }
         
         boundary.instancierJeu(player1Name, player2Name);
